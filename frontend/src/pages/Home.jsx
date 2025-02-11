@@ -28,7 +28,11 @@ export default function Home() {
     return (
         <div className='App'>
             <Display currentManga={currentManga}/>
-            <Pagination totalPages={manga.length} perPages={perPages}/>
+            <Pagination 
+                totalPages={manga.length} 
+                perPages={perPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}/>
         </div>
     )
 }
