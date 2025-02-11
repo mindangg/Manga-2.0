@@ -6,7 +6,7 @@ import Display from '../components/Display'
 export default function Home() {
     const [manga, setManga] = useState([])
     const [currentPage, setCurrentPage] = useState(1) 
-    const [perPages, setPerPages] = useState(8) 
+    const [productPerPages, setroductPerPages] = useState(8) 
 
     useEffect(() => {
         const fetchManga = async () => {
@@ -21,16 +21,16 @@ export default function Home() {
         fetchManga()
     }, [])
 
-    const lastPageIndex = currentPage * perPages
-    const firstPageIndex = lastPageIndex - perPages
+    const lastPageIndex = currentPage * productPerPages
+    const firstPageIndex = lastPageIndex - productPerPages
     const currentManga = manga.slice(firstPageIndex, lastPageIndex)
 
     return (
         <div className='App'>
             <Display currentManga={currentManga}/>
             <Pagination 
-                totalPages={manga.length} 
-                perPages={perPages}
+                totalProducts={manga.length} 
+                productPerPages={productPerPages}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}/>
         </div>
