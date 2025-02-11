@@ -7,6 +7,7 @@ import '../styles/CardDetails.css'
 export default function CardDetails({ id, manga }) {
     const [selectedImage, setSelectedImage] = useState(cover1); 
     const [isProductVisible, setIsProductVisible] = useState(true); 
+    const [quantity, setQuantity] = useState(1); 
 
     const changeProductView = (img) => {
         setSelectedImage(img)
@@ -48,13 +49,21 @@ export default function CardDetails({ id, manga }) {
                 <p>Author:</p>
                 <h2>{manga.author}</h2>
                 <p>{manga.category}</p><br></br>
-                <button>Add to cart</button>
+                <button>Add to cart</button><br></br>
 
-                <button id='quantitydown'></button>
-                <input id='quantity'></input>
-                <button id='quantityup'></button>
+                <button id='quantitydown'
+                        onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                        disabled={quantity === 1}
+                        >-</button>
+                <input id='quantity'
+                        type='number'
+                        value={quantity}>
+                        </input>
+                <button id='quantityup'
+                        onClick={() => setQuantity((prev) => prev + 1)}
+                        >+</button>
 
-                <p>Availability: ${manga.quantity}</p><br></br>
+                <p>Availability: {manga.quantity}</p><br></br>
                 <h3>Description: </h3><br></br>
                 <p>{manga.description}</p>
             </div>

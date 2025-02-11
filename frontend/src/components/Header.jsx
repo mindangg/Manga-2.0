@@ -11,18 +11,17 @@ export default function Header() {
             </div>
 
             <nav className='navbar'>
-                <Link to="/">Home</Link>
-                <Link to="/">Product</Link>
-                <Link to="/">Category</Link>
-                <Link to="/">About Us</Link>
+                <Link to='/'>Home</Link>
+                <Link to='/'>Product</Link>
+                <Link to='/'>Category</Link>
+                <Link to='/'>About Us</Link>
             </nav>
 
             <div className='icons'>
-                <i className="fa-solid fa-magnifying-glass"></i>
-                <i className="fa-regular fa-user"></i>
-                <i className="fa-solid fa-cart-shopping"></i>
+                <i className='fa-solid fa-magnifying-glass'></i>
+                <Link to='/login'><i className='fa-regular fa-user'></i></Link>
+                <Link to='/cart'><i className='fa-solid fa-cart-shopping'></i></Link>
             </div>
         </header>
-
     )
 }
