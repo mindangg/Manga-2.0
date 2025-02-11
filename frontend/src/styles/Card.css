@@ -1,0 +1,54 @@
+.card{
+    position: relative;
+}
+
+.card img{
+    width: 320px;
+    height: 340px;
+    transition: 0.22s ease-in;
+}
+
+.card img:nth-child(1){
+    position: absolute;
+}
+
+.card img:hover{
+    cursor: pointer;
+}
+
+.card img:nth-child(1):hover{
+    opacity: 0;
+}
+
+.card h4{
+    position: relative;
+    top: 10px;
+    left: 0;
+    font-size: 18px;
+    color: white;
+}
+
+.card p{
+    position: relative;
+    top: 20px;
+    left: 0;
+    font-size: 16px;
+    color: var(--gray);
+}
+
+.card button{
+    position: absolute;
+    top: 75%;
+    left: 63%;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    background-color: var(--green);
+    border: none;
+    padding: 12px;
+}
+
+.card button:hover{
+    cursor: pointer;
+    background-color: rgba(8, 220, 100, 0.8);
+}

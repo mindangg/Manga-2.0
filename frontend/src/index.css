@@ -1,0 +1,26 @@
+*,
+*:before,
+*:after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    /* overflow: visible; */
+}
+
+:root{
+    --black: #201c1c;
+    --green: #08dc64;
+    --green-l: #08bc5c;
+    --gray: #bbbbbb;
+    font-size: 16px;
+}
+
