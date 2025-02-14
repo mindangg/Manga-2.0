@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
+import jjk from '../assets/banner/jjk.jpg'
+
 import Pagination from '../components/Pagination'
 import Display from '../components/Display'
+import Slider from '../components/Slider'
+import Carousel from '../components/Carousel'
 
 export default function Home() {
     const [manga, setManga] = useState([])
-    const [currentPage, setCurrentPage] = useState(1) 
-    const [productPerPages, setroductPerPages] = useState(8) 
 
     useEffect(() => {
         const fetchManga = async () => {
@@ -21,18 +23,17 @@ export default function Home() {
         fetchManga()
     }, [])
 
-    const lastPageIndex = currentPage * productPerPages
-    const firstPageIndex = lastPageIndex - productPerPages
-    const currentManga = manga.slice(firstPageIndex, lastPageIndex)
-
     return (
-        <div className='App'>
-            <Display currentManga={currentManga}/>
-            <Pagination 
-                totalProducts={manga.length} 
-                productPerPages={productPerPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}/>
+        <div className='home'>
+            <Slider/>
+
+            <Carousel/>
+
+            <div className='banner'>
+                <img src={jjk}></img>
+            </div>
+
+            <Carousel/>
         </div>
     )
 }

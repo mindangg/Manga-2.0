@@ -12,7 +12,7 @@ html{
 
 body{
     background-color: var(--black);
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', 'Poppins', sans-serif;
     /* overflow: visible; */
 }
 
@@ -21,6 +21,28 @@ body{
     --green: #08dc64;
     --green-l: #08bc5c;
     --gray: #bbbbbb;
+    --error: red;
     font-size: 16px;
 }
 
+.banner{
+    margin: 250px 0 0 0;
+}
+
+.banner img{
+    width: 100%;
+    height: 560px;
+}
+
+div.error {
+    padding: 10px;
+    background: var(--black);
+    border: 1px solid var(--error);
+    color: var(--error);
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+input.error {
+border: 1px solid var(--error);
+}

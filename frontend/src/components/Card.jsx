@@ -29,8 +29,8 @@ export default function Card({ manga }) {
     
     return (
         <>
-            <div className='card' onClick={() => showProductInfo(manga._id)}>
-                <a id={manga._id}>
+            <div className='card'>
+                <a id={manga._id} onClick={() => showProductInfo(manga._id)}>
                     <img src={cover1}></img>
                     <img src={cover2}></img>
                 </a>

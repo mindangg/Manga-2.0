@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const mangaRoutes = require('./routes/mangaRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use(cors({origin: 'http://localhost:5173'}))
 
 // routes
 app.use('/api/manga', mangaRoutes)
+app.use('/api/user', userRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

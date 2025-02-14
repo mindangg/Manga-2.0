@@ -54,6 +54,7 @@
     color: var(--gray);
     text-decoration: none;
     position: relative;
+    cursor: pointer;
 }
 
 #signup__login a::after{

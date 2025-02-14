@@ -1,0 +1,211 @@
+#billing__info {
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 150px;
+    justify-content: center;
+}
+
+#billing__info h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.billing__form {
+    width: 600px;
+    padding-left: 20px;
+}
+.transfer__form{
+    width: 600px;
+}
+
+#billing__info label {
+    font-size: 1.1em;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#billing__info input,
+#billing__info textarea,
+#billing__info select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+#billing__info textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+#billing__info select {
+    cursor: pointer;
+}
+
+#billing__info input:focus,
+#billing__info textarea:focus,
+#billing__info select:focus {
+    border-color: #00d146;
+    outline: none;
+    background-color: #e9f9e7;
+}
+
+#billing__info input[required],
+#billing__info textarea[required],
+#billing__info select[required] {
+    border-color: #ccc;
+}
+
+#billing__info .error {
+    color: red;
+    font-size: 0.9em;
+    display: none;
+    margin-top: -10px;
+}
+
+#billing__info .submit__btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #00d146;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+#billing__info .submit__btn:hover {
+    background-color: #00b63a;
+}
+
+#billing__info .submit__btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Pay Now Button */
+.paynow__btn {
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--green);
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.paynow__btn:hover {
+    background-color: var(--green-l);
+}
+
+.paynow__btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#cardInfo{
+    background: red;
+    z-index: 10;
+}
+
+/*  */
+/* Cart container */
+.payment-info {
+    background-color: #f5f5f5;
+    padding: 1.5rem;
+    width: 600px;
+}
+
+/* Item list styling */
+.payment-info__item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.payment-info__item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+/* Circular quantity popup */
+.quantity-circle {
+    position: absolute;
+    top: -10px;
+    left: 40px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.payment-info__item-details {
+    flex-grow: 1;
+}
+
+.payment-info__item-details p {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.payment-info__item-price {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Summary details */
+.payment-info__summary {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 1rem 0;
+}
+
+.payment-info__summary .total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.payment-info__summary .subtotal {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+}
+
+.payment-info__summary .order-price {
+    color: var(--green);
+}
+
+#paymentByQR{
+    overflow: hidden;
+    display: none;
+}
+#Payment-form{
+    width: 600px;
+    padding-left: 20px;
+}

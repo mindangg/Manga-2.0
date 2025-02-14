@@ -3,8 +3,6 @@ header{
     top: 0;
     left: 0;
     width: 100%;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -58,6 +56,7 @@ header{
 
 .icons{
     margin: 0 20px;
+    display: flex;
 }
 
 .icons i{
@@ -69,4 +68,69 @@ header{
 .icons i:hover{
     cursor: pointer;
     transform: translateY(-5px);
+}
+
+.icons .user{
+    display: flex;
+}
+
+.icons .user div{
+    color: #28a745;
+    font-size: 14px;
+    transform: translateY(1px);
+}
+
+.category:hover div{
+    opacity: 1;
+    visibility: visible;
+    color: red;
+}
+
+.category__dropdown{
+    position: fixed;
+    top: 100px;
+    left: 51%;
+    /* left: 0; */
+    /* width: 100%;
+    left: 50%;
+    transform: translateX(-50%); */
+    width: 190px;
+    display: flex;
+    flex-wrap: wrap;
+    transition: 0.3s;
+    z-index: 1;
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+
+    background-color: var(--black);
+    /* background-color: red; */
+}
+
+.category__dropdown a{
+    color: var(--gray);
+    text-decoration: none;
+    position: relative;
+    font-weight: light;
+    margin: 10px 20px 10px 0;
+}
+
+.category__dropdown a:hover{
+    color: white;
+}
+
+.category__dropdown a::after{
+    content: '';
+    background-color: var(--gray);
+    height: 1.5px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+.category__dropdown a:hover::after{
+    width: 0;
+    color: white;
 }

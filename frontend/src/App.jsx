@@ -5,34 +5,45 @@ import React from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Product from './pages/Product'
 import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
 
 // components
 import Header from './components/Header'
 import Footer from './components/Footer'
+
 
 export default function App() {
   return (
     <div className='App'>
       <BrowserRouter>
         <Header />
-        <div className="pages">
+        <div className='pages'>
           <Routes>
             <Route 
-              path="/" 
+              path='/' 
               element={<Home/>} 
             />
             <Route 
-              path="/login" 
+              path='/login' 
               element={<Login/>} 
             />
             <Route 
-              path="/signup" 
+              path='/signup' 
               element={<Signup/>} 
             />
             <Route 
-              path="/cart" 
+              path='/product' 
+              element={<Product/>} 
+            />
+            <Route 
+              path='/cart' 
               element={<Cart/>} 
+            />
+            <Route 
+              path='/checkout' 
+              element={<Checkout/>} 
             />
           </Routes>
         </div>

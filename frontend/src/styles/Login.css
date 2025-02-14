@@ -63,9 +63,6 @@
     color: var(--gray);
     text-decoration: none;
     position: relative;
-}
-
-#login a:hover{
     cursor: pointer;
 }
 
