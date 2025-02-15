@@ -24,7 +24,6 @@ export default function Card({ manga }) {
         }
 
         setIsLoading(false)
-
     }
     
     return (

@@ -4,8 +4,20 @@ import '../styles/Search.css'
 
 export default function Search() {
 
-
+    const showFilter = () => {
+        if (document.getElementById("filter").className == "") {
+            document.getElementById("filter").classList.add("filter__active")
+            document.querySelector(".filter__container").style.display = "inline"
+        }
     
+        else {
+            document.getElementById("filter").classList.remove("filter__active")
+            document.querySelector(".filter__container").style.display = "none"
+            document.getElementById("filter__min").value = ""
+            document.getElementById("filter__max").value = ""
+        }
+    }
+
     const close = () => {
         if (document.getElementById('filter').className == 'filter__active') {
             document.getElementById('filter').classList.remove('filter__active')
@@ -28,7 +40,7 @@ export default function Search() {
                     <a id='search__close' onClick={() => close()}><i className='fa-solid fa-xmark' ></i></a>
                 </div>
 
-                <a id='filter'><i className='fa-solid fa-filter' ></i></a>
+                <a id='filter' onClick={() => showFilter()}><i className='fa-solid fa-filter' ></i></a>
 
                 <div className='filter__container'>
                     <select id='filter__category'>

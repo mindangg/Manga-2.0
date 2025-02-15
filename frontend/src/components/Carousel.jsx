@@ -11,9 +11,10 @@ export default function Carousel() {
         const fetchManga = async () => {
             const response = await fetch('http://localhost:4000/api/manga')
             const json = await response.json()
-            if (response.ok) 
+            if (response.ok)
                 setManga(json.slice(0, 8))
         }
+        
         fetchManga()
     }, [])
 

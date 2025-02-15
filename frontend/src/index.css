@@ -34,7 +34,7 @@ body{
     height: 560px;
 }
 
-div.error {
+.error div{
     padding: 10px;
     background: var(--black);
     border: 1px solid var(--error);
@@ -43,6 +43,6 @@ div.error {
     margin: 20px 0;
 }
 
-input.error {
+.error input{
 border: 1px solid var(--error);
 }

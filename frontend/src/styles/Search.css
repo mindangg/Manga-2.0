@@ -1,5 +1,4 @@
-.search__popup,
-.shopping__popup
+.search__popup
 {
     background-color: rgba(0, 0, 0, 0.4);
     width: 100%;
@@ -11,13 +10,13 @@
     z-index: 2;
 }
 
-.search,
-.shopping__container
+.search
 {
     position: absolute;
     width: 620px;
     height: 620px;
     margin: auto;
+    top: 30px;
     right: 20px;
     background-color: var(--black);
     animation: rightToLeft 0.5s ease;  

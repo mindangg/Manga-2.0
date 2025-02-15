@@ -7,6 +7,10 @@
     overflow: hidden;
 }
 
+.carousel .product__page{
+    background-color: red;
+} 
+
 .carousel h1{
     color: white;
     font-size: 2.2em;
