@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import '../styles/Signup.css'
 
 import { useSignup } from '../hooks/useSignup'
 
@@ -48,11 +47,7 @@ export default function Signup() {
                         value={address} onChange={(e) => setAddress(e.target.value)}></input>
             </div>
 
-            <div>
-                <label className='error'></label>
-            </div>
-
-            <button id='signup__btn' disabled={isLoading}>Create account</button>
+            <button type='submit' id='signup__btn' disabled={isLoading}>Create account</button>
 
             <div id='signup__login'>
                 <Link to='/login' id='signup__login--nav'>Already has account?</Link>

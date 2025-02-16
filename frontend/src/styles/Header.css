@@ -74,10 +74,12 @@ header{
     display: flex;
 }
 
-.icons .user div{
+.icons .user span{
     color: #28a745;
     font-size: 14px;
-    transform: translateY(1px);
+    /* transform: translateY(1px); */
+    position: absolute;
+    top: 20px;
 }
 
 .category:hover div{

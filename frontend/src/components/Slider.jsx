@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../styles/Slider.css';
 
 import banner1 from '../assets/banner/1.png';
 import banner2 from '../assets/banner/2.png';

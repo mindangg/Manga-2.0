@@ -46,3 +46,331 @@ body{
 .error input{
 border: 1px solid var(--error);
 }
+
+/* login */
+
+#login{
+    width: 400px;
+    position: relative;
+    top: 200px;
+    height: 560px;
+    margin: 0 auto;
+}
+
+#login h1{
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login__input{
+    width: 100%;
+    height: 55px;
+    margin: 17px 0;
+}
+
+.login__input label {
+    color: rgba(255, 51, 0, 0.76);
+    font-size: 14px;
+    display: block;
+    margin: 5px;
+    font-family: "Poppins-Regular", sans-serif;
+}
+
+#login input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid #363636;
+    padding: 20px 45px 20px 20px;
+    font-size: 16px;
+    color: white;
+}
+
+#login input::placeholder{
+    color: #8d8d8d;
+    font-size: 16px;
+}
+
+#login__btn{
+    margin-top: 12px;
+    width: 100%;
+    height: 65px;
+    background-color: var(--green);
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+}
+
+#login__btn:hover {
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+#login a{
+    color: var(--gray);
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+#login a::after{
+    content: '';
+    background-color: var(--gray);
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+#login a:hover::after{
+    width: 0;
+}
+
+
+#login__signup{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#login__forget{
+    font-size: 17px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* signup */
+
+#signup{
+    width: 450px;
+    position: relative;
+    height: 700px;
+    top: 130px;
+    margin: auto;
+}
+
+#signup h1{
+    font-size: 45px;
+    color: white;
+    text-align: center;
+}
+
+.signup__input{
+    width: 100%;
+    height: 55px;
+    margin: 25px 0;
+}
+
+#signup input{
+    width: 100%;
+    height: 100%;
+    background: none;
+    outline: none;
+    border: 2px solid #363636;
+    padding: 20px 45px 20px 20px;
+    font-size: 16px;
+    color: white;
+}
+
+#signup input::placeholder{
+    color: #8d8d8d;
+    font-size: 16px;
+}
+
+#signup__btn{
+    width: 100%;
+    height: 65px;
+    background-color: var(--green);
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    margin-top: 5px;
+}
+
+#signup__btn:hover{
+    background-color: var(--green-l);
+    cursor: pointer;
+}
+
+#signup a{
+    color: var(--gray);
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+#signup a::after{
+    content: '';
+    background-color: var(--gray);
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+#signup a:hover::after{
+    width: 0;
+}
+
+#signup__login{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.signup__input label {
+    color: rgba(255, 51, 0, 0.76);
+    font-size: 14px;
+    display: none;
+    margin: 3px;
+    font-family: "Poppins-Regular", sans-serif;
+}
+
+/* pagination */
+
+.pagination{
+    width: 95%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 50px auto 0;
+}
+
+.pagination span{
+    color: white;
+    width: 50px;
+    height: 40px;  
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;     
+    margin: 0 10px;
+}
+
+.pagination__btn {
+    width: 40px;
+    height: 40px;
+    border: solid 1px #303828;
+    border-radius: 50%;
+    background-color: var(--black);
+    color: var(--green);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pagination__btn i:nth-of-type(2){
+    display: none;
+}
+
+.pagination__btn:nth-of-type(1):hover #left__angle{
+    display: none;
+}
+
+.pagination__btn:nth-of-type(1):hover #left__arrow{
+    display: inline;
+}
+
+.pagination__btn:nth-of-type(2):hover #right__angle{
+    display: none;
+}
+
+.pagination__btn:nth-of-type(2):hover #right__arrow{
+    display: inline;
+}
+
+/* display */
+
+.container {
+    margin: 150px auto 0;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 80px 25px;
+}
+
+/* slider */
+
+.slider{
+    position: relative;
+    top: 123px;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    margin: 0;
+}
+
+.slider__list{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    transition: 1s;
+}
+
+.slider__list img{
+    width: 1519px;
+    height: 100%;
+    object-fit: fill;
+}
+
+.slider__button{
+    position: absolute;
+    top: 42%;
+    left: 5%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slider__button button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #fff5;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+
+.slider__dots{
+    position: absolute;
+    left: 82%;
+    bottom: 15%;
+    color: #fff;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.slider__dots li{
+    list-style: none;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 20px 10px;
+    border-radius: 20px;
+    transition: 1s;
+}
+
+.slider__dots li.active{
+    background-color: #fff;
+    width: 29px;
+}

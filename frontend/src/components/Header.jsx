@@ -4,8 +4,10 @@ import logo from '../assets/WEBTOON_Logo.png'
 import '../styles/Header.css'
 import Search from './Search'
 
+import { useAuthContext } from '../hooks/useAuthContext'
+
 export default function Header() {
-    const [showUsername, setShowUsername] = useState('')
+    const { user } = useAuthContext()
 
     const search = () => {
         document.querySelector(".search__popup").style.display = "flex";
@@ -41,8 +43,9 @@ export default function Header() {
                 <i className='fa-solid fa-magnifying-glass' onClick={() => search()}></i>
                 <Search/>
                 <div className='user'>
-                    <Link to='/login'><i className='fa-regular fa-user'></i></Link>
-                    <div>{showUsername}</div>
+                    {user && <Link to='/user-info'><i className='fa-regular fa-user'></i></Link>}
+                    {!user && <Link to='/login'><i className='fa-regular fa-user'></i></Link>}
+                    {user && <span>{user.user.username}</span>}
                 </div>
                 <Link to='/cart'><i className='fa-solid fa-cart-shopping'></i></Link>
             </div>

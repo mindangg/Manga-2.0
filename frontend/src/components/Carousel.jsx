@@ -32,7 +32,7 @@ export default function Carousel() {
 
     useEffect(() => {
         if (carouselListRef.current) {
-            const newOffset = activeIndex * 200
+            const newOffset = activeIndex * 355
             carouselListRef.current.style.transform = `translateX(-${newOffset}px)`
         }
     }, [activeIndex])

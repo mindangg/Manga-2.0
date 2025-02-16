@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Product from './pages/Product'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
+import UserInfo from './pages/UserInfo' 
 
 // components
 import Header from './components/Header'
@@ -38,6 +39,10 @@ export default function App() {
               element={<Product/>} 
             />
             <Route 
+              path='/user-info' 
+              element={<UserInfo/>} 
+            />
+            <Route 
               path='/cart' 
               element={<Cart/>} 
             />
@@ -47,7 +52,6 @@ export default function App() {
             />
           </Routes>
         </div>
-
       </BrowserRouter>
 
       <Footer/>

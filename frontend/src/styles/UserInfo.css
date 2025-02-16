@@ -1,0 +1,155 @@
+#user__info{
+    position: relative;
+    top: 120px;
+    height: 64px;
+    background-color: #282424;
+    padding: 0 40px;
+}
+
+#user__info ul{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+}
+
+#user__info ul li{
+    color: #c0bcbc;
+    list-style: none;
+}
+
+#user__info div{
+    display: flex;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+#user__info div li{
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#user__info li:hover{
+    color: white;
+    cursor: pointer;
+}
+
+
+#order__container{
+    position: relative;
+    top: 150px;
+    border: 1px solid white;
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* .order__history {
+    max-width: 650px;
+    margin: 2rem auto;
+    border: 1px solid #ddd;
+    padding: 20px;
+  }
+*/
+.order__history{
+    margin: 0 auto;
+    padding: 20px;
+
+}
+
+.order{
+    display: flex;
+    margin: 0 auto;
+
+}
+
+#order__container h2{
+    color: #ddd;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.order{
+    padding: 15px;
+}
+
+.order:first-child{
+    border-top: 1px solid #ddd;
+}
+
+.order{
+    border-bottom: 1px solid #ddd;
+}
+
+.order:last-child{
+    border-bottom: none;
+}
+
+.order .order__info{
+    width: 30%;
+}
+
+.order .order__items__details{
+    width: 85%;
+}
+
+.order__id,
+.order__date,
+.order__status{
+    font-weight: bold;
+    color: #ddd;
+}
+
+.order__cancel-btn{
+    display: block;
+    height: 35px;
+    width: 130px;
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #008d3f;
+    color: white;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.order__cancel-btn:hover{
+    background-color: #00b63a;
+}
+
+.order__items__details ul{
+    list-style: none;
+    padding: 0;
+}
+
+.order__items__details li{
+    padding: 5px 0;
+}
+
+.status--completed{
+    color: green;
+}
+
+.status--pending{
+    color: orange;
+}
+
+.status--cancelled{
+    color: red;
+}
+
+.status-pending{
+    color: orange;
+}
+
+.show__details{
+    cursor: pointer;
+    color: #ddd;
+}
+
+.order__items__details{
+    color: #ddd;
+}
+
+
+

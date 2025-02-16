@@ -27,8 +27,14 @@
     transition: 0.7s;
 }
 
+
+.carousel__list .card img{
+    width: 335px;
+    height: 355px;
+}
+
 .carousel__list .card button{
-    top: 49.2%;
+    top: 51.5%;
     left: 63%;
 }
 

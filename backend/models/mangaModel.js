@@ -7,6 +7,10 @@ const mangaModel = new Schema({
         type: String,
         required: true
     },
+    series: {
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         required: true
@@ -15,7 +19,7 @@ const mangaModel = new Schema({
         type: String,
         required: true
     },
-    quantity: {
+    stock: {
         type: Number,
         required: true
     },

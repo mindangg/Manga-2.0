@@ -1,5 +1,4 @@
 import React from 'react'
-import '../styles/Pagination.css'
 
 export default function Pagination({ totalProducts, productPerPages, currentPage, setCurrentPage }) {
     let totalPages = totalProducts / productPerPages
