@@ -7,7 +7,7 @@ header{
     justify-content: space-between;
     align-items: center;
     transition: 0.5s;
-    padding: 20px 25px;
+    padding: 20px 30px;
     font-size: 1rem;
     z-index: 1;
     background-color: var(--black);
@@ -77,8 +77,8 @@ header{
 .icons .user span{
     color: #28a745;
     font-size: 14px;
-    /* transform: translateY(1px); */
     position: absolute;
+    right: 75px;
     top: 20px;
 }
 
@@ -92,10 +92,6 @@ header{
     position: fixed;
     top: 100px;
     left: 51%;
-    /* left: 0; */
-    /* width: 100%;
-    left: 50%;
-    transform: translateX(-50%); */
     width: 190px;
     display: flex;
     flex-wrap: wrap;
@@ -104,9 +100,7 @@ header{
     padding: 10px;
     opacity: 0;
     visibility: hidden;
-
     background-color: var(--black);
-    /* background-color: red; */
 }
 
 .category__dropdown a{

@@ -19,6 +19,10 @@ const mangaModel = new Schema({
         type: String,
         required: true
     },
+    supplier: {
+        type: String,
+        required: true
+    },
     stock: {
         type: Number,
         required: true
