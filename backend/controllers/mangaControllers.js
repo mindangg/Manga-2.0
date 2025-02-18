@@ -1,11 +1,27 @@
 const Manga = require('../models/mangaModel')
 const mongoose = require('mongoose')
+const multer = require('multer')
+const path = require('path')
+
+// multer storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './books/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({
+    storage: storage
+})
 
 // Get all manga
 const getAllManga = async (req, res) => {
-    const workouts = await Manga.find().sort({createdAt: -1})
+    const manga = await Manga.find().sort({createdAt: -1})
 
-    res.status(200).json(workouts)
+    res.status(200).json(manga)
 }
 
 // Get a single manga
@@ -15,21 +31,24 @@ const getManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         res.status(400).json({error: 'No such manga'})
 
-    const workout = await Manga.findById(id)
+    const manga = await Manga.findById(id)
 
-    if(!workout)
+    if(!manga)
         res.status(400).json({error: 'No such manga'})
 
-    res.status(200).json(workout)
+    res.status(200).json(manga)
 }
 
 // Create a manga
 const createManga = async (req, res) => {
-    const { title, category, author, quantity, price, description } = req.body
+    const { title, series, category, author, supplier, stock, price, description } = req.body
+    const cover1 = req.files['cover1'] ? req.files['cover1'][0].path : null;
+    const cover2 = req.files['cover2'] ? req.files['cover2'][0].path : null;
 
     try {
-        const workout = await Manga.create({ title, category, author, quantity, price, description })
-        res.status(200).json(workout)
+        const manga = await Manga.create({ title, series, category, author, supplier, 
+                                                stock, price, description, cover1, cover2 })
+        res.status(200).json(manga)
     }
     catch (error) {
         res.status(400).json({error: 'No such manga'})
@@ -43,12 +62,12 @@ const deleteManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         res.status(400).json({error: 'No such manga'})
 
-    const workout = await Manga.findOneAndDelete({_id: id})
+    const manga = await Manga.findOneAndDelete({_id: id})
 
-    if(!workout)
+    if(!manga)
         res.status(400).json({error: 'No such manga'})
 
-    res.status(200).json(workout)
+    res.status(200).json(manga)
 }
 
 // Update a manga
@@ -58,14 +77,20 @@ const updateManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         res.status(400).json({error: 'No such manga'})
 
-    const workout = await Manga.findOneAndUpdate({_id: id}, {
+    const manga = await Manga.findOneAndUpdate({_id: id}, {
         ...req.body
     })
 
-    if(!workout)
+    // const updatedData = { ...req.body };
+    // if (req.files['cover1']) updatedData.cover1 = req.files['cover1'][0].path;
+    // if (req.files['cover2']) updatedData.cover2 = req.files['cover2'][0].path;
+
+    // const manga = await Manga.findOneAndUpdate({ _id: id }, updatedData, { new: true });
+
+    if(!manga)
         res.status(400).json({error: 'No such manga'})
 
-    res.status(200).json(workout)
+    res.status(200).json(manga)
 }
 
 module.exports = {
@@ -73,5 +98,6 @@ module.exports = {
     getManga,
     createManga,
     deleteManga,
-    updateManga
+    updateManga,
+    upload
 }
