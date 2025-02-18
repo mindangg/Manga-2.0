@@ -5,7 +5,6 @@ const cors = require('cors')
 
 const mangaRoutes = require('./routes/mangaRoutes')
 const userRoutes = require('./routes/userRoutes')
-const multer = require('multer')
 
 const app = express()
 
