@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import '../styles/Card.css'
 
-import cover1 from '../assets/books/my dress up darling/my-dress-up-darling-volume-1-primary.jpg'
-import cover2 from '../assets/books/my dress up darling/my-dress-up-darling-volume-1-back.jpg'
-
 import CardDetails from './CardDetails'
 
 
@@ -24,14 +21,16 @@ export default function Card({ manga }) {
         }
 
         setIsLoading(false)
+
+        console.log(manga.cover1)
     }
     
     return (
         <>
             <div className='card'>
                 <a id={manga._id} onClick={() => showProductInfo(manga._id)}>
-                    <img src={cover1}></img>
-                    <img src={cover2}></img>
+                    <img src={manga.cover1}></img>
+                    <img src={manga.cover2}></img>
                 </a>
                 <h4>{manga.title}</h4>
                 <p>${manga.price}</p>

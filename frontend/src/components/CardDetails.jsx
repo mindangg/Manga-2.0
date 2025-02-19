@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import cover1 from '../assets/books/my dress up darling/my-dress-up-darling-volume-1-primary.jpg'
-import cover2 from '../assets/books/my dress up darling/my-dress-up-darling-volume-1-back.jpg'
 
 import '../styles/CardDetails.css'
 
 export default function CardDetails({ id, manga }) {
-    const [selectedImage, setSelectedImage] = useState(cover1); 
+    const [selectedImage, setSelectedImage] = useState(manga.cover1); 
     const [isProductVisible, setIsProductVisible] = useState(true); 
     const [quantity, setQuantity] = useState(1); 
 
@@ -30,10 +28,10 @@ export default function CardDetails({ id, manga }) {
             <a id='product__close' onClick={() => closeProduct()}><i className='fa-solid fa-xmark'></i></a>
             <div className='product__img'>
                 <img id='product__img1' src={selectedImage}></img>
-                <img id='product__img2' src={cover2} style={{ opacity: selectedImage === cover1 ? 0 : 1 }}></img>
+                <img id='product__img2' src={manga.cover2} style={{ opacity: selectedImage === manga.cover1 ? 0 : 1 }}></img>
 
-                <a id='product__view1' onClick={() => changeProductView(cover1)}><img src={cover1}></img></a>
-                <a id='product__view2' onClick={() => changeProductView(cover2)}><img src={cover2}></img></a>
+                <a id='product__view1' onClick={() => changeProductView(manga.cover1)}><img src={manga.cover1}></img></a>
+                <a id='product__view2' onClick={() => changeProductView(manga.cover2)}><img src={manga.cover2}></img></a>
             </div>
 
             <div className='product__info'>
