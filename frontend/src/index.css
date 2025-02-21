@@ -373,3 +373,38 @@ border: 1px solid var(--error);
     background-color: #fff;
     width: 29px;
 }
+
+/* notification */
+
+#notification {
+    visibility: hidden;
+    min-width: 250px;
+    color: black;
+    background: var(--green);
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 7px;
+    padding: 20px;
+    position: fixed;
+    z-index: 3;
+    left: 50%;
+    top: 70px;
+    transform: translateX(-50%);
+}
+
+@keyframes drop-in {
+    from {top: 0; opacity: 0}
+    to {top: 70px; opacity: 1}
+}
+
+@keyframes drop-out {
+    from {top: 70px; opacity: 1}
+    to {top: 0; opacity: 0}
+}
+
+#notification.show{
+    visibility: visible;
+    animation: drop-in 1s, drop-out 1s 2.5s;
+}

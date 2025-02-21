@@ -63,7 +63,6 @@ export default function CardDetails({ id, manga }) {
                             >+</button>
                 </div>
 
-
                 <p>Stock: {manga.stock}</p><br></br>
                 <h3>Description: </h3><br></br>
                 <p>{manga.description}</p>

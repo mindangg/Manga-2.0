@@ -15,6 +15,10 @@ import UserInfo from './pages/UserInfo'
 // components
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Notification from './components/Notification'
+
+// 
+import { useNotificationContext } from './hooks/useNotificationContext'
 
 const Layout = () => {
   const hideLayout = useLocation().pathname === '/admin'
@@ -35,6 +39,7 @@ const Layout = () => {
           <Route path='/checkout' element={<Checkout/>}/>
         </Routes>
       </div>
+      <Notification/>
       {!hideLayout && <Footer/>}
     </div>
   );
