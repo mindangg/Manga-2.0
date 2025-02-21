@@ -26,8 +26,7 @@ export default function Home() {
     return (
         <div className='home'>
             <Slider/>
-
-            <Carousel/>
+            <Carousel/> 
 
             <div className='banner'>
                 <img src={jjk}></img>

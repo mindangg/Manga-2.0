@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import '../styles/CardDetails.css'
 
 export default function CardDetails({ id, manga }) {
-    const [selectedImage, setSelectedImage] = useState(manga.cover1); 
+    const [selectedImage, setSelectedImage] = useState(`http://localhost:4000/${manga.cover1}`); 
     const [isProductVisible, setIsProductVisible] = useState(true); 
     const [quantity, setQuantity] = useState(1); 
 
@@ -28,10 +28,10 @@ export default function CardDetails({ id, manga }) {
             <a id='product__close' onClick={() => closeProduct()}><i className='fa-solid fa-xmark'></i></a>
             <div className='product__img'>
                 <img id='product__img1' src={selectedImage}></img>
-                <img id='product__img2' src={manga.cover2} style={{ opacity: selectedImage === manga.cover1 ? 0 : 1 }}></img>
+                <img id='product__img2' src={`http://localhost:4000/${manga.cover2}`} style={{ opacity: selectedImage === manga.cover1 ? 0 : 1 }}></img>
 
-                <a id='product__view1' onClick={() => changeProductView(manga.cover1)}><img src={manga.cover1}></img></a>
-                <a id='product__view2' onClick={() => changeProductView(manga.cover2)}><img src={manga.cover2}></img></a>
+                <a id='product__view1' onClick={() => changeProductView(`http://localhost:4000/${manga.cover1}`)}><img src={`http://localhost:4000/${manga.cover1}`}></img></a>
+                <a id='product__view2' onClick={() => changeProductView(`http://localhost:4000/${manga.cover2}`)}><img src={`http://localhost:4000/${manga.cover2}`}></img></a>
             </div>
 
             <div className='product__info'>
@@ -49,19 +49,22 @@ export default function CardDetails({ id, manga }) {
                 <p>{manga.category}</p><br></br>
                 <button>Add to cart</button><br></br>
 
-                <button id='quantitydown'
-                        onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                        disabled={quantity === 1}
-                        >-</button>
-                <input id='quantity'
-                        type='number'
-                        value={quantity}>
-                        </input>
-                <button id='quantityup'
-                        onClick={() => setQuantity((prev) => prev + 1)}
-                        >+</button>
+                <div className='carddetails-quantity'>
+                    <button id='quantitydown'
+                            onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                            disabled={quantity === 1}
+                            >-</button>
+                    <input id='quantity'
+                            type='number'
+                            value={quantity}>
+                            </input>
+                    <button id='quantityup'
+                            onClick={() => setQuantity((prev) => prev + 1)}
+                            >+</button>
+                </div>
 
-                <p>Availability: {manga.quantity}</p><br></br>
+
+                <p>Stock: {manga.stock}</p><br></br>
                 <h3>Description: </h3><br></br>
                 <p>{manga.description}</p>
             </div>

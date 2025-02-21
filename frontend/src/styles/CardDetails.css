@@ -144,15 +144,27 @@
     font-size: 0.95em;
 }
 
+.carddetails-quantity{
+    height: 45px;
+}
+
 #quantitydown,
 #quantityup{
     background-color: var(--black);
     color: white;
-    border: solid 1px #303828;
-    border-right: none;
+    border: 1px solid #303828;
     width: 50px;
-    height: 45px;
+    height: 100%;
+    cursor: pointer;
     margin-bottom: 25px;
+}
+
+#quantitydown{
+    border-right: none;
+}
+
+#quantityup{
+    border-left: none;
 }
 
 #quantity{
@@ -161,10 +173,9 @@
     border-left: none;
     border-right: none;
     width: 70px;
-    height: 45px;
+    height: 100%;
     text-align: center;
     color: white;
-    font-size: 16px;
 }
 
 #quantity::-webkit-outer-spin-button,

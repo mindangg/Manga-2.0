@@ -23,14 +23,15 @@ export default function Card({ manga }) {
         setIsLoading(false)
 
         console.log(manga.cover1)
+        console.log(manga.cover2)
     }
     
     return (
         <>
             <div className='card'>
                 <a id={manga._id} onClick={() => showProductInfo(manga._id)}>
-                    <img src={manga.cover1}></img>
-                    <img src={manga.cover2}></img>
+                    <img src={`http://localhost:4000/${manga.cover1}`}></img>
+                    <img src={`http://localhost:4000/${manga.cover2}`}></img>
                 </a>
                 <h4>{manga.title}</h4>
                 <p>${manga.price}</p>

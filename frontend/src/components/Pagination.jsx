@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Pagination({ totalProducts, productPerPages, currentPage, setCurrentPage }) {
-    let totalPages = totalProducts / productPerPages
+    let totalPages = Math.ceil(totalProducts / productPerPages)
 
     return (
         <div className='pagination'>

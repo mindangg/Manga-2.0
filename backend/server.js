@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 
 const Manga = require('./models/mangaModel')
 const initializerArray = require('./initializer')
@@ -21,6 +22,9 @@ app.use((req, res, next) => {
 
 // cors
 app.use(cors({origin: 'http://localhost:5173'}))
+
+// Serve static files from the 'books/uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Crucial line
 
 // routes
 app.use('/api/manga', mangaRoutes)
