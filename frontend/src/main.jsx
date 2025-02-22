@@ -5,12 +5,15 @@ import App from './App.jsx'
 
 import { AuthContextProvider } from './contexts/AuthContext.jsx'
 import { NotificationContextProvider } from './contexts/NotificationContext.jsx'
+import { CardDetailsContextProvider } from './contexts/CardDetailsContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
       <NotificationContextProvider>
-        <App/>
+        <CardDetailsContextProvider>
+          <App/>
+        </CardDetailsContextProvider>
       </NotificationContextProvider>
     </AuthContextProvider>
   </StrictMode>,

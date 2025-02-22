@@ -68,6 +68,12 @@
     color: white;
 }
 
+#cart-quantity::-webkit-outer-spin-button,
+#cart-quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 #cart-quantityremove{
     color: var(--gray);
     text-decoration: none;

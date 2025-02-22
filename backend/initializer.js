@@ -87,8 +87,8 @@ const initializerArray =
             stock: 120,
             price: 12.21,
             description: "It's an assassin showdown! Shishiba and Osaragi take on Yotsumura and his geisha on the streets of Kyoto.",
-            cover1: "uploads/sakamoto-days-volume-12-primary.jpg",
-            cover2: "uploads/sakamoto-days-volume-12-back.jpg"
+            cover1: "uploads/sakamoto-days-volume-12-primary.jpeg",
+            cover2: "uploads/sakamoto-days-volume-12-back.jpeg"
         },
 
         {
@@ -191,7 +191,7 @@ const initializerArray =
             stock: 90,
             price: 14.06,
             description: "A mysterious cursed spirit suddenly flies into Sakurajima Colony. It’s someone who became a curse after death and bears a grudge against Maki!",
-            cover1: "uploads/jujutsu-kaisen-volume-22-primary.jpg",
+            cover1: "uploads/jujutsu-kaisen-volume-22-primary.jpeg",
             cover2: "uploads/jujutsu-kaisen-volume-22-back.jpg"
         },
         
@@ -204,8 +204,8 @@ const initializerArray =
             stock: 90,
             price: 18.26,
             description: "Sukuna reveals that he is the Disgraced One whom the Angel wants to kill. While Itadori grapples with that realization, Kenjaku sets in motion plans involving various nations.",
-            cover1: "uploads/jujutsu-kaisen-volume-23-primary.jpg",
-            cover2: "uploads/jujutsu-kaisen-volume-23-back.jpg"
+            cover1: "uploads/jujutsu-kaisen-volume-23-primary.jpeg",
+            cover2: "uploads/jujutsu-kaisen-volume-23-back.jpeg"
         },
 
         {

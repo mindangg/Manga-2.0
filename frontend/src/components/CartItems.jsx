@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cover1 from '../assets/books/my dress up darling/my-dress-up-darling-volume-1-primary.jpg'
 
 import '../styles/CartItems.css'
 
-export default function CartItems() {
+export default function CartItems({ quantity }) {
+    const [cartQuantity, setCartQuantity] = useState(1)
 
     return (
         <div className='cart-item'>
@@ -15,7 +16,16 @@ export default function CartItems() {
             </div>
             <div className='cart-quantity'>
                 <div>
-                    <button id='cart-quantitydown'>-</button><input id='cart-quantity' value={10}></input><button id='cart-quantityup'>+</button>
+                    <button id='cart-quantitydown'
+                            onClick={() => setCartQuantity((prev) => Math.max(1, prev - 1))}
+                            disabled={cartQuantity === 1}
+                            >-</button>
+                    <input id='cart-quantity' 
+                            type='number'
+                            value={cartQuantity}></input>
+                    <button id='cart-quantityup'
+                            onClick={() => setCartQuantity((next) => next + 1)}
+                            >+</button>
                 </div>
             </div>
             <div className='cart-total'>

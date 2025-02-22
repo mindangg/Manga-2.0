@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 // cors
 app.use(cors({origin: 'http://localhost:5173'}))
 
-// Serve static files from the 'books/uploads' directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Crucial line
+// serve static files from the '/uploads'
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // routes
 app.use('/api/manga', mangaRoutes)

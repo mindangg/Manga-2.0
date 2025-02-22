@@ -389,8 +389,8 @@ border: 1px solid var(--error);
     padding: 20px;
     position: fixed;
     z-index: 3;
-    left: 50%;
     top: 70px;
+    left: 50%;
     transform: translateX(-50%);
 }
 

@@ -16,9 +16,7 @@ import UserInfo from './pages/UserInfo'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Notification from './components/Notification'
-
-// 
-import { useNotificationContext } from './hooks/useNotificationContext'
+import CardDetails from './components/CardDetails'
 
 const Layout = () => {
   const hideLayout = useLocation().pathname === '/admin'
@@ -40,6 +38,7 @@ const Layout = () => {
         </Routes>
       </div>
       <Notification/>
+      <CardDetails/>
       {!hideLayout && <Footer/>}
     </div>
   );
