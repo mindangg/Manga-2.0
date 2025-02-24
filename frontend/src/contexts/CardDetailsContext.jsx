@@ -12,18 +12,24 @@ export const CardDetailsContextProvider = ({ children }) => {
     const showProductInfo = async (id) => {
         const response = await fetch('http://localhost:4000/api/manga/' + id)
 
+        if (!response.ok) {
+            setManga(null)
+            throw new Error('Failed to fetch manga details')
+        }
+
         if (response.ok) {
             const mangaData = await response.json()
             setManga(mangaData)
         }
+        
     }
 
     const clearManga = () => {
-        setManga(null);
+        setManga(null)
     }
 
     return (
-        <CardDetailsContext.Provider value={{ manga, showProductInfo, clearManga  }}>
+        <CardDetailsContext.Provider value={{ manga, showProductInfo, clearManga }}>
             { children }
         </CardDetailsContext.Provider>
     )
