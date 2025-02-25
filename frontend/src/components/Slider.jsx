@@ -50,26 +50,26 @@ export default function Slider() {
         const checkLeft = itemsRef.current[active].offsetLeft;
         listRef.current.style.left = `-${checkLeft}px`;
 
-        document.querySelector('.slider .slider__dots li.active')?.classList.remove('active');
+        document.querySelector('.slider .slider-dots li.active')?.classList.remove('active');
         dotsRef.current[active].classList.add('active');
     }, [active]);
 
     return (
         <div className='slider'>
-            <div className='slider__list' ref={listRef}>
+            <div className='slider-list' ref={listRef}>
                 {[banner1, banner2, banner3, banner4, banner5].map((banner, index) => (
-                    <div className='slider__item' key={index} ref={(el) => (itemsRef.current[index] = el)}>
+                    <div className='slider-item' key={index} ref={(el) => (itemsRef.current[index] = el)}>
                         <img src={banner} alt={`Banner ${index + 1}`} />
                     </div>
                 ))}
             </div>
 
-            <div className='slider__button'>
-                <button id='slider__prev' ref={prevRef}>{'<'}</button>
-                <button id='slider__next' ref={nextRef}>{'>'}</button>
+            <div className='slider-button'>
+                <button id='slider-prev' ref={prevRef}>{'<'}</button>
+                <button id='slider-next' ref={nextRef}>{'>'}</button>
             </div>
 
-            <ul className='slider__dots'>
+            <ul className='slider-dots'>
                 {[...Array(5)].map((_, index) => (
                     <li
                         key={index}

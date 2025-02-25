@@ -1,4 +1,4 @@
-#user__info{
+#user-info{
     position: relative;
     top: 120px;
     height: 64px;
@@ -6,36 +6,36 @@
     padding: 0 40px;
 }
 
-#user__info ul{
+#user-info ul{
     display: flex;
     justify-content: space-between;
     height: 100%;
     align-items: center;
 }
 
-#user__info ul li{
+#user-info ul li{
     color: #c0bcbc;
     list-style: none;
 }
 
-#user__info div{
+#user-info div{
     display: flex;
     margin: 0 auto;
     gap: 30px;
 }
 
-#user__info div li{
+#user-info div li{
     font-weight: bold;
     font-size: 17px;
 }
 
-#user__info li:hover{
+#user-info li:hover{
     color: white;
     cursor: pointer;
 }
 
 
-#order__container{
+#order-container{
     position: relative;
     top: 150px;
     border: 1px solid white;
@@ -43,7 +43,7 @@
     margin: 0 auto;
 }
 
-.order__history{
+.order-history{
     margin: 0 auto;
     padding: 20px;
 
@@ -55,7 +55,7 @@
 
 }
 
-#order__container h2{
+#order-container h2{
     color: #ddd;
     margin: 20px 0;
     text-align: center;
@@ -77,22 +77,22 @@
     border-bottom: none;
 }
 
-.order .order__info{
+.order .order-info{
     width: 30%;
 }
 
-.order .order__items__details{
+.order .order-items-details{
     width: 85%;
 }
 
-.order__id,
-.order__date,
-.order__status{
+.order-id,
+.order-date,
+.order-status{
     font-weight: bold;
     color: #ddd;
 }
 
-.order__cancel-btn{
+.order-cancel-btn{
     display: block;
     height: 35px;
     width: 130px;
@@ -106,16 +106,16 @@
     cursor: pointer;
 }
 
-.order__cancel-btn:hover{
+.order-cancel-btn:hover{
     background-color: #00b63a;
 }
 
-.order__items__details ul{
+.order-items-details ul{
     list-style: none;
     padding: 0;
 }
 
-.order__items__details li{
+.order-items-details li{
     padding: 5px 0;
 }
 
@@ -135,12 +135,12 @@
     color: orange;
 }
 
-.show__details{
+.show-details{
     cursor: pointer;
     color: #ddd;
 }
 
-.order__items__details{
+.order-items-details{
     color: #ddd;
 }
 

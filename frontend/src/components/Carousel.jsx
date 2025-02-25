@@ -42,29 +42,29 @@ export default function Carousel() {
     return (
         <div className='carousel'>
             <h1>Best Sellers</h1>
-            <div className='carousel__container'>
-                <div className='carousel__list' ref={carouselListRef}>
+            <div className='carousel-container'>
+                <div className='carousel-list' ref={carouselListRef}>
                     {manga.map((m, index) => (
                         <Card key={index} manga={m} />
                     ))}
                 </div>
             </div>
 
-            <div className='carousel__button'>
+            <div className='carousel-button'>
                 <button onClick={handlePrev} disabled={activeIndex === 0}>
-                    <i className='fa-solid fa-angle-left' id='left__angle'></i>
-                    <i className='fa-solid fa-arrow-left' id='left__arrow'></i>
+                    <i className='fa-solid fa-angle-left' id='left-angle'></i>
+                    <i className='fa-solid fa-arrow-left' id='left-arrow'></i>
                 </button>
 
                 <button onClick={handleNext} disabled={activeIndex >= manga.length - 4}>
-                <i className='fa-solid fa-angle-right' id='right__angle'></i>
-                <i className='fa-solid fa-arrow-right' id='right__arrow'></i>
+                <i className='fa-solid fa-angle-right' id='right-angle'></i>
+                <i className='fa-solid fa-arrow-right' id='right-arrow'></i>
                 </button>
             </div>
 
-            <ul className='carousel__dots'>
+            <ul className='carousel-dots'>
                 {manga.slice(0, manga.length - 3).map((_, index) => (
-                    <li key={index} className={index === activeIndex ? 'best__active' : ''}></li>
+                    <li key={index} className={index === activeIndex ? 'best-active' : ''}></li>
                 ))}
             </ul>
         </div>

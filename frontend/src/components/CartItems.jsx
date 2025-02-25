@@ -3,8 +3,8 @@ import cover1 from '../assets/books/my dress up darling/my-dress-up-darling-volu
 
 import '../styles/CartItems.css'
 
-export default function CartItems({ quantity }) {
-    const [cartQuantity, setCartQuantity] = useState(1)
+export default function CartItems() {
+    const [quantity, setQuantity] = useState(1)
 
     return (
         <div className='cart-item'>
@@ -17,14 +17,14 @@ export default function CartItems({ quantity }) {
             <div className='cart-quantity'>
                 <div>
                     <button id='cart-quantitydown'
-                            onClick={() => setCartQuantity((prev) => Math.max(1, prev - 1))}
-                            disabled={cartQuantity === 1}
+                            onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                            disabled={quantity === 1}
                             >-</button>
                     <input id='cart-quantity' 
                             type='number'
-                            value={cartQuantity}></input>
+                            value={quantity}></input>
                     <button id='cart-quantityup'
-                            onClick={() => setCartQuantity((next) => next + 1)}
+                            onClick={() => setQuantity((next) => next + 1)}
                             >+</button>
                 </div>
             </div>

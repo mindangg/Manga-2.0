@@ -10,7 +10,7 @@ export default function Header() {
     const { user } = useAuthContext()
 
     const search = () => {
-        document.querySelector(".search__popup").style.display = "flex";
+        document.querySelector(".search-popup").style.display = "flex";
         document.querySelector(".search").style.animationName = "rightToLeft"
     }
 
@@ -25,7 +25,7 @@ export default function Header() {
                 <Link to='/product'>Product</Link>
                 <div className='category'>
                     <Link to='/category'>Category</Link>
-                    <div className='category__dropdown'>
+                    <div className='category-dropdown'>
                         <Link to='/category/shounen'>Shounen</Link>
                         <Link to='/category/seinen'>Seinen</Link>
                         <Link to='/category/rom-com'>Rom Com</Link>

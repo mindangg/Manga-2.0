@@ -6,7 +6,7 @@ import '../styles/ProductCard.css'
 
 export default function ProductCard() {
     return (
-        <div className='product__card'>
+        <div className='product-card'>
             <div className='display'>
                 <img src={img}></img>
             </div>

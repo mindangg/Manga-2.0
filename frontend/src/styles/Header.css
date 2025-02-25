@@ -88,7 +88,7 @@ header{
     color: red;
 }
 
-.category__dropdown{
+.category-dropdown{
     position: fixed;
     top: 100px;
     left: 51%;
@@ -103,7 +103,7 @@ header{
     background-color: var(--black);
 }
 
-.category__dropdown a{
+.category-dropdown a{
     color: var(--gray);
     text-decoration: none;
     position: relative;
@@ -111,11 +111,11 @@ header{
     margin: 10px 20px 10px 0;
 }
 
-.category__dropdown a:hover{
+.category-dropdown a:hover{
     color: white;
 }
 
-.category__dropdown a::after{
+.category-dropdown a::after{
     content: '';
     background-color: var(--gray);
     height: 1.5px;
@@ -126,7 +126,7 @@ header{
     transition: 0.3s;
 }
 
-.category__dropdown a:hover::after{
+.category-dropdown a:hover::after{
     width: 0;
     color: white;
 }

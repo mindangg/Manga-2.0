@@ -6,44 +6,44 @@ export default function Search() {
 
     const showFilter = () => {
         if (document.getElementById("filter").className == "") {
-            document.getElementById("filter").classList.add("filter__active")
-            document.querySelector(".filter__container").style.display = "inline"
+            document.getElementById("filter").classList.add("filter-active")
+            document.querySelector(".filter-container").style.display = "inline"
         }
     
         else {
-            document.getElementById("filter").classList.remove("filter__active")
-            document.querySelector(".filter__container").style.display = "none"
-            document.getElementById("filter__min").value = ""
-            document.getElementById("filter__max").value = ""
+            document.getElementById("filter").classList.remove("filter-active")
+            document.querySelector(".filter-container").style.display = "none"
+            document.getElementById("filter-min").value = ""
+            document.getElementById("filter-max").value = ""
         }
     }
 
     const close = () => {
-        if (document.getElementById('filter').className == 'filter__active') {
-            document.getElementById('filter').classList.remove('filter__active')
-            document.querySelector('.filter__container').style.display = 'none'
-            document.getElementById('filter__min').value = ''
-            document.getElementById('filter__max').value = ''
+        if (document.getElementById('filter').className == 'filter-active') {
+            document.getElementById('filter').classList.remove('filter-active')
+            document.querySelector('.filter-container').style.display = 'none'
+            document.getElementById('filter-min').value = ''
+            document.getElementById('filter-max').value = ''
         }
     
         document.querySelector('.search').style.animationName = 'leftToRight'
         setTimeout(function () {
-            document.querySelector('.search__popup').style.display = 'none';
+            document.querySelector('.search-popup').style.display = 'none';
         }, 390);
     }
 
     return (
-        <div className='search__popup'>
+        <div className='search-popup'>
             <div className='search'>
                 <div className='searchbox'>
-                    <input id='search__input' type='search' placeholder='Search for...'></input>
-                    <a id='search__close' onClick={() => close()}><i className='fa-solid fa-xmark' ></i></a>
+                    <input id='search-input' type='search' placeholder='Search for...'></input>
+                    <a id='search-close' onClick={() => close()}><i className='fa-solid fa-xmark' ></i></a>
                 </div>
 
                 <a id='filter' onClick={() => showFilter()}><i className='fa-solid fa-filter' ></i></a>
 
-                <div className='filter__container'>
-                    <select id='filter__category'>
+                <div className='filter-container'>
+                    <select id='filter-category'>
                         <option value=''>All</option>
                         <option value='shounen'>Shounen</option>
                         <option value='seinen'>Seinen</option>
@@ -56,9 +56,9 @@ export default function Search() {
                     </select>
 
                     <span >Price</span>
-                    <input type='text' placeholder='Min' id='filter__min'></input>
+                    <input type='text' placeholder='Min' id='filter-min'></input>
                     <span >to</span>
-                    <input type='text' placeholder='Max' id='filter__max'></input>
+                    <input type='text' placeholder='Max' id='filter-max'></input>
                     <a><i className='fa-solid fa-magnifying-glass-dollar'></i></a>
                 </div>
             </div>

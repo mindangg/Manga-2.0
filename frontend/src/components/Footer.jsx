@@ -5,8 +5,8 @@ import "../styles/Footer.css";
 export default function Footer() {
   return (
     <footer>
-      <div className="footer__container">
-        <div className="footer__content">
+      <div className="footer-container">
+        <div className="footer-content">
           <a href="#">
             <img src={logo} alt="Webtoon Logo" />
           </a>
@@ -14,27 +14,27 @@ export default function Footer() {
           <p>Web programming and its application</p>
         </div>
 
-        <div className="footer__content">
+        <div className="footer-content">
           <h3>
             Customer Service
-            <div className="footer__underline">
+            <div className="footer-underline">
               <span></span>
             </div>
           </h3>
           <p>FAQs</p>
           <p>Returns Policy</p>
           <p>Refund Policy</p>
-          <p className="footer__email--id">thanhsang@sgu.edu.vn</p>
+          <p className="footer-email--id">thanhsang@sgu.edu.vn</p>
           <div style={{ display: "flex", alignItems: "center" }}>
             <i className="fa-solid fa-phone" style={{ marginRight: "10px" }}></i>
             <h4>076-302-0810</h4>
           </div>
         </div>
 
-        <div className="footer__content">
+        <div className="footer-content">
           <h3>
             Legal
-            <div className="footer__underline">
+            <div className="footer-underline">
               <span></span>
             </div>
           </h3>
@@ -42,20 +42,20 @@ export default function Footer() {
           <p>Privacy Notice</p>
         </div>
 
-        <div className="footer__content">
+        <div className="footer-content">
           <h3>
             Newsletter
-            <div className="footer__underline">
+            <div className="footer-underline">
               <span></span>
             </div>
           </h3>
-          <form className="footer__form">
+          <form className="footer-form">
             <i className="fa-regular fa-envelope" style={{ color: "white" }}></i>
             <input type="email" placeholder="E-mail" required />
             <button type="submit">{">"}</button>
           </form>
 
-          <div className="footer__social--icons">
+          <div className="footer-social--icons">
             <a href="#">
               <i className="fa-brands fa-instagram" style={{ color: "white" }}></i>
             </a>

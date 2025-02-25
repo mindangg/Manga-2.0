@@ -10,7 +10,7 @@ export default function UserInfo() {
 
     return (
         <>
-            <div id='user__info'>
+            <div id='user-info'>
                 <ul className='nav'>
                     <div>
                         <li>Orders</li>
@@ -20,9 +20,9 @@ export default function UserInfo() {
                 </ul>
             </div>
 
-            <div id='order__container'>
+            <div id='order-container'>
                 <h2>Your Order History</h2>
-                <div className='order__history'>
+                <div className='order-history'>
                     <Order/>
                     <Order/>
                     <Order/>

@@ -1,4 +1,4 @@
-.search__popup
+.search-popup
 {
     background-color: rgba(0, 0, 0, 0.4);
     width: 100%;
@@ -58,7 +58,7 @@
 
 .searchbox i:hover,
 #filter i:hover,
-.filter__container i:hover
+.filter-container i:hover
 {
     cursor: pointer;
     transform: translateY(-5px);
@@ -72,14 +72,14 @@
     color: white;
 }
 
-.filter__container{
+.filter-container{
     position: relative;
     top: 70px;
     padding: 20px;
     display: none;
 }
 
-.filter__container select{
+.filter-container select{
     margin-right: 30px;
     height: 30px;
     background-color: transparent;
@@ -88,11 +88,11 @@
     width: 210px;
 }
 
-.filter__container option{
+.filter-container option{
     background: var(--black);
 }
 
-.filter__container input{
+.filter-container input{
     width: 95px;
     height: 30px;
     margin-right: 10px;
@@ -103,12 +103,12 @@
     color: white;
 }
 
-.filter__container span{
+.filter-container span{
     margin-right: 10px;
     height: 30px;
 }
 
-.filter__container i{
+.filter-container i{
     font-size: 20px;
     transition: transform 0.3s;
 }

@@ -7,7 +7,7 @@
     overflow: hidden;
 }
 
-.carousel .product__page{
+.carousel .product-page{
     background-color: red;
 } 
 
@@ -17,7 +17,7 @@
     margin-bottom: 35px;
 }
 
-.carousel__list{
+.carousel-list{
     position: absolute;
     left: 0;
     height: 100%;
@@ -27,17 +27,17 @@
     transition: 0.7s;
 }
 
-.carousel__list .card img{
+.carousel-list .card img{
     width: 336px;
     height: 355px;
 }
 
-.carousel__list .card button{
+.carousel-list .card button{
     top: 51.5%;
     left: 64%;
 }
 
-.carousel__button{
+.carousel-button{
     position: absolute;
     top: 90%;
     left: 90%;
@@ -45,7 +45,7 @@
     display: flex;
 }
 
-.carousel__button button{
+.carousel-button button{
     width: 45px;
     height: 45px;
     border: solid 1px #303828;
@@ -56,31 +56,31 @@
     margin-right: 15px;
 }
 
-.carousel__button button:hover{
+.carousel-button button:hover{
     cursor: pointer;
 }
 
-.carousel__button button i:nth-child(2){
+.carousel-button button i:nth-child(2){
     display: none;
 }
 
-.carousel__button button:nth-child(1):hover #left__angle{
+.carousel-button button:nth-child(1):hover #left-angle{
     display: none;
 }
 
-.carousel__button button:nth-child(1):hover #left__arrow{
+.carousel-button button:nth-child(1):hover #left-arrow{
     display: inline;
 }
 
-.carousel__button button:nth-child(2):hover #right__angle{
+.carousel-button button:nth-child(2):hover #right-angle{
     display: none;
 }
 
-.carousel__button button:nth-child(2):hover #right__arrow{
+.carousel-button button:nth-child(2):hover #right-arrow{
     display: inline;
 }
 
-.carousel__dots{
+.carousel-dots{
     position: absolute;
     bottom: 6.2%;
     left: 5%;
@@ -90,7 +90,7 @@
     display: flex;
 }
 
-.carousel__dots li{
+.carousel-dots li{
     list-style: none;
     width: 230px;
     height: 1.5px;
@@ -99,6 +99,6 @@
     /* animation: bestSlider 0.5s ease; */
 }
 
-.carousel__dots li.best__active{
+.carousel-dots li.best-active{
     background-color: var(--green);
 }

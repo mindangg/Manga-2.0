@@ -19,19 +19,19 @@ export default function Login() {
         <form id='login' onSubmit={handleSubmit}>
             <h1>Login</h1>
 
-            <div className='login__input'>
-                <input type='text' id='login__input--username' placeholder='Username'
+            <div className='login-input'>
+                <input type='text' id='login-input--username' placeholder='Username'
                         value={username} onChange={(e) => setUsername(e.target.value)}></input>
             </div>
 
-            <div className='login__input'>
-                <input type='password' id='login__input--password' placeholder='Password'
+            <div className='login-input'>
+                <input type='password' id='login-input--password' placeholder='Password'
                         value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
-            <button type='submit' id='login__btn' disabled={isLoading}>Login</button>
+            <button type='submit' id='login-btn' disabled={isLoading}>Login</button>
 
-            <div id='login__signup'>
-                <Link to='/signup' id='login__signup--nav'>Sign Up</Link>
+            <div id='login-signup'>
+                <Link to='/signup' id='login-signup--nav'>Sign Up</Link>
             </div>
             
             {error && <div className='error'>{error}</div>}

@@ -22,35 +22,35 @@ export default function Signup() {
         <form id='signup' onSubmit={handleSubmit}>
             <h1>Sign Up</h1>
 
-            <div className='signup__input'>
-                <input type='text' id='signup__input--username' placeholder='Username' 
+            <div className='signup-input'>
+                <input type='text' id='signup-input--username' placeholder='Username' 
                         value={username} onChange={(e) => setUsername(e.target.value)}></input>
             </div>
 
-            <div className='signup__input'>
-                <input type='email' id='signup__input--email' placeholder='Email' 
+            <div className='signup-input'>
+                <input type='email' id='signup-input--email' placeholder='Email' 
                         value={email} onChange={(e) => setEmail(e.target.value)}></input>
             </div>
 
-            <div className='signup__input'>
-                <input type='password' id='signup__input--password' placeholder='Password' 
+            <div className='signup-input'>
+                <input type='password' id='signup-input--password' placeholder='Password' 
                         value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
 
-            <div className='signup__input'>
-                <input type='tel' id='signup__input--phone' placeholder='Phone Number' 
+            <div className='signup-input'>
+                <input type='tel' id='signup-input--phone' placeholder='Phone Number' 
                         value={phone} onChange={(e) => setPhone(e.target.value)}></input>
             </div>
 
-            <div className='signup__input'>
-                <input type='text' id='signup__input--address' placeholder='Address' 
+            <div className='signup-input'>
+                <input type='text' id='signup-input--address' placeholder='Address' 
                         value={address} onChange={(e) => setAddress(e.target.value)}></input>
             </div>
 
-            <button type='submit' id='signup__btn' disabled={isLoading}>Create account</button>
+            <button type='submit' id='signup-btn' disabled={isLoading}>Create account</button>
 
-            <div id='signup__login'>
-                <Link to='/login' id='signup__login--nav'>Already has account?</Link>
+            <div id='signup-login'>
+                <Link to='/login' id='signup-login--nav'>Already has account?</Link>
             </div>
 
             {error && <div className='error'>{error}</div>}
