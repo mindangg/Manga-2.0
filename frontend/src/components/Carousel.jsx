@@ -6,13 +6,15 @@ export default function Carousel() {
     const [manga, setManga] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
     const carouselListRef = useRef(null)
+    const selectedIndexes = [35, 3, 23, 29, 9, 56, 58, 49]
 
     useEffect(() => {
         const fetchManga = async () => {
             const response = await fetch('http://localhost:4000/api/manga')
             const json = await response.json()
             if (response.ok)
-                setManga(json.slice(0, 8))
+                console.log(json)
+                setManga(selectedIndexes.map(index => json[index]))
         }
         
         fetchManga()
