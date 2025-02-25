@@ -6,14 +6,17 @@ import App from './App.jsx'
 import { AuthContextProvider } from './contexts/AuthContext.jsx'
 import { NotificationContextProvider } from './contexts/NotificationContext.jsx'
 import { CardDetailsContextProvider } from './contexts/CardDetailsContext.jsx'
+import { CartContextProvider } from './contexts/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
       <NotificationContextProvider>
-        <CardDetailsContextProvider>
-          <App/>
-        </CardDetailsContextProvider>
+      <CartContextProvider>
+          <CardDetailsContextProvider>
+            <App/>
+          </CardDetailsContextProvider>
+        </CartContextProvider>
       </NotificationContextProvider>
     </AuthContextProvider>
   </StrictMode>,

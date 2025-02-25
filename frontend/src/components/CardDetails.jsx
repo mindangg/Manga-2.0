@@ -7,22 +7,20 @@ import { useCardDetailsContext } from '../hooks/useCardDetailsContext'
 export default function CardDetails() {
     const { manga, clearManga  } = useCardDetailsContext()
 
-    const [selectedImage, setSelectedImage] = useState(manga ? `http://localhost:4000/${manga.cover1}` : ''); 
-    const [isVisible, setIsVisible] = useState(false);
-    const [quantity, setQuantity] = useState(1); 
+    const [selectedImage, setSelectedImage] = useState(manga ? `http://localhost:4000/${manga.cover1}` : '') 
+    const [isVisible, setIsVisible] = useState(false)
 
     const changeProductView = (img) => {
         setSelectedImage(img)
     }
 
     const closeProduct = () => {
-        // document.querySelector('.product').style.animationName = 'bottomUp'
-        // setTimeout(function () {
-        //     document.querySelector('.product-page').style.display = 'none'
-        // }, 365)
+        document.querySelector('.product').style.animationName = 'bottomUp'
+        setTimeout(function () {
+            setIsVisible(false),
+            clearManga()
+        }, 365)
 
-        setIsVisible(false)
-        clearManga()
     }
 
     useEffect(() => {

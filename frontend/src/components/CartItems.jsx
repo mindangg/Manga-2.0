@@ -3,7 +3,7 @@ import cover1 from '../assets/books/my dress up darling/my-dress-up-darling-volu
 
 import '../styles/CartItems.css'
 
-export default function CartItems() {
+export default function CartItems({ cart }) {
     const [quantity, setQuantity] = useState(1)
 
     return (

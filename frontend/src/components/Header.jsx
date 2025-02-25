@@ -1,17 +1,27 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 import logo from '../assets/WEBTOON_Logo.png'
 import '../styles/Header.css'
 import Search from './Search'
 
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useNotificationContext } from '../hooks/useNotificationContext'
 
 export default function Header() {
     const { user } = useAuthContext()
+    const { showNotification } = useNotificationContext()
+    const navigate = useNavigate();
 
     const search = () => {
         document.querySelector(".search-popup").style.display = "flex";
         document.querySelector(".search").style.animationName = "rightToLeft"
+    }
+
+    const handleClick = () => {
+        if (!user)
+            showNotification('Please login to view cart') 
+        else
+            navigate('/cart')
     }
 
     return (
@@ -47,7 +57,8 @@ export default function Header() {
                     {!user && <Link to='/login'><i className='fa-regular fa-user'></i></Link>}
                     {user && <span>{user.user.username}</span>}
                 </div>
-                <Link to='/cart'><i className='fa-solid fa-cart-shopping'></i></Link>
+                
+                <i className='fa-solid fa-cart-shopping' onClick={() => handleClick()}></i>
             </div>
         </header>
     )

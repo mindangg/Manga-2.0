@@ -3,10 +3,14 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    addToCart
+    getOrders, 
+    createOrder
 } = require('../controllers/orderControllers')
 
-// Add to cart
-router.post('/cart', addToCart)
+// Get orders
+router.get('/', getOrders)
+
+// Create order
+router.post('/', createOrder)
 
 module.exports = router
