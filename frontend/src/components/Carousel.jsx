@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Card from './Card'
 import '../styles/Carousel.css'
 
-export default function Carousel() {
+export default function Carousel({ title }) {
     const [manga, setManga] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
     const carouselListRef = useRef(null)
@@ -40,7 +40,7 @@ export default function Carousel() {
 
     return (
         <div className='carousel'>
-            <h1>Best Sellers</h1>
+            <h1>{title}</h1>
             <div className='carousel-container'>
                 <div className='carousel-list' ref={carouselListRef}>
                     {manga.map((m, index) => (

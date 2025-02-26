@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import '../styles/CartItems.css'
 
+import { useCartContext } from '../hooks/useCartContext'
+
 export default function CartItems({ cart }) {
     const [quantity, setQuantity] = useState(1)
+    const { dispatch } = useCartContext() 
 
-    console.log(cart)
+    const handleDelete = async () => {
+        const response = await fetch('http://localhost:4000/api/cart/' + cart._id, {
+            method: 'DELETE'
+        })
+
+        const json = await response.json()
+        console.log(cart.mangaID.price)
+        if (response.ok) {
+            dispatch({type: 'DELETE_ITEM', payload: json})
+        }
+    }
 
     return (
         <div className='cart-item'>
             <div className='cart-info'>
-                {cart.MangaID && <img src={`http://localhost:4000/${cart.MangaID.cover1}`}></img>}
+                {cart.mangaID && <img src={`http://localhost:4000/${cart.mangaID.cover1}`}></img>}
                 <div>
-                    <p>{cart.MangaID && cart.MangaID.title}</p>
+                    <p>{cart.mangaID && cart.mangaID.title}</p>
                 </div>
             </div>
             <div className='cart-quantity'>
@@ -31,10 +44,10 @@ export default function CartItems({ cart }) {
                 </div>
             </div>
             <div className='cart-total'>
-                <p>{cart.MangaID && cart.MangaID.price * quantity}</p>
+                <p>{cart.mangaID && cart.mangaID.price * quantity}</p>
             </div>
             <div className='cart-delete'>
-                <button id='cart-quantityremove'>Remove</button>
+                <button id='cart-quantityremove' onClick={() => handleDelete()}>Remove</button>
             </div>
         </div>
     )

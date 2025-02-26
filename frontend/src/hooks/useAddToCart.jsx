@@ -21,10 +21,9 @@ export const useAddToCart = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            });
-
+            })
+            
             const json = await response.json()
-            console.log(json)
 
             if (!response.ok) {
                 console.error('Failed to add to cart:', json)
@@ -33,7 +32,6 @@ export const useAddToCart = () => {
 
             showNotification('Added to cart')
             dispatch({ type: 'ADD_ITEM', payload: json })
-            // console.log('Added to cart:', json)
         } 
         catch (error) {
             console.error('Error adding to cart:', error)

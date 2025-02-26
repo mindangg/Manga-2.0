@@ -406,5 +406,5 @@ border: 1px solid var(--error);
 
 #notification.show{
     visibility: visible;
-    animation: drop-in 1s, drop-out 1s 2.5s;
+    animation: drop-in 0.8s, drop-out 0.8s 1.8s;
 }

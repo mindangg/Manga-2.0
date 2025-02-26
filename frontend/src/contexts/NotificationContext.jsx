@@ -10,6 +10,10 @@ export const NotificationContextProvider = ({ children }) => {
 
   const showNotification = (msg) => {
     setMessage(msg)
+
+    setTimeout(() => {
+      setMessage('')
+    }, 2500)
   }
 
   return (

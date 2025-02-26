@@ -12,20 +12,19 @@ export default function Cart() {
     const { user } = useAuthContext()
 
     useEffect(() => {
+        if (!user) 
+            return
+        
         const fetchCart = async () => {
             const response = await fetch('http://localhost:4000/api/cart')
             const json = await response.json()
-
-            console.log('cart: ', json)
 
             if (response.ok) {
                 dispatch({ type: 'DISPLAY_ITEM', payload: json })
             }
         }
-        if (user){
-            fetchCart()
-        }
 
+        fetchCart()
 
     }, [dispatch, user])
 

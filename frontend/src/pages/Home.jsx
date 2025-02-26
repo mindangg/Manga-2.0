@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import jjk from '../assets/banner/jjk.jpg'
 
-import Pagination from '../components/Pagination'
-import Display from '../components/Display'
 import Slider from '../components/Slider'
 import Carousel from '../components/Carousel'
 
@@ -26,13 +24,13 @@ export default function Home() {
     return (
         <div className='home'>
             <Slider/>
-            <Carousel/> 
+            <Carousel title='Best Sellers'/> 
 
             <div className='banner'>
                 <img src={jjk}></img>
             </div>
 
-            <Carousel/>
+            <Carousel title='People Choices'/>
         </div>
     )
 }

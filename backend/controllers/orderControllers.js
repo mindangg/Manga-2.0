@@ -1,4 +1,5 @@
 const Order = require('../models/orderModel')
+const mongoose = require('mongoose')
 
 // Add to cart
 const createOrder = async (req, res) => {
@@ -17,7 +18,7 @@ const createOrder = async (req, res) => {
     }
 }
 
-// Get all orders with manga and user details
+// Get all orders
 const getOrders = async (req, res) => {
     try {
         const orders = await Order.find()
@@ -31,4 +32,19 @@ const getOrders = async (req, res) => {
     }
 }
 
-module.exports = { createOrder, getOrders }
+// Delete order
+const deleteOrder = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id))
+        res.status(400).json({error: 'No such order'})
+
+    const order = await Order.findOneAndDelete({_id: id})
+
+    if(!order)
+        res.status(400).json({error: 'No such order'})
+
+    res.status(200).json(order)
+}
+
+module.exports = { createOrder, getOrders, deleteOrder }
