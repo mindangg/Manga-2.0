@@ -1,12 +1,15 @@
 const Order = require('../models/orderModel')
-const mongoose = require('mongoose')
 
 // Add to cart
 const createOrder = async (req, res) => {
-    const { userID, userPhone, userAddress, mangaID, quantity, total } = req.body
+    const { userID, mangaID } = req.body
+
+    if (!userID || !mangaID) {
+        return res.status(400).json({ error: 'Missing userID or mangaID' })
+    }
 
     try {
-        const order = await Order.create({ userID, userPhone, userAddress, mangaID, quantity, total })
+        const order = await Order.create({ userID, mangaID, quantity: 1, total: 0 })
         res.status(200).json(order)
     }
     catch (error) {
@@ -21,10 +24,10 @@ const getOrders = async (req, res) => {
             .populate('userID')
             .populate('mangaID')
   
-        res.status(200).json(orders);
+        res.status(200).json(orders)
     } 
     catch (error) {
-        res.status(500).json({ error: 'Failed to fetch orders' });
+        res.status(500).json({ error: 'Failed to fetch orders' })
     }
 }
 

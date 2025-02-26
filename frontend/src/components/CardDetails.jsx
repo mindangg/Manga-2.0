@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import '../styles/CardDetails.css'
 
 import { useCardDetailsContext } from '../hooks/useCardDetailsContext'
+import { useAddToCart } from '../hooks/useAddToCart'
 
 export default function CardDetails() {
-    const { manga, clearManga  } = useCardDetailsContext()
+    const { manga, clearManga } = useCardDetailsContext()
+    const { addToCart } = useAddToCart()
 
-    const [selectedImage, setSelectedImage] = useState(manga ? `http://localhost:4000/${manga.cover1}` : '') 
+    const [selectedImage, setSelectedImage] = useState(null) 
     const [isVisible, setIsVisible] = useState(false)
 
     const changeProductView = (img) => {
@@ -33,14 +35,15 @@ export default function CardDetails() {
         
         }, [manga]);
 
+
     if(manga){
         return (
         <div className='product-page' style={isVisible ? { display: 'inline', animation: 'topDown' } : { animation: 'bottomUp', display: 'none' }}>
             <div className='product'>
                 <a id='product-close' onClick={() => closeProduct()}><i className='fa-solid fa-xmark'></i></a>
                 <div className='product-img'>
-                    <img id='product-img1' src={selectedImage}></img>
-                    <img id='product-img2' src={`http://localhost:4000/${manga.cover2}`} style={{ opacity: selectedImage === manga.cover1 ? 0 : 1 }}></img>
+                {selectedImage && <img id='product-img1' src={selectedImage} alt='Manga Cover' />}
+                {manga.cover2 && <img id='product-img2' src={`http://localhost:4000/${manga.cover2}`} alt='Manga Cover 2' />}
 
                     <a id='product-view1' onClick={() => changeProductView(`http://localhost:4000/${manga.cover1}`)}><img src={`http://localhost:4000/${manga.cover1}`}></img></a>
                     <a id='product-view2' onClick={() => changeProductView(`http://localhost:4000/${manga.cover2}`)}><img src={`http://localhost:4000/${manga.cover2}`}></img></a>
@@ -59,7 +62,7 @@ export default function CardDetails() {
                     <p>Author:</p>
                     <h2>{manga.author}</h2>
                     <p>{manga.category}</p><br/>
-                    <button>Add to cart</button><br/>
+                    <button onClick={() => addToCart(manga._id)}>Add to cart</button><br/>
 
                     <p>Stock: {manga.stock}</p><br/>
                     <h3>Description: </h3><br/>

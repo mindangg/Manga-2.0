@@ -18,13 +18,15 @@ const orderModel = new Schema({
     quantity: {
       type: Number,
       required: true,
+      default: 1
     },
     total: {
       type: Number,
       required: true,
+      default: 0
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Order', orderModel);
+module.exports = mongoose.model('Order', orderModel)

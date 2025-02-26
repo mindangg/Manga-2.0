@@ -13,7 +13,6 @@ export default function Carousel() {
             const response = await fetch('http://localhost:4000/api/manga')
             const json = await response.json()
             if (response.ok)
-                console.log(json)
                 setManga(selectedIndexes.map(index => json[index]))
         }
         

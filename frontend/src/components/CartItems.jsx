@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import cover1 from '../assets/books/my dress up darling/my-dress-up-darling-volume-1-primary.jpg'
 
 import '../styles/CartItems.css'
 
 export default function CartItems({ cart }) {
     const [quantity, setQuantity] = useState(1)
 
+    console.log(cart)
+
     return (
         <div className='cart-item'>
             <div className='cart-info'>
-                <img src={cover1}></img>
+                {cart.MangaID && <img src={`http://localhost:4000/${cart.MangaID.cover1}`}></img>}
                 <div>
-                    <p>My Dress Up Darling - Volume 01</p>
+                    <p>{cart.MangaID && cart.MangaID.title}</p>
                 </div>
             </div>
             <div className='cart-quantity'>
@@ -22,14 +23,15 @@ export default function CartItems({ cart }) {
                             >-</button>
                     <input id='cart-quantity' 
                             type='number'
-                            value={quantity}></input>
+                            value={quantity}
+                            onChange={() => setQuantity()}></input>
                     <button id='cart-quantityup'
                             onClick={() => setQuantity((next) => next + 1)}
                             >+</button>
                 </div>
             </div>
             <div className='cart-total'>
-                <p>$19</p>
+                <p>{cart.MangaID && cart.MangaID.price * quantity}</p>
             </div>
             <div className='cart-delete'>
                 <button id='cart-quantityremove'>Remove</button>

@@ -2,9 +2,11 @@ import React from 'react'
 import '../styles/Card.css'
 
 import { useCardDetailsContext } from '../hooks/useCardDetailsContext'
+import { useAddToCart } from '../hooks/useAddToCart'
 
 export default function Card({ manga }) {
     const { showProductInfo } = useCardDetailsContext()
+    const { addToCart  } = useAddToCart()
 
     return (
         <div className='card'>
@@ -14,7 +16,7 @@ export default function Card({ manga }) {
             </a>
             <h4>{manga.title}</h4>
             <p>${manga.price}</p>
-            <button id={manga._id}>+ Add to cart</button>
+            <button onClick={() => addToCart(manga._id)}>+ Add to cart</button>
         </div>
   )
 }

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import CartItems from '../components/CartItems'
-import { useNotificationContext } from '../hooks/useNotificationContext'
 import { useCartContext } from '../hooks/useCartContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -9,27 +8,24 @@ import { Link } from 'react-router-dom'
 import '../styles/Cart.css'
 
 export default function Cart() {
-    const { showNotification } = useNotificationContext()
-
     const { cart, dispatch } = useCartContext()
     const { user } = useAuthContext()
 
     useEffect(() => {
         const fetchCart = async () => {
-            const response = await fetch('http://localhost:4000/api/cart', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                    }
-            })
+            const response = await fetch('http://localhost:4000/api/cart')
             const json = await response.json()
 
+            console.log('cart: ', json)
+
             if (response.ok) {
-                dispatch({type: 'DISPLAY_ITEM', payload: json})
+                dispatch({ type: 'DISPLAY_ITEM', payload: json })
             }
         }
-  
-        if (user)
+        if (user){
             fetchCart()
+        }
+
 
     }, [dispatch, user])
 
@@ -52,7 +48,7 @@ export default function Cart() {
                         </div>
 
                         <div className='cart-items'>
-                            {cart.map((c) => (
+                            {cart.map((c, _) => (
                                 <CartItems key={c._id} cart={c} />
                             ))}
                         </div>
