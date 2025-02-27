@@ -16,8 +16,13 @@ export default function Cart() {
             return
         
         const fetchCart = async () => {
-            const response = await fetch('http://localhost:4000/api/cart')
+            const response = await fetch('http://localhost:4000/api/cart', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             const json = await response.json()
+            console.log(json)
 
             if (response.ok) {
                 dispatch({ type: 'DISPLAY_ITEM', payload: json })

@@ -1,77 +1,79 @@
-#billing__info {
+#billing-info {
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
     background-color: #fff;
     margin-top: 150px;
+    display: flex;
     justify-content: center;
 }
 
-#billing__info h2 {
+#billing-info h2 {
     font-size: 1.8em;
     margin-bottom: 20px;
     color: #333;
 }
 
-.billing__form {
+.billing-form {
     width: 600px;
     padding-left: 20px;
 }
-.transfer__form{
+.transfer-form{
     width: 600px;
 }
 
-#billing__info label {
+#billing-info label {
     font-size: 1.1em;
     color: #333;
     display: block;
     margin-bottom: 8px;
 }
 
-#billing__info input,
-#billing__info textarea,
-#billing__info select {
+#billing-info input,
+#billing-info textarea,
+#billing-info select {
     width: 100%;
-    padding: 12px;
+    padding: 11.9px 12px;
     font-size: 1em;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f9f9f9;
     box-sizing: border-box;
+    color: black;
 }
 
-#billing__info textarea {
+#billing-info textarea {
     height: 120px;
     resize: vertical;
 }
 
-#billing__info select {
+#billing-info select {
     cursor: pointer;
 }
 
-#billing__info input:focus,
-#billing__info textarea:focus,
-#billing__info select:focus {
+#billing-info input:focus,
+#billing-info textarea:focus,
+#billing-info select:focus {
     border-color: #00d146;
     outline: none;
     background-color: #e9f9e7;
 }
 
-#billing__info input[required],
-#billing__info textarea[required],
-#billing__info select[required] {
+#billing-info input[required],
+#billing-info textarea[required],
+#billing-info select[required] {
     border-color: #ccc;
 }
 
-#billing__info .error {
+#billing-info .error {
     color: red;
     font-size: 0.9em;
     display: none;
     margin-top: -10px;
 }
 
-#billing__info .submit__btn {
+#billing-info .submit-btn {
     width: 100%;
     padding: 15px;
     background-color: #00d146;
@@ -83,17 +85,17 @@
     margin-top: 20px;
 }
 
-#billing__info .submit__btn:hover {
+#billing-info .submit-btn:hover {
     background-color: #00b63a;
 }
 
-#billing__info .submit__btn:disabled {
+#billing-info .submit-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
 /* Pay Now Button */
-.paynow__btn {
+.paynow-btn {
     text-align: center;
     width: 100%;
     padding: 15px;
@@ -106,11 +108,11 @@
     transition: background-color 0.3s ease;
 }
 
-.paynow__btn:hover {
+.paynow-btn:hover {
     background-color: var(--green-l);
 }
 
-.paynow__btn:disabled {
+.paynow-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
@@ -120,7 +122,6 @@
     z-index: 10;
 }
 
-/*  */
 /* Cart container */
 .payment-info {
     background-color: #f5f5f5;
@@ -129,14 +130,14 @@
 }
 
 /* Item list styling */
-.payment-info__item {
+.payment-info-item {
     display: flex;
     align-items: center;
     position: relative;
     margin-bottom: 1rem;
 }
 
-.payment-info__item img {
+.payment-info-item img {
     width: 50px;
     height: 50px;
     border-radius: 5px;
@@ -160,29 +161,29 @@
     font-weight: bold;
 }
 
-.payment-info__item-details {
+.payment-info-item-details {
     flex-grow: 1;
 }
 
-.payment-info__item-details p {
+.payment-info-item-details p {
     font-size: 0.9rem;
     color: #333;
 }
 
-.payment-info__item-price {
+.payment-info-item-price {
     font-weight: bold;
     color: #333;
 }
 
 
 /* Summary details */
-.payment-info__summary {
+.payment-info-summary {
     font-size: 0.9rem;
     color: #333;
     margin: 1rem 0;
 }
 
-.payment-info__summary .total {
+.payment-info-summary .total {
     font-size: 1.2rem;
     font-weight: bold;
     color: #333;
@@ -191,13 +192,13 @@
     margin-top: 1rem;
 }
 
-.payment-info__summary .subtotal {
+.payment-info-summary .subtotal {
     display: flex;
     justify-content: space-between;
     margin: 0.5rem 0;
 }
 
-.payment-info__summary .order-price {
+.payment-info-summary .order-price {
     color: var(--green);
 }
 

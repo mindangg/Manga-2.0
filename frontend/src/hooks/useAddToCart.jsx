@@ -19,7 +19,8 @@ export const useAddToCart = () => {
                 method: 'POST',
                 body: JSON.stringify({ userID: user.user._id, mangaID }),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
                 }
             })
             

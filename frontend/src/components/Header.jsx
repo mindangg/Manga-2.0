@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React, { useState } from 'react'
+import React from 'react'
 import logo from '../assets/WEBTOON_Logo.png'
 import '../styles/Header.css'
 import Search from './Search'
@@ -10,7 +10,7 @@ import { useNotificationContext } from '../hooks/useNotificationContext'
 export default function Header() {
     const { user } = useAuthContext()
     const { showNotification } = useNotificationContext()
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const search = () => {
         document.querySelector(".search-popup").style.display = "flex";

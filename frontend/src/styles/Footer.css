@@ -2,10 +2,10 @@ footer{
     position: relative;
     width: 100%;
     bottom: 0;
-    margin: 200px 0 45px;
+    margin: 100px 0 45px;
     color: white;
     background-color: var(--black);
-    padding: 100px 0 30px;
+    padding: 0 0 30px;
     font-size: 14px;
     line-height: 20px;
 }

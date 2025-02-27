@@ -1,9 +1,9 @@
 .carousel{
     position: relative;
-    top: 185px;
+    top: 180px;
     max-width: 100%;
     height: 590px;
-    margin: 0 40px;
+    margin: 0 40px 200px;
     overflow: hidden;
 }
 

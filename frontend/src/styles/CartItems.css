@@ -10,7 +10,7 @@
     align-items: center;
     gap: 10px;
     width: 55%;
-    justify-content: center;
+    padding-left: 10%;
 }
 
 .cart-info img{
@@ -21,6 +21,7 @@
 .cart-info p:nth-of-type(1){
     color: white;
     font-weight: bold;
+    width: 70%;
 }
 
 .cart-info p:nth-of-type(2){
@@ -113,6 +114,7 @@
         width: 100%;
         margin-bottom: 10px;
         justify-content: flex-start;
+        padding-left: 0;
     }
 
     .cart-quantity {

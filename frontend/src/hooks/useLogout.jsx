@@ -1,9 +1,11 @@
 import { useAuthContext } from './useAuthContext'
 import { useNotificationContext } from './useNotificationContext'
+import { useCartContext } from './useCartContext'
 
 export const useLogout = () => {
     const { dispatch } = useAuthContext()
     const { showNotification } = useNotificationContext()
+    const { dispatch: cartDispatch } = useCartContext()
 
     const logout = () => {
         // remove user from local storage
@@ -13,7 +15,8 @@ export const useLogout = () => {
         showNotification(`See you again`)
 
         // dispatch logout action'
-        dispatch({type: 'LOGOUT'})
+        dispatch({ type: 'LOGOUT' })
+        cartDispatch({ type: 'DISPLAY_ITEM', payload: null })
     }
 
     return { logout }
