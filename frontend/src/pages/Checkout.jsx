@@ -5,39 +5,35 @@ import QR from '../assets/QR.jpg'
 
 import CheckoutItems from '../components/CheckoutItems'
 
+import { useCartContext } from '../hooks/useCartContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 export default function Checkout() {
+    const { cart, dispatch } = useCartContext()
     const { user } = useAuthContext()
-    const [order, setOrder] = useState([])
 
     useEffect(() => {
         if (!user) 
             return
-
-        const fetchOrder = async () => {
-            const response = await fetch('http://localhost:4000/cart', {
+        
+        const fetchCart = async () => {
+            const response = await fetch('http://localhost:4000/api/cart', {
                 headers: {
-                    'Authoriztion': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${user.token}`
                 }
             })
 
             const json = await response.json()
+            console.log(json)
 
             if (response.ok) {
-                setOrder(json)
-                console.log(order)
-            }
-
-            if (!response.ok) {
-                setOrder([])
-                console.log('Error fetch cart for checkout')
+                dispatch({ type: 'DISPLAY_ITEM', payload: json })
             }
         }
 
-        fetchOrder()
-    }, [user])
+        fetchCart()
 
+    }, [dispatch, user])
 
     return (
         <div id='billing-info'>
@@ -118,24 +114,24 @@ export default function Checkout() {
                         </div>
                     </div>
 
-                <button className='paynow-btn' type='button' onclick='Order.handlePayNow()'>Pay Now</button>
+                <button className='paynow-btn' type='button'>Pay Now</button>
             </div>
             </div>
 
             <div className='payment-info'>
                 <div className='payment-info-container'>
-                    {order.map((o, _) => {
-                        <CheckoutItems order={o} />
-                    })}
+                    {cart.map((c, _) => (
+                        <CheckoutItems key={c._id} order={c} />
+                    ))}
                 </div>
                 <div className='payment-info-summary'>
                     <div className='subtotal'>
-                        <span>Subtotal • 4 items</span>
-                        <span>$149.99</span>
+                        <span>Subtotal • {cart.length} items</span>
+                        <span>${cart.total}</span>
                     </div>
                     <div className='total'>
                         <span>Total</span>
-                        <span className='order-price'>$149.99 USD</span>
+                        <span className='order-price'>${cart.total}</span>
                     </div>
                 </div>
             </div>

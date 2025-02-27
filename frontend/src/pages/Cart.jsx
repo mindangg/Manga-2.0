@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import CartItems from '../components/CartItems'
+
 import { useCartContext } from '../hooks/useCartContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -21,8 +22,9 @@ export default function Cart() {
                     'Authorization': `Bearer ${user.token}`
                 }
             })
+
             const json = await response.json()
-            console.log(json)
+            // console.log(json)
 
             if (response.ok) {
                 dispatch({ type: 'DISPLAY_ITEM', payload: json })

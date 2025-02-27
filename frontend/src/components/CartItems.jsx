@@ -19,7 +19,7 @@ export default function CartItems({ cart }) {
         })
 
         const json = await response.json()
-        console.log(cart.mangaID.price)
+
         if (response.ok) {
             dispatch({type: 'DELETE_ITEM', payload: json})
         }
