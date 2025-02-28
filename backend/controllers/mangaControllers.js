@@ -2,6 +2,7 @@ const Manga = require('../models/mangaModel')
 const mongoose = require('mongoose')
 const multer = require('multer')
 const path = require('path')
+const removeSpecialChar = require('../helpers/helper')
 
 // multer storage
 const storage = multer.diskStorage({
@@ -19,9 +20,13 @@ const upload = multer({
 
 // Get all manga
 const getAllManga = async (req, res) => {
-    const manga = await Manga.find().sort({createdAt: -1})
-
-    res.status(200).json(manga)
+    try {
+        const manga = await Manga.find().sort({ createdAt: -1 })
+        res.status(200).json(manga)
+    }   
+    catch (error){
+        res.status(400).json(error)
+    }
 }
 
 // Get a single manga
@@ -32,6 +37,18 @@ const getManga = async (req, res) => {
         res.status(400).json({error: 'No such manga'})
 
     const manga = await Manga.findById(id)
+
+    if(!manga)
+        res.status(400).json({error: 'No such manga'})
+
+    res.status(200).json(manga)
+}
+
+const filterManga = async (req, res) => {
+    const { category } = req.params
+
+    const manga = await Manga.find({ category: { $regex: new RegExp(removeSpecialChar(category), 'i') } })
+                                .sort({ createAt: -1 })
 
     if(!manga)
         res.status(400).json({error: 'No such manga'})
@@ -96,6 +113,7 @@ const updateManga = async (req, res) => {
 module.exports = {
     getAllManga,
     getManga,
+    filterManga,
     createManga,
     deleteManga,
     updateManga,

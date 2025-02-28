@@ -8,14 +8,18 @@ const {
     createManga,
     deleteManga,
     updateManga, 
-    upload
+    upload,
+    filterManga
 } = require('../controllers/mangaControllers')
 
-// Get all mangas
+// Get all mangas or filter
 router.get('/', getAllManga)
 
 // Get a single manga
 router.get('/:id', getManga)
+
+// Get a single manga
+router.get('/product/:category', filterManga)
 
 // Post a manga
 // router.post('/', createManga)

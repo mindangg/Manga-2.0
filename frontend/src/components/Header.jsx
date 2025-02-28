@@ -34,16 +34,16 @@ export default function Header() {
                 <Link to='/'>Home</Link>
                 <Link to='/product'>Product</Link>
                 <div className='category'>
-                    <Link to='/category'>Category</Link>
+                    <Link>Category</Link>
                     <div className='category-dropdown'>
-                        <Link to='/category/shounen'>Shounen</Link>
-                        <Link to='/category/seinen'>Seinen</Link>
-                        <Link to='/category/rom-com'>Rom Com</Link>
-                        <Link to='/category/action'>Action</Link>
-                        <Link to='/category/family'>Family</Link>
-                        <Link to='/category/comedy'>Comedy</Link>
-                        <Link to='/category/fantasy'>Fantasy</Link>
-                        <Link to='/category/dark-fantasy'>Dark Fantasy</Link>
+                        <Link to='/product/shounen'>Shounen</Link>
+                        <Link to='/product/seinen'>Seinen</Link>
+                        <Link to='/product/rom-com'>Rom Com</Link>
+                        <Link to='/product/action'>Action</Link>
+                        <Link to='/product/family'>Family</Link>
+                        <Link to='/product/comedy'>Comedy</Link>
+                        <Link to='/product/fantasy'>Fantasy</Link>
+                        <Link to='/product/dark-fantasy'>Dark Fantasy</Link>
                     </div>
                 </div>
                 <Link to='/'>About Us</Link>

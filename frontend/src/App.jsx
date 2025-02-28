@@ -32,6 +32,7 @@ const Layout = () => {
           <Route path='/login' element={!user ? <Login/> : <Navigate to='/'/>}/>
           <Route path='/signup' element={!user ? <Signup/> : <Navigate to='/'/>}/>
           <Route path='/product' element={<Product/>}/>
+          <Route path='/product/:category' element={<Product/>}/>
           <Route path='/user-info' element={user ? <UserInfo/> : <Navigate to='/'/>}/>
           <Route path='/cart' element={<Cart/>}/>
           <Route path='/checkout' element={<Checkout/>}/>

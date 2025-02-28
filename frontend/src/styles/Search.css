@@ -17,7 +17,7 @@
     height: 620px;
     margin: auto;
     top: 30px;
-    right: 20px;
+    right: 1%;
     background-color: var(--black);
     animation: rightToLeft 0.5s ease;  
 }
@@ -75,17 +75,17 @@
 .filter-container{
     position: relative;
     top: 70px;
-    padding: 20px;
+    padding: 0 20px;
     display: none;
 }
 
 .filter-container select{
-    margin-right: 30px;
-    height: 30px;
+    margin-right: 20px;
+    height: 36px;
+    width: 210px;
     background-color: transparent;
     color: white;
     padding-left: 10px;
-    width: 210px;
 }
 
 .filter-container option{
@@ -94,17 +94,19 @@
 
 .filter-container input{
     width: 95px;
-    height: 30px;
+    height: 36px;
     margin-right: 10px;
     background: transparent;
     border: none;
     border: 1px solid var(--gray);
-    padding-left: 10px;
+    border-radius: 5px;
+    padding-left: 12px;
     color: white;
 }
 
 .filter-container span{
-    margin-right: 10px;
+    color: white;
+    margin-right: 12.5px;
     height: 30px;
 }
 
@@ -131,4 +133,31 @@
     to{
         transform: translateX(0);
     }
+}
+
+@media screen and (max-width: 670px) {
+    .search
+    {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        margin: auto;
+        background-color: var(--black);
+        animation: rightToLeft 0.5s ease;  
+    }
+
+    .filter-container select{
+        margin-bottom: 20px;
+        width: 90%;
+    }
+
+    .filter-container span:nth-child(2){
+        margin-left: 64px;
+    }
+
+    .filter-container span:nth-child(4){
+        margin-left: 10px;
+        margin-right: 20px;
+    }
+    
 }
