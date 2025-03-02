@@ -23,17 +23,17 @@ header{
 
 .navbar{
     display: flex;
+    justify-content: space-between;
+    width: 42%;
 }
 
 .navbar a{
-    margin: 0 45px;
     text-decoration: none;
     color:white;
     font-size: 1.1rem;
     font-weight: bold;
     letter-spacing: 2px;
     transition: 0.5s;
-
     position: relative;
     width: max-content;
     cursor: pointer;
@@ -92,7 +92,7 @@ header{
     position: fixed;
     top: 100px;
     left: 51%;
-    width: 190px;
+    width: 160px;
     display: flex;
     flex-wrap: wrap;
     transition: 0.3s;
@@ -103,19 +103,20 @@ header{
     background-color: var(--black);
 }
 
-.category-dropdown a{
+.category-dropdown span{
     color: var(--gray);
-    text-decoration: none;
+    font-size: 18px;
     position: relative;
     font-weight: light;
     margin: 10px 20px 10px 0;
 }
 
-.category-dropdown a:hover{
+.category-dropdown span:hover{
     color: white;
+    cursor: pointer;
 }
 
-.category-dropdown a::after{
+.category-dropdown span::after{
     content: '';
     background-color: var(--gray);
     height: 1.5px;
@@ -126,7 +127,7 @@ header{
     transition: 0.3s;
 }
 
-.category-dropdown a:hover::after{
+.category-dropdown span:hover::after{
     width: 0;
     color: white;
 }

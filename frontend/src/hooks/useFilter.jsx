@@ -1,29 +1,38 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export const useFilter = () => {
     const navigate = useNavigate()
-    const [manga, setManga] = useState([])
 
-    const fetchManga = async () => {
-        const response = await fetch('http://localhost:4000/api/manga')
+    const [searchParams, setSearchParams] = useSearchParams()
 
-        const json = await response.json()
+    const handleFilter = (title, category, minPrice, maxPrice) => {
+        const newParams = new URLSearchParams(searchParams)
+        console.log(category)
+        if (title.trim() !== '') {
+            newParams.set('title', title.trim())
+        } 
+        else
+            newParams.delete('title')
 
-        return json
+        if (category !== '') {
+            newParams.set('category', category)
+        } 
+        else
+            newParams.delete('category')
+
+        if (minPrice !== '' && !isNaN(minPrice))
+            newParams.set('minPrice', minPrice)
+        else
+            newParams.delete('minPrice')
+
+        if (maxPrice !== '' && !isNaN(maxPrice))
+            newParams.set('maxPrice', maxPrice)
+        else
+            newParams.delete('maxPrice')
+
+        setSearchParams(newParams)
+        navigate(`/product?${newParams}`)
     }
 
-    const filterByName = (name) => {
-        navigate('/product')
-        setManga(fetchManga().filter((p) => p.title === name))
-    }
-
-    const filterByPrice = () => {
-        navigate('/product')
-    }
-
-    const filterByCategory = () => {
-        navigate('/product')
-    }
-
-    return { filterByName, filterByPrice, filterByCategory }
+    return { handleFilter, searchParams }
 }

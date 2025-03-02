@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
+import { useNotificationContext } from '../hooks/useNotificationContext'
 
 export const useSignup = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const { dispatch } = useAuthContext()
+    const { showNotification } = useNotificationContext()
 
     const signup = async (username, email, password, phone, address) => {
         setIsLoading(true)
@@ -26,6 +28,9 @@ export const useSignup = () => {
         if (response.ok) {
             // save user to local storage
             localStorage.setItem('user', JSON.stringify(json))
+
+            // show notification login
+            showNotification(`Hello ${username}`)
     
             // update the auth context
             dispatch({type: 'LOGIN', payload: json})
@@ -34,5 +39,5 @@ export const useSignup = () => {
         }
     }
 
-    return { signup, error, isLoading }
+    return { signup, error, setError, isLoading }
 }

@@ -2,33 +2,18 @@ import React, { useState, useEffect, useRef } from 'react'
 import Card from './Card'
 import '../styles/Carousel.css'
 
-export default function Carousel({ title }) {
-    const [manga, setManga] = useState([])
+export default function Carousel({ title, manga }) {
     const [activeIndex, setActiveIndex] = useState(0)
     const carouselListRef = useRef(null)
-    const selectedIndexes = [35, 3, 23, 29, 9, 56, 58, 49]
-
-    useEffect(() => {
-        const fetchManga = async () => {
-            const response = await fetch('http://localhost:4000/api/manga')
-            const json = await response.json()
-            if (response.ok)
-                setManga(selectedIndexes.map(index => json[index]))
-        }
-        
-        fetchManga()
-    }, [])
 
     const handleNext = () => {
-        if (activeIndex < manga.length - 4) {
+        if (activeIndex < manga.length - 4)
             setActiveIndex((prev) => prev + 1)
-        }
     }
 
     const handlePrev = () => {
-        if (activeIndex > 0) {
+        if (activeIndex > 0)
             setActiveIndex((prev) => prev - 1)
-        }
     }
 
     useEffect(() => {

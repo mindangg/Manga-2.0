@@ -6,11 +6,14 @@ import Search from './Search'
 
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useNotificationContext } from '../hooks/useNotificationContext'
+import { useFilter } from '../hooks/useFilter'
 
 export default function Header() {
     const { user } = useAuthContext()
     const { showNotification } = useNotificationContext()
     const navigate = useNavigate()
+
+    const { handleFilter } = useFilter()
 
     const search = () => {
         document.querySelector(".search-popup").style.display = "flex";
@@ -36,14 +39,14 @@ export default function Header() {
                 <div className='category'>
                     <Link>Category</Link>
                     <div className='category-dropdown'>
-                        <Link to='/product/shounen'>Shounen</Link>
-                        <Link to='/product/seinen'>Seinen</Link>
-                        <Link to='/product/rom-com'>Rom Com</Link>
-                        <Link to='/product/action'>Action</Link>
-                        <Link to='/product/family'>Family</Link>
-                        <Link to='/product/comedy'>Comedy</Link>
-                        <Link to='/product/fantasy'>Fantasy</Link>
-                        <Link to='/product/dark-fantasy'>Dark Fantasy</Link>
+                        <span onClick={() => handleFilter('', 'shounen', '', '')}>Shounen</span>
+                        <span onClick={() => handleFilter('', 'seinen', '', '')}>Seinen</span>
+                        <span onClick={() => handleFilter('', 'rom-com', '', '')}>Rom Com</span>
+                        <span onClick={() => handleFilter('', 'action', '', '')}>Action</span>
+                        <span onClick={() => handleFilter('', 'family', '', '')}>Family</span>
+                        <span onClick={() => handleFilter('', 'comedy', '', '')}>Comedy</span>
+                        <span onClick={() => handleFilter('', 'fantasy', '', '')}>Fantasy</span>
+                        <span onClick={() => handleFilter('', 'dark-fantasy', '', '')}>Dark Fantasy</span>
                     </div>
                 </div>
                 <Link to='/'>About Us</Link>

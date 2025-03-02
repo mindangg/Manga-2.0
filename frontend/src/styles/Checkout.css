@@ -32,8 +32,9 @@
 #billing-info input,
 #billing-info textarea,
 #billing-info select {
+    height: 50px;
     width: 100%;
-    padding: 11.9px 12px;
+    padding: 10px 12px;
     font-size: 1em;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -202,10 +203,6 @@
     color: var(--green);
 }
 
-#paymentByQR{
-    overflow: hidden;
-    display: none;
-}
 #Payment-form{
     width: 600px;
     padding-left: 20px;

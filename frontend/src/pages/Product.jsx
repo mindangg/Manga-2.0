@@ -3,47 +3,41 @@ import { useParams } from 'react-router-dom'
 
 import Pagination from '../components/Pagination'
 import Display from '../components/Display'
-import Slider from '../components/Slider'
+
+import { useFilter } from '../hooks/useFilter'
 
 export default function Product() {
     const [manga, setManga] = useState([])
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setproductPerPages] = useState(8) 
 
-    const { category } = useParams()
+    const { searchParams } = useFilter()
 
     useEffect(() => {
         const fetchManga = async () => {
             try {
-                const url = category 
-                    ? `http://localhost:4000/api/manga/product/${category}`
-                    : `http://localhost:4000/api/manga`
-
-                // console.log(url)
-
+                const url = searchParams.toString()
+                ? `http://localhost:4000/api/manga/product?${searchParams}`
+                : `http://localhost:4000/api/manga`
+                console.log(url)
                 const response = await fetch(url)
                 const json = await response.json()
-
-                if (response.ok)
-                    setManga(json)
-                else
-                    console.error('Failed to fetch:', json)
+                setManga(json)
             } 
             catch (error) {
-                console.error('Error:', error);
+                console.error('Error fetching manga:', error)
             }
         }
 
-        fetchManga();
-    }, [category])
+        fetchManga()
+    }, [searchParams])
 
     const lastPageIndex = currentPage * productPerPages
     const firstPageIndex = lastPageIndex - productPerPages
     const currentManga = manga.slice(firstPageIndex, lastPageIndex)
 
     return (
-        <div className='App'>
-            <Slider/>
+        <div>
             <Display currentManga={currentManga}/>
             <Pagination 
                 totalProducts={manga.length} 

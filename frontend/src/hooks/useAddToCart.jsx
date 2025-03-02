@@ -3,14 +3,19 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { useNotificationContext } from '../hooks/useNotificationContext'
 
 export const useAddToCart = () => {
-    const { dispatch } = useCartContext()
+    const { cart, dispatch } = useCartContext()
     const { user } = useAuthContext()
     const { showNotification } = useNotificationContext()
 
     const addToCart = async (mangaID) => {
-        if (!user || !user.user) {
+        if (!user) {
             showNotification('Please log in to add to cart')
-            console.error('User not logged in')
+            // console.error('User not logged in')
+            return
+        }
+    
+        if (cart.some(item => item.mangaID === mangaID)) {
+            showNotification('Product is already in cart')
             return
         }
 

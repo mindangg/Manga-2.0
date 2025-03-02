@@ -1,53 +1,62 @@
 import React, { useState } from 'react'
 
+import { useFilter } from '../hooks/useFilter'
+
 import '../styles/Search.css'
 
 export default function Search() {
-    const [name, setName] = useState('')
+    const [title, setTitle] = useState('')
+    const [category, setCategory] = useState('')
     const [minPrice, setMinPrice] = useState('')
     const [maxPrice, setMaxPrice] = useState('')
 
-    const showFilter = () => {
-        if (document.getElementById('filter').className == '') {
-            document.getElementById('filter').classList.add('filter-active')
-            document.querySelector('.filter-container').style.display = 'inline'
-        }
-    
-        else {
-            document.getElementById('filter').classList.remove('filter-active')
-            document.querySelector('.filter-container').style.display = 'none'
-            document.getElementById('filter-min').value = ''
-            document.getElementById('filter-max').value = ''
-        }
+    const [isFilterOpen, setIsFilterOpen] = useState(false)
+
+    const { handleFilter } = useFilter()
+
+    const handleSearch = () => {
+        handleFilter(title, category, minPrice, maxPrice)
+        close()
     }
+    
+    const toggleFilter = () => {
+        setIsFilterOpen(!isFilterOpen)
+    }   
 
     const close = () => {
-        if (document.getElementById('filter').className == 'filter-active') {
-            document.getElementById('filter').classList.remove('filter-active')
-            document.querySelector('.filter-container').style.display = 'none'
-            document.getElementById('filter-min').value = ''
-            document.getElementById('filter-max').value = ''
-        }
+        setIsFilterOpen(false)
+
+        setTitle('')
+        setCategory('')
+        setMinPrice('')
+        setMaxPrice('')
     
         document.querySelector('.search').style.animationName = 'leftToRight'
-        setTimeout(function () {
+        setTimeout(() => {
             document.querySelector('.search-popup').style.display = 'none';
         }, 390)
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter')
+            handleSearch()
     }
 
     return (
         <div className='search-popup'>
             <div className='search'>
                 <div className='searchbox'>
-                    <input id='search-input' type='search' placeholder='Search for...'
-                            value={name} onChange={(e) => setName(e.target.value)}></input>
-                    <a id='search-close' onClick={() => close()}><i className='fa-solid fa-xmark' ></i></a>
+                    <input type='search' placeholder='Search for...'
+                            value={title} onChange={(e) => setTitle(e.target.value)}
+                            onKeyDown={(e) => handleKeyDown(e)}></input>
+                    <a onClick={() => close()}><i className='fa-solid fa-xmark'></i></a>
                 </div>
 
-                <a id='filter' onClick={() => showFilter()}><i className='fa-solid fa-filter' ></i></a>
+                <a id='filter' onClick={toggleFilter}><i className='fa-solid fa-filter'></i></a>
 
-                <div className='filter-container'>
-                    <select id='filter-category' onChange={(e) => filterByCategory(e.target.value)}>
+                {isFilterOpen && (
+                <div className='filter-container' onKeyDown={(e) => handleKeyDown(e)}>
+                    <select id='filter-category' value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value=''>All</option>
                         <option value='shounen'>Shounen</option>
                         <option value='seinen'>Seinen</option>
@@ -60,13 +69,18 @@ export default function Search() {
                     </select>
 
                     <span>Price</span>
-                    <input type='text' placeholder='Min' id='filter-min'
-                            value={minPrice} onChange={(e) => setMinPrice(e.target)}></input>
+                    <input type='number' placeholder='Min' value={minPrice}
+                            onChange={(e) => setMinPrice(Math.max(0, parseFloat(e.target.value)))}
+                            ></input>
                     <span>to</span>
-                    <input type='text' placeholder='Max' id='filter-max'
-                            value={maxPrice} onChange={(e) => setMaxPrice(e.target)}></input>
-                    <a onClick={() => filterByPrice()}><i className='fa-solid fa-magnifying-glass-dollar'></i></a>
+                    <input type='number' placeholder='Max' value={maxPrice}
+                            onChange={(e) => setMaxPrice(Math.max(0, parseFloat(e.target.value)))}
+                            ></input>
+                    <a onClick={handleSearch}>
+                        <i className='fa-solid fa-magnifying-glass-dollar'></i>
+                    </a>
                 </div>
+                )}
             </div>
         </div>
     )

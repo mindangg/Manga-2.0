@@ -1,5 +1,4 @@
-.search-popup
-{
+.search-popup{
     background-color: rgba(0, 0, 0, 0.4);
     width: 100%;
     height: 100%;
@@ -10,8 +9,7 @@
     z-index: 2;
 }
 
-.search
-{
+.search{
     position: absolute;
     width: 620px;
     height: 620px;
@@ -22,8 +20,7 @@
     animation: rightToLeft 0.5s ease;  
 }
 
-.searchbox
-{
+.searchbox{
     width: 100%;
     height: 60px;
     padding: 30px;
@@ -57,9 +54,7 @@
 /* filter */
 
 .searchbox i:hover,
-#filter i:hover,
-.filter-container i:hover
-{
+.filter-container i:hover{
     cursor: pointer;
     transform: translateY(-5px);
 }
@@ -76,7 +71,6 @@
     position: relative;
     top: 70px;
     padding: 0 20px;
-    display: none;
 }
 
 .filter-container select{
@@ -102,6 +96,12 @@
     border-radius: 5px;
     padding-left: 12px;
     color: white;
+}
+
+.filter-container input::-webkit-outer-spin-button,
+.filter-container input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .filter-container span{
@@ -159,5 +159,4 @@
         margin-left: 10px;
         margin-right: 20px;
     }
-    
 }

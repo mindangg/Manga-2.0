@@ -15,11 +15,14 @@ const {
 // Get all mangas or filter
 router.get('/', getAllManga)
 
-// Get a single manga
-router.get('/:id', getManga)
+// Filter navbar
+// router.get('/product/:category', filterMangaNavbar)
+
+// Filter navbar
+router.get('/product', filterManga)
 
 // Get a single manga
-router.get('/product/:category', filterManga)
+router.get('/:id', getManga)
 
 // Post a manga
 // router.post('/', createManga)

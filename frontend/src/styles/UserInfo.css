@@ -34,25 +34,22 @@
     cursor: pointer;
 }
 
-
 #order-container{
     position: relative;
     top: 150px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     width: 50%;
-    margin: 0 auto;
+    margin: 0 auto 220px;
 }
 
 .order-history{
     margin: 0 auto;
     padding: 20px;
-
 }
 
 .order{
     display: flex;
     margin: 0 auto;
-
 }
 
 #order-container h2{
@@ -98,16 +95,16 @@
     width: 130px;
     margin-top: 5px;
     padding: 5px;
-    background-color: #008d3f;
-    color: white;
+    background-color: var(--green);
+    color: black;
     font-size: 15px;
-    border-radius: 10px;
+    border-radius: 7px;
     border: none;
     cursor: pointer;
 }
 
 .order-cancel-btn:hover{
-    background-color: #00b63a;
+    background-color: var(--green-l);
 }
 
 .order-items-details ul{
@@ -142,6 +139,71 @@
 
 .order-items-details{
     color: #ddd;
+}
+
+#user-container{
+    max-width: 600px;
+    margin: 2rem auto;
+    position: relative;
+    top: 150px;
+    margin: 0 auto 200px;
+}
+
+#user-container form {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 2rem;
+    max-width: 550px;
+    width: 100%;
+}
+
+#user-container form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#user-container form p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+#user-container input{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: 2px solid #333333;
+    padding: 15px 45px 15px 20px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* .user-info .error{
+    color: red;
+    font-size: 0.9em;
+    display: none;
+    margin-top: -10px;
+} */
+
+#user-container input::placeholder{
+    color: #aaaaaa;
+}
+
+/* Save button styling */
+#user-container button {
+    background-color: #00ff00;
+    color: #1a1a1a;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+#user-container button:hover {
+    background-color: #00e600;
 }
 
 

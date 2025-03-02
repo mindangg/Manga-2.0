@@ -7,15 +7,20 @@ export default function Signup() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
+    const [confPassword, setConfPassword] = useState('')
 
-    const { signup, error, isLoading } = useSignup()
+    const { signup, error, setError, isLoading } = useSignup()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await signup(username, email, password, phone, address)
+        if (password !== confPassword) {
+            setError('Password does not match')
+            console.log('not')
+            return
+        }
+
+        await signup(username, email, password)
     }
 
     return (
@@ -23,7 +28,7 @@ export default function Signup() {
             <h1>Sign Up</h1>
 
             <div className='signup-input'>
-                <input type='text' id='signup-input--username' placeholder='Username' 
+                <input type='text' placeholder='Username' 
                         value={username} onChange={(e) => setUsername(e.target.value)}></input>
             </div>
 
@@ -33,18 +38,13 @@ export default function Signup() {
             </div>
 
             <div className='signup-input'>
-                <input type='password' id='signup-input--password' placeholder='Password' 
+                <input type='password' placeholder='Password' 
                         value={password} onChange={(e) => setPassword(e.target.value)}></input>
             </div>
 
             <div className='signup-input'>
-                <input type='tel' id='signup-input--phone' placeholder='Phone Number' 
-                        value={phone} onChange={(e) => setPhone(e.target.value)}></input>
-            </div>
-
-            <div className='signup-input'>
-                <input type='text' id='signup-input--address' placeholder='Address' 
-                        value={address} onChange={(e) => setAddress(e.target.value)}></input>
+                <input type='password' placeholder='Confirm Password' 
+                        value={confPassword} onChange={(e) => setConfPassword(e.target.value)}></input>
             </div>
 
             <button type='submit' id='signup-btn' disabled={isLoading}>Create account</button>

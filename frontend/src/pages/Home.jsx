@@ -6,7 +6,10 @@ import Slider from '../components/Slider'
 import Carousel from '../components/Carousel'
 
 export default function Home() {
-    const [manga, setManga] = useState([])
+    const [manga1, setManga1] = useState([])
+    const [manga2, setManga2] = useState([])
+    const selectedIndexes1 = [39, 47, 60, 16, 54, 30, 12, 22]
+    const selectedIndexes2 = [35, 3, 23, 29, 9, 56, 58, 49]
 
     useEffect(() => {
         const fetchManga = async () => {
@@ -14,8 +17,10 @@ export default function Home() {
 
             const json = await response.json()
 
-            if (response.ok)
-                setManga(json)
+            if (response.ok) {
+                setManga1(selectedIndexes1.map(index => json[index]))
+                setManga2(selectedIndexes2.map(index => json[index]))
+            }
         }
 
         fetchManga()
@@ -24,13 +29,13 @@ export default function Home() {
     return (
         <div className='home'>
             <Slider/>
-            <Carousel title='Best Sellers'/> 
+            <Carousel title='Best Sellers' manga={manga1}/> 
 
             <div className='banner'>
                 <img src={jjk}></img>
             </div>
 
-            <Carousel title='People Choices'/>
+            <Carousel title='People Choices' manga={manga2}/>
         </div>
     )
 }
