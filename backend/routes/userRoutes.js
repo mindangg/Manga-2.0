@@ -3,6 +3,7 @@ const express = require('express')
 const {
     loginUser,
     signupUser,
+    getUser,
     updateUser
 } = require('../controllers/userControllers')
 
@@ -14,7 +15,10 @@ router.post('/login', loginUser)
 // signup user
 router.post('/signup', signupUser)
 
-// signup user
+// get a single user
+router.get('/:id', getUser)
+
+// update a single user
 router.patch('/:id', updateUser)
 
 module.exports = router

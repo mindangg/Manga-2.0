@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLogout } from '../hooks/useLogout'
 
 import '../styles/UserInfo.css'
@@ -9,14 +9,35 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 export default function UserInfo() {
     const { logout } = useLogout()
-    const { user } = useAuthContext()
+    const { user, dispatch } = useAuthContext()
 
     const [isOrder, setIsOrder] = useState(true)
     const [isUser, setIsUser] = useState(false)
 
-    const [fullname, setFullName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
+    const [fullname, setFullName] = useState(user.user.fullname)
+    const [phone, setPhone] = useState(user.user.phone)
+    const [address, setAddress] = useState(user.user.address)
+
+    // useEffect(() => {
+    //     // const fetchUser = async () => {
+    //     //     const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
+    //     //         headers: {
+    //     //             'Authorization': `Bearer ${user.token}`
+    //     //         }
+    //     //     })
+
+    //     //     const json = await response.json()
+    //     //     console.log(json)
+
+    //     //     // if (response.ok) {
+    //     //     //     dispatch({ type: 'DISPLAY_ITEM', payload: json })
+    //     //     // }
+    //     // }
+
+    //     // fetchUser()
+
+    //     console.log(user)
+    // }, [])
     
     const toggleOrder = () => {
         if (!isOrder) {
@@ -47,13 +68,15 @@ export default function UserInfo() {
 
             const json = await response.json()
     
-            if (response.ok)
+            if (response.ok) {
                 console.log(json)
+                dispatch({ type: 'SET_USER', payload: json })
+            }
+
         }
         catch (error) {
             console.error(error)
         }
-
     }
 
     return (
