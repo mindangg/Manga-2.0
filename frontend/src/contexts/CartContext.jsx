@@ -18,6 +18,12 @@ export const cartReducer = (state, action) => {
             return {
                 cart: state.cart.filter((c) => c._id !== action.payload._id)
             }
+
+        case 'UPDATE_ITEM':
+            return {
+                cart: state.cart.map((c) => c._id === action.payload._id ? action.payload : c)
+            }
+            
         default:
             return state
     }

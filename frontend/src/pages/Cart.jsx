@@ -60,7 +60,7 @@ export default function Cart() {
                         </div>
                     </div>
                     <div className='cart-summary'>
-                        <h3>Total of order: $30</h3>
+                        <h3>Total of order: ${cart.reduce((acc, c) => acc + c.total, 0)}</h3>
                         <Link to='/checkout'><button id='checkout-btn'>Checkout</button></Link>
                     </div>
                 </div>

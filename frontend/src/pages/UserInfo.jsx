@@ -13,7 +13,8 @@ export default function UserInfo() {
 
     const [isOrder, setIsOrder] = useState(true)
     const [isUser, setIsUser] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(false)
+ 
     const [fullname, setFullName] = useState(user.user.fullname)
     const [phone, setPhone] = useState(user.user.phone)
     const [address, setAddress] = useState(user.user.address)
@@ -38,6 +39,10 @@ export default function UserInfo() {
 
     //     console.log(user)
     // }, [])
+
+    useEffect(() => {
+        console.log(user.user.address)
+    }, [])
     
     const toggleOrder = () => {
         if (!isOrder) {
@@ -57,6 +62,7 @@ export default function UserInfo() {
         e.preventDefault()
 
         try {
+            setIsLoading(true)
             const response = await fetch('http://localhost:4000/api/user/' + user.user._id, {
                 method: 'PATCH',
                 headers: {
@@ -70,11 +76,14 @@ export default function UserInfo() {
     
             if (response.ok) {
                 console.log(json)
+                console.log(user.user.address)
                 dispatch({ type: 'SET_USER', payload: json })
+                setIsLoading(false)
             }
 
         }
         catch (error) {
+            setIsLoading(false)
             console.error(error)
         }
     }
@@ -118,7 +127,7 @@ export default function UserInfo() {
                                 <input type='text' placeholder='Address' value={address}
                                     onChange={(e) => setAddress(e.target.value)}></input>
                             </div>
-                            <button type='submit'>Save user info</button>
+                            <button type='submit' disabled={isLoading}>Save user info</button>
                     </form>
                 </div>
             )}

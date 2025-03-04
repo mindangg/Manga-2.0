@@ -50,4 +50,19 @@ const deleteOrder = async (req, res) => {
     res.status(200).json(order)
 }
 
-module.exports = { getOrders, createOrder, deleteOrder }
+// Update order
+const updateOrder = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id))
+        res.status(400).json({error: 'No such order'})
+
+    const order = await Order.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+
+    if(!order)
+        res.status(400).json({error: 'No such order'})
+
+    res.status(200).json(order)
+}
+
+module.exports = { getOrders, createOrder, deleteOrder, updateOrder }

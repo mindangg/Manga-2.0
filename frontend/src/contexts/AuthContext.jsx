@@ -11,18 +11,33 @@ export const authReducer = (state, action) => {
 
         case 'LOGOUT':
             return { 
-                user: null
+                user: null 
             }
 
-        case 'SET_USER':
-            return { 
-                user: [action.payload, ...state.user] 
-            }
+        // Admin-specific actions
+        // case 'SET_USERS': 
+        //     return { 
+        //         ...state,
+        //         users: action.payload
+        //     }
 
-        case 'DELETE_ITEM':
-            return {
-                cart: state.user.filter((u) => u._id !== action.payload._id)
-            }
+        // case 'ADD_USER':
+        //     return {
+        //         ...state,
+        //         users: [action.payload, ...state.users]
+        //     }
+
+        // case 'DELETE_USER':
+        //     return { 
+        //         ...state,
+        //         users: state.users.filter((u) => u._id !== action.payload._id)
+        //     }
+
+        // case 'UPDATE_USER':
+        //     return { 
+        //         ...state,
+        //         users: state.users.map((u) => u._id === action.payload._id ? action.payload : u)
+        //     }
         default:
             return state
     }
@@ -30,7 +45,7 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
-        user: null
+        user: null,
     })
 
     useEffect(() => {

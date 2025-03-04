@@ -8,7 +8,7 @@ import Carousel from '../components/Carousel'
 export default function Home() {
     const [manga1, setManga1] = useState([])
     const [manga2, setManga2] = useState([])
-    const selectedIndexes1 = [39, 47, 60, 16, 54, 30, 12, 22]
+    const selectedIndexes1 = [27, 45, 50, 0, 8, 16, 32, 60]
     const selectedIndexes2 = [35, 3, 23, 29, 9, 56, 58, 49]
 
     useEffect(() => {

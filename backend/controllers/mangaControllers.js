@@ -21,7 +21,7 @@ const upload = multer({
 // Get all manga
 const getAllManga = async (req, res) => {
     try {
-        const manga = await Manga.find().sort({ createdAt: -1 })
+        const manga = await Manga.find().sort({ title: 1 })
         res.status(200).json(manga)
     }   
     catch (error){
@@ -82,7 +82,7 @@ const filterManga = async (req, res) => {
             }
         }
 
-        const manga = await Manga.find(filter).sort({ createdAt: -1 })
+        const manga = await Manga.find(filter).sort({ title: 1 })
 
         if (!manga.length) {
             return res.status(400).json({ error: 'No such manga' })
