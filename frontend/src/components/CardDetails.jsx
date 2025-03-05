@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import '../styles/CardDetails.css'
+import '../styles/Card.css'
 
 import { useCardDetailsContext } from '../hooks/useCardDetailsContext'
 import { useAddToCart } from '../hooks/useAddToCart'

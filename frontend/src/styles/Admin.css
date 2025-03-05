@@ -55,7 +55,7 @@
     height: 100%;
     padding: 30px 70px;
 }
-.controllers{
+.add-product{
     display: flex;
     width: 100%;
     column-gap: 40px;
@@ -236,4 +236,133 @@ input[type="file"] {
 .add-btns button:hover{
     cursor: pointer;
     background-color: rgba(8, 220, 100, 0.8);
+}
+
+.user-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.user-header{
+    font-weight: bold;
+}
+.user-header,
+.user-info{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2.5fr 2.5fr 4fr 2fr 1.5fr 1fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+} 
+
+.user-status{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.user-status-lock{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.user-action i{
+    cursor: pointer;
+}
+
+.user-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+
+.manga-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-header{
+    font-weight: bold;
+}
+
+.manga-header,
+.manga-info{
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr 2fr 1.5fr 2fr 1fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+}
+
+.manga-info img{
+    width: 90px;
+}
+
+.manga-action i{
+    cursor: pointer;
+}
+
+.manga-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+
+.order-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-header{
+    font-weight: bold;
+}
+
+.order-header,
+.order-info{
+    display: grid;
+    grid-template-columns: 1fr 3fr 2fr 2fr 1.5fr 1.5fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+}
+
+.order-info img{
+    width: 90px;
+}
+
+.order-action i{
+    cursor: pointer;
+}
+
+.order-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.order-status-pending{
+    background-color: rgb(230, 158, 25);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.order-status-delivered{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.user-status-canceled{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.order-action{
+    cursor: pointer;
 }

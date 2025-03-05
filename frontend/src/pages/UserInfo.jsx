@@ -19,26 +19,26 @@ export default function UserInfo() {
     const [phone, setPhone] = useState(user.user.phone)
     const [address, setAddress] = useState(user.user.address)
 
-    // useEffect(() => {
-    //     // const fetchUser = async () => {
-    //     //     const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
-    //     //         headers: {
-    //     //             'Authorization': `Bearer ${user.token}`
-    //     //         }
-    //     //     })
+    useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
 
-    //     //     const json = await response.json()
-    //     //     console.log(json)
+            const json = await response.json()
+            console.log(json)
 
-    //     //     // if (response.ok) {
-    //     //     //     dispatch({ type: 'DISPLAY_ITEM', payload: json })
-    //     //     // }
-    //     // }
+            if (response.ok) {
+                dispatch({ type: 'LOGIN', payload: json })
+            }
+        }
 
-    //     // fetchUser()
+        fetchUser()
 
-    //     console.log(user)
-    // }, [])
+        console.log(user)
+    }, [])
 
     useEffect(() => {
         console.log(user.user.address)

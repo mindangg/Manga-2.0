@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import '../styles/CartItems.css'
+import '../styles/Cart.css'
 
 import { useCartContext } from '../hooks/useCartContext'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -42,7 +42,7 @@ export default function CartItems({ cart }) {
             })
     
             const json = await response.json()
-            console.log(json)
+            // console.log(json)
     
             if (response.ok) {
                 dispatch({type: 'UPDATE_ITEM', payload: json})
@@ -53,10 +53,10 @@ export default function CartItems({ cart }) {
         }
     }
     
-    useEffect(() => {
-        handleQuantity()
-        console.log(cart.quantity)
-    }, [quantity])
+    // useEffect(() => {
+    //     handleQuantity()
+    //     console.log(cart.mangaID.title)
+    // }, [quantity])
 
     return (
         <div className='cart-item'>

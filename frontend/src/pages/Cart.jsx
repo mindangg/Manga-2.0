@@ -24,7 +24,6 @@ export default function Cart() {
             })
 
             const json = await response.json()
-            // console.log(json)
 
             if (response.ok) {
                 dispatch({ type: 'DISPLAY_ITEM', payload: json })

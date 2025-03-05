@@ -16,6 +16,7 @@ export const useAddToCart = () => {
     
         if (cart.some(item => item.mangaID === mangaID)) {
             showNotification('Product is already in cart')
+            console.log(cart)
             return
         }
 

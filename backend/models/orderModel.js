@@ -31,24 +31,24 @@ const orderModel = new Schema({
 },{ timestamps: true })
 
 // Update total
-updateTotal = async (order) => {
-  const manga = await mongoose.model('Manga').findById(order.mangaID)
-  if (!manga)
-    throw new Error('No such manga')
+// updateTotal = async (order) => {
+//   const manga = await mongoose.model('Manga').findById(order.mangaID)
+//   if (!manga)
+//     throw new Error('No such manga')
 
-  order.total = Number((order.quantity * manga.price).toFixed(2))
-}
+//   order.total = Number((order.quantity * manga.price).toFixed(2))
+// }
 
 // Calculate the total before initialize the order ya know
-orderModel.pre('save', async function (next) {
-  try {
-    await updateTotal(this)
-    next()
-  }
-  catch (error) {
-    next(error)
-  }
-})
+// orderModel.pre('save', async function (next) {
+//   try {
+//     await updateTotal(this)
+//     next()
+//   }
+//   catch (error) {
+//     next(error)
+//   }
+// })
 
 // Update total when quantity changes
 // orderModel.pre('findOneAndUpdate', async function (next) {
@@ -58,7 +58,8 @@ orderModel.pre('save', async function (next) {
 
 //   try {
 //     const order = await mongoose.model('Order').findOne(this.getQuery())
-//     if (!order) return next(new Error('Order not found'))
+//     if (!order) 
+//       return next(new Error('Order not found'))
 
 //     order.quantity = update.quantity
 //     await updateTotal(order)

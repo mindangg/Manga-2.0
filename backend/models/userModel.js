@@ -29,7 +29,7 @@ const userSchema = new Schema({
     address: {
         type: String,
     }
-})
+}, {timestamps: true})
 
 // static signup function
 userSchema.statics.signup = async function(username, email, password) {
