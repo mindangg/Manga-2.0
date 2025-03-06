@@ -318,7 +318,7 @@ input[type="file"] {
     flex-direction: column;
 }
 
-.manga-header{
+.order-header{
     font-weight: bold;
 }
 
@@ -331,10 +331,6 @@ input[type="file"] {
     align-items: center;
     color: white;
     border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
-}
-
-.order-info img{
-    width: 90px;
 }
 
 .order-action i{
