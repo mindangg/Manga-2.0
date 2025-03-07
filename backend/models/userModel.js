@@ -28,7 +28,10 @@ const userSchema = new Schema({
     },
     address: {
         type: String,
-    }
+    },
+    // status: {
+    //     enum: ['Active', 'Disable']
+    // }
 }, {timestamps: true})
 
 // static signup function

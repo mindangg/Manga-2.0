@@ -8,20 +8,20 @@ const orderModel = new Schema({
       ref: 'User',
       required: true
     },
-    mangaID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Manga',
-      required: true
-    },
-    quantity: {
-      type: Number,
-      required: true,
-      default: 1
-    },
-    total: {
-      type: Number,
-      required: true,
-    },
+    // mangaID: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Manga',
+    //   required: true
+    // },
+    // quantity: {
+    //   type: Number,
+    //   required: true,
+    //   default: 1
+    // },
+    // total: {
+    //   type: Number,
+    //   required: true,
+    // },
     state: {
       type: String,
       enum: ['Cart', 'Pending', 'Delivered', 'Canceled'],
