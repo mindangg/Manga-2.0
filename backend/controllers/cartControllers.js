@@ -37,8 +37,7 @@ const validateCartInput = (req, res, next) => {
         return res.status(400).json({error: 'No such user or manga'})
 
     req.body.quantity = Number.isInteger(quantity) && quantity > 0 ? quantity : 1
-    // if (!Number.isInteger(quantity) || quantity <= 0)
-    //     return res.status(400).json({error: 'Quantity must be a positive integer'})
+
     next()
 }
 
@@ -64,7 +63,6 @@ const createCart = async (req, res) => {
             else
                 cart.items.push({ mangaID, quantity })
 
-            cart.markModified('items')
             await cart.save()
         }
 
@@ -76,19 +74,88 @@ const createCart = async (req, res) => {
 }
 
 // Delete cart
-const deleteCart = async (req, res) => {
-    const { id } = req.params
+// const deleteCart = async (req, res) => {
+//     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(400).json({error: 'No such cart'})
+//     if (!mongoose.Types.ObjectId.isValid(id))
+//         return res.status(400).json({error: 'No such cart'})
+
+//     try {
+//         const cart = await cart.findOneAndDelete({_id: id})
+    
+//         res.status(200).json(cart)
+//     }
+//     catch (error) {
+//         res.status(400).json({ error: 'No such cart' })
+//     }
+// }
+const deleteCart = async (req, res) => {
+    const { userID, mangaID } = req.body
+
+    if (!userID || !mangaID)
+        return res.status(400).json({error: 'Missing userID or mangaID'})
+
+    if (!mongoose.Types.ObjectId.isValid(userID) || !mongoose.Types.ObjectId.isValid(mangaID))
+        return res.status(400).json({error: 'No such user or manga'})
 
     try {
-        const cart = await cart.findOneAndDelete({_id: id})
+        const cart = await Cart.findOne({ userID })
+
+        if (!cart)
+            return res.status(400).json({error: 'Cart not found'})
+
+        cart.items = cart.items.filter((i) => !i.mangaID.equals(mangaID))
+
+        await cart.save()
     
         res.status(200).json(cart)
     }
     catch (error) {
-        res.status(400).json({ error: 'No such cart' })
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const updateCartQuantity = async (req, res) => {
+    const { userID, mangaID, type } = req.body
+
+    if (!userID || !mangaID)
+        return res.status(400).json({error: 'Missing userID or mangaID'})
+
+    if (!mongoose.Types.ObjectId.isValid(userID) || !mongoose.Types.ObjectId.isValid(mangaID))
+        return res.status(400).json({error: 'No such user or manga'})
+
+    try {
+        const cart = await Cart.findOne({ userID })
+        
+        if (!cart)
+            return res.status(400).json({error: 'Cart not found'})
+
+        const item = cart.items.find((i) => i.mangaID.equals(mangaID))
+
+        if (!item) 
+            return res.status(400).json({error: 'Item not found'})
+
+        if (type === 'increase')
+            item.quantity += 1
+        else if (type === 'decrease') {
+            
+            // check if quantity is above 1 so decrease quantity by 1
+            if (item.quantity > 1)
+                item.quantity -= 1
+
+            // if quantity <= 1 delete the item
+            else
+                cart.items = cart.items.filter((i) => !i.mangaID.equals(mangaID))
+        }
+        else
+            return res.status(400).json({error: 'Invalid "type" {use increase or decrease}'})
+
+        await cart.save()
+
+        res.status(200).json(cart)
+    }
+    catch (error) {
+        res.status(400).json({error: error.message})
     }
 }
 
