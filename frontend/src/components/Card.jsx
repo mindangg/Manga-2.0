@@ -6,7 +6,7 @@ import { useAddToCart } from '../hooks/useAddToCart'
 
 export default function Card({ manga }) {
     const { showProductInfo } = useCardDetailsContext()
-    const { addToCart  } = useAddToCart()
+    const { addToCart } = useAddToCart()
 
     return (
         <div className='card'>

@@ -14,11 +14,11 @@ export const useAddToCart = () => {
             return
         }
     
-        if (cart.some(item => item.mangaID === mangaID)) {
-            showNotification('Product is already in cart')
-            console.log(cart)
-            return
-        }
+        // if (cart.some(item => item.mangaID === mangaID)) {
+        //     showNotification('Product is already in cart')
+        //     console.log(cart)
+        //     return
+        // }
 
         try {
             const response = await fetch('http://localhost:4000/api/cart', {
@@ -31,6 +31,7 @@ export const useAddToCart = () => {
             })
             
             const json = await response.json()
+            console.log(json)
 
             if (!response.ok) {
                 console.error('Failed to add to cart:', json)

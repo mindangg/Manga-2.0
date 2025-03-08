@@ -71,7 +71,8 @@ const filterManga = async (req, res) => {
         }
 
         if (minPrice || maxPrice) {
-            filter.price = {} // Initialize price filter object
+            // Initialize price filter object
+            filter.price = {}
 
             if (minPrice && !isNaN(parseFloat(minPrice))) {
                 filter.price.$gte = parseFloat(minPrice)

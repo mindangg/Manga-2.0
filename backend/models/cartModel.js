@@ -15,7 +15,6 @@ const cartModel = new Schema({
           ref: 'Manga',
           required: true
         },
-
         quantity: {
           type: Number,
           default: 1

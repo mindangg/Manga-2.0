@@ -9,6 +9,7 @@ const initializerArray = require('./initializer')
 
 const mangaRoutes = require('./routes/mangaRoutes')
 const userRoutes = require('./routes/userRoutes')
+const cartRoutes = require('./routes/cartRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 
 const app = express()
@@ -30,7 +31,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // routes
 app.use('/api/manga', mangaRoutes)
 app.use('/api/user', userRoutes)
-app.use('/api/cart', orderRoutes)
+app.use('/api/cart', cartRoutes)
+app.use('/api/order', orderRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

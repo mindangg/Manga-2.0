@@ -26,8 +26,8 @@ const getCarts = async (req, res) => {
     }
 }
 
-// Add to cart
-const createCart = async (req, res) => {
+// Check for cart input
+const validateCartInput = (req, res, next) => {
     const { userID, mangaID, quantity } = req.body
 
     if (!userID || !mangaID)
@@ -36,8 +36,18 @@ const createCart = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(userID) || !mongoose.Types.ObjectId.isValid(mangaID))
         return res.status(400).json({error: 'No such user or manga'})
 
+    req.body.quantity = Number.isInteger(quantity) && quantity > 0 ? quantity : 1
+    // if (!Number.isInteger(quantity) || quantity <= 0)
+    //     return res.status(400).json({error: 'Quantity must be a positive integer'})
+    next()
+}
+
+// Add to cart
+const createCart = async (req, res) => {
+    const { userID, mangaID, quantity } = req.body
+
     try {
-        const cart = await Cart.findOne({ userID })
+        let cart = await Cart.findOne({ userID })
 
         // check if there is already a cart
 
@@ -46,14 +56,15 @@ const createCart = async (req, res) => {
 
         else {
             // check to see if there is an item so update quantity instead of creating duplicate
-            const exists = cart.items.some((i) => i.mangaID.equals(mangaID))
+            const item = cart.items.find((i) => i.mangaID.equals(mangaID))
 
-            if (exists)
-                cart.items[itemIndex].quantity += quantity
+            if (item)
+                item.quantity += quantity
 
             else
                 cart.items.push({ mangaID, quantity })
 
+            cart.markModified('items')
             await cart.save()
         }
 
@@ -104,4 +115,4 @@ const updateCart = async (req, res) => {
     }
 }
 
-module.exports = { getCarts, createCart, deleteCart, updateCart }
+module.exports = { getCarts, validateCartInput, createCart, deleteCart, updateCart }
