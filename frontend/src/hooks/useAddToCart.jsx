@@ -46,5 +46,48 @@ export const useAddToCart = () => {
         }
     }
 
-    return { addToCart }
+    const handleDelete = async (userID, mangaID) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/${userID}/${mangaID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+    
+            const json = await response.json()
+    
+            if (response.ok) {
+                dispatch({type: 'DELETE_ITEM', payload: json})
+            }
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
+    const handleQuantity = async (cartID, userID, mangaID, type) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/cart/quantity/${cartID}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({ userID, mangaID, type })
+            })
+    
+            const json = await response.json()
+            console.log(json)
+    
+            if (response.ok) {
+                dispatch({type: 'UPDATE_QUANTITY', payload: json})
+            }
+        }
+        catch (error){
+            console.error(error)
+        }
+    }
+
+    return { addToCart, handleDelete, handleQuantity }
 }

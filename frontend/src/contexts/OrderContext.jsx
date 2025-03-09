@@ -5,33 +5,29 @@ export const CartContext = createContext()
 export const cartReducer = (state, action) => {
     switch(action.type) {
         case 'DISPLAY_ITEM':
+            console.log('Deleted: ', action.payload)
             return {
                 cart: action.payload
             }
             
+        case 'UPDATE_ITEM':
+            return {
+                
+            }
+            
         case 'ADD_ITEM':
             return {
-                ...state.cart,
-                cart: {
-                    items: [...(state.cart.items || []), action.payload]
-                }
+                cart: [action.payload, ...state.cart]
             }
 
         case 'DELETE_ITEM':
-            console.log('Delete cart', action.payload)
             return {
-                cart: {
-                    ...state.cart,
-                    items: state.cart.items.filter((i) => i._id !== action.payload._id)
-                }
+                cart: state.cart.filter((c) => c._id !== action.payload._id)
             }
 
-        case 'UPDATE_QUANTITY':
-            console.log('Update quantity', action.payload)
+        case 'UPDATE_ITEM':
             return {
-                ...state.cart,
-                items: state.cart.items.map((i) => 
-                    i.mangaID === action.payload.mangaID ? {...i, quantity: action.payload.quantity} : i)
+                cart: state.cart.map((c) => c._id === action.payload._id ? action.payload : c)
             }
             
         default:
@@ -41,7 +37,7 @@ export const cartReducer = (state, action) => {
 
 export const CartContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, {
-        cart: { items: []}
+        cart: []
     })
 
     return (

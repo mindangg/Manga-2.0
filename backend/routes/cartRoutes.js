@@ -5,25 +5,25 @@ const router = express.Router()
 const requireAuth = require('../middlewares/requireAuth')
 
 const {
-    getCarts, 
+    getCart, 
     validateCartInput,
     createCart,
     deleteCart,
-    updateCart
+    updateCartQuantity
 } = require('../controllers/cartControllers')
 
 router.use(requireAuth)
 
 // Get Carts
-router.get('/', getCarts)
+router.get('/', getCart)
 
 // Create Cart
 router.post('/', validateCartInput, createCart)
 
 // Delete Cart
-router.delete('/:id', deleteCart)
+router.delete('/:userID/:mangaID', deleteCart)
 
-// Update Cart
-router.patch('/:id', updateCart)
+// Update Quantity Cart
+router.patch('/quantity/:id', updateCartQuantity)
 
 module.exports = router

@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const orderModel = new Schema({
+    orderNumber: {
+      type: String,
+      unique: true
+    },
     userID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -18,17 +22,28 @@ const orderModel = new Schema({
     //   required: true,
     //   default: 1
     // },
-    // total: {
-    //   type: Number,
-    //   required: true,
-    // },
+    total: {
+      type: Number,
+      required: true,
+    },
     state: {
       type: String,
-      enum: ['Cart', 'Pending', 'Delivered', 'Canceled'],
+      enum: ['Pending', 'Delivered', 'Canceled'],
       required: true,
-      default: 'Cart',
+      default: 'Pending',
     }
 },{ timestamps: true })
+
+orderModel.pre('save', async function (next) {
+  if (!this.orderNumber) {
+    const count = await mongoose.model('Order').countDocuments()
+    const orderNum = count + 1
+
+    this.orderNumber = `DH${String(orderNum).padStart(3, '0')}`
+  }
+
+  next()
+})
 
 // Update total
 // updateTotal = async (order) => {

@@ -19,6 +19,10 @@ const cartModel = new Schema({
           type: Number,
           default: 1
         },
+        createdAt: { 
+          type: Date, 
+          default: Date.now 
+        }
       },
     ],
 },{ timestamps: true })

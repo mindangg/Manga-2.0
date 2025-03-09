@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
       <NotificationContextProvider>
-      <CartContextProvider>
+        <CartContextProvider>
           <CardDetailsContextProvider>
             <App/>
           </CardDetailsContextProvider>

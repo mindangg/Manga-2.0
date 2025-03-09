@@ -34,6 +34,11 @@ export default function Cart() {
 
     }, [dispatch, user])
 
+    // useEffect(() => {
+    //     if (cart && cart.length > 0)
+    //         console.log('Check cart in cartitems', cart[0].items)
+    // }, [cart])
+
     return (
         <>
             {(!cart || cart.length === 0) ? (
@@ -53,13 +58,13 @@ export default function Cart() {
                         </div>
 
                         <div className='cart-items'>
-                            {cart.map((c, _) => (
+                            {cart.items?.map((c, _) => (
                                 <CartItems key={c._id} cart={c} />
                             ))}
                         </div>
                     </div>
                     <div className='cart-summary'>
-                        <h3>Total of order: ${cart.reduce((acc, c) => acc + c.total, 0)}</h3>
+                        <h3>Total of order: $</h3>
                         <Link to='/checkout'><button id='checkout-btn'>Checkout</button></Link>
                     </div>
                 </div>
