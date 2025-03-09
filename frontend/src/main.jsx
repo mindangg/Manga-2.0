@@ -11,13 +11,13 @@ import { CartContextProvider } from './contexts/CartContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
-      <NotificationContextProvider>
-        <CartContextProvider>
+      <CartContextProvider>
+        <NotificationContextProvider>
           <CardDetailsContextProvider>
             <App/>
           </CardDetailsContextProvider>
+          </NotificationContextProvider>
         </CartContextProvider>
-      </NotificationContextProvider>
     </AuthContextProvider>
   </StrictMode>,
 )

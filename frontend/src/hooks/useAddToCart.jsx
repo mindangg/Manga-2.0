@@ -3,7 +3,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { useNotificationContext } from '../hooks/useNotificationContext'
 
 export const useAddToCart = () => {
-    const { cart, dispatch } = useCartContext()
+    const { dispatch } = useCartContext()
     const { user } = useAuthContext()
     const { showNotification } = useNotificationContext()
 
@@ -13,12 +13,6 @@ export const useAddToCart = () => {
             // console.error('User not logged in')
             return
         }
-    
-        // if (cart.some(item => item.mangaID === mangaID)) {
-        //     showNotification('Product is already in cart')
-        //     console.log(cart)
-        //     return
-        // }
 
         try {
             const response = await fetch('http://localhost:4000/api/cart', {
@@ -39,7 +33,7 @@ export const useAddToCart = () => {
             }
 
             showNotification('Added to cart')
-            dispatch({ type: 'ADD_ITEM', payload: json })
+            dispatch({type: 'DISPLAY_ITEM', payload: json})
         } 
         catch (error) {
             console.error('Error adding to cart:', error)
@@ -56,10 +50,14 @@ export const useAddToCart = () => {
             })
     
             const json = await response.json()
+            console.log(json)
     
-            if (response.ok) {
-                dispatch({type: 'DELETE_ITEM', payload: json})
+            if (!response.ok) {
+                console.error('Failed to delete item in cart:', json)
+                return
             }
+
+            dispatch({type: 'DELETE_ITEM', payload: json})
         }
         catch (error) {
             console.error(error)
@@ -80,9 +78,13 @@ export const useAddToCart = () => {
             const json = await response.json()
             console.log(json)
     
-            if (response.ok) {
-                dispatch({type: 'UPDATE_QUANTITY', payload: json})
+            if (!response.ok) {
+                console.error('Failed to update quantity of item in cart:', json)
+                return
             }
+            
+            dispatch({type: 'UPDATE_QUANTITY', payload: json})
+
         }
         catch (error){
             console.error(error)
