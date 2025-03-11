@@ -16,8 +16,10 @@ const getCart = async (req, res) => {
             // .populate('userID', 'name email')
             // .populate('items.mangaID', 'title price')
 
-        if (cart)
-            cart.items.sort((a, b) => b.createdAt - a.createdAt)
+        if (!cart)
+            return res.status(400).json({error: 'Cart not found'})
+
+        cart.items.sort((a, b) => b.createdAt - a.createdAt)
         
         console.log(cart)
         res.status(200).json(cart)

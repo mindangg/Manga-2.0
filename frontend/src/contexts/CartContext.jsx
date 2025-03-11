@@ -9,18 +9,29 @@ export const cartReducer = (state, action) => {
                 cart: action.payload
             }
 
+        // case 'ADD_ITEM':
+        //     return {
+            // cart: {
+            //     ...state.cart,
+            //     items: [...state.cart.items, action.payload]
+            // }
+        //     }
+
         case 'DELETE_ITEM':
-            console.log('Delete cart', action.payload.items)
+            console.log('State', state.cart)
+            console.log('Delete', action.payload)
             return {
-                cart: state.cart.filter((i) => i._id !== action.payload.items._id)
+                cart: state.cart.items.filter((i) => i._id !== action.payload)
             }
 
-        case 'UPDATE_QUANTITY':
-            console.log('Update quantity', action.payload)
-            return {
-                cart: state.items.map((i) => 
-                        i.mangaID === action.payload.mangaID ? {...i, quantity: action.payload.quantity} : i)
-            }
+            case 'UPDATE_QUANTITY':
+                return {
+                    cart: state.cart.map((item) =>
+                        item.mangaID === action.payload.mangaID
+                            ? { ...item, quantity: action.payload.quantity }
+                            : item
+                    )
+                }
             
         default:
             return state

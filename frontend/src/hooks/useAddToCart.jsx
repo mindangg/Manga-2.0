@@ -25,7 +25,7 @@ export const useAddToCart = () => {
             })
             
             const json = await response.json()
-            console.log(json)
+            // console.log(json)
 
             if (!response.ok) {
                 console.error('Failed to add to cart:', json)
@@ -40,7 +40,7 @@ export const useAddToCart = () => {
         }
     }
 
-    const handleDelete = async (userID, mangaID) => {
+    const handleDelete = async (cartID, userID, mangaID) => {
         try {
             const response = await fetch(`http://localhost:4000/api/cart/${userID}/${mangaID}`, {
                 method: 'DELETE',
@@ -57,7 +57,7 @@ export const useAddToCart = () => {
                 return
             }
 
-            dispatch({type: 'DELETE_ITEM', payload: json})
+            dispatch({type: 'DELETE_ITEM', payload: cartID})
         }
         catch (error) {
             console.error(error)

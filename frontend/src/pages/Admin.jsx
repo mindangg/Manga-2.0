@@ -60,7 +60,7 @@ export default function Admin() {
             </div>
             
             <div className='content'>
-            {/* <div className='order-container'>
+            <div className='order-container'>
                     <div className='order-header'>
                         <span>Order</span>
                         <span>Customer</span>
@@ -72,7 +72,7 @@ export default function Admin() {
                     <OrderCard/>
                     <OrderCard/>
                     <OrderCard/>
-                </div> */}
+                </div>
                 
                 {/* <div className='manga-container'>
                     <div className='manga-header'>
@@ -90,7 +90,7 @@ export default function Admin() {
                     <MangaCard/>
                 </div> */}
 
-                <div className='user-container'>
+                {/* <div className='user-container'>
                     <div className='user-header'>
                         <span>Full Name</span>
                         <span>Username</span>
@@ -105,7 +105,7 @@ export default function Admin() {
                     <UserCard/>
                     <UserCard/>
                     <UserCard/>
-                </div>
+                </div> */}
             </div>
         </div>
     )

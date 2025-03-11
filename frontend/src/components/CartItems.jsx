@@ -38,7 +38,7 @@ export default function CartItems({ cart }) {
                 <p>{cart.mangaID && cart.mangaID.price}</p>
             </div>
             <div className='cart-delete'>
-                <button id='cart-quantityremove' onClick={() => handleDelete(user.user._id, cart.mangaID._id)}>Remove</button>
+                <button id='cart-quantityremove' onClick={() => handleDelete(cart._id, user.user._id, cart.mangaID._id)}>Remove</button>
             </div>
         </div>
     )
