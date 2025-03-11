@@ -362,3 +362,10 @@ input[type="file"] {
 .order-action{
     cursor: pointer;
 }
+
+.admin-login-container{
+    background: url('../assets/access-denied.png') no-repeat center center/cover;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
