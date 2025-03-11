@@ -154,7 +154,8 @@
     height: 20px;
     border-radius: 50%;
     background-color: var(--green);
-    color: #fff;
+    /* color: #fff; */
+    color: var(--black);
     display: flex;
     align-items: center;
     justify-content: center;

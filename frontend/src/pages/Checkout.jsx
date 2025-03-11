@@ -26,7 +26,7 @@ export default function Checkout() {
             })
 
             const json = await response.json()
-            // console.log(json)
+            console.log(json)
 
             if (response.ok) {
                 dispatch({ type: 'DISPLAY_ITEM', payload: json })
@@ -37,6 +37,30 @@ export default function Checkout() {
 
     }, [dispatch, user])
 
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${user.token}`
+    //             }
+    //         })
+
+    //         const json = await response.json()
+    //         console.log(json)
+
+    //         if (response.ok) {
+    //             dispatch({ type: 'LOGIN', payload: json })
+    //         }
+    //     }
+
+    //     fetchUser()
+
+    // }, [])
+
+    const [fullname, setFullName] = useState(user.user.fullname)
+    const [phone, setPhone] = useState(user.user.phone)
+    const [address, setAddress] = useState(user.user.address)
+
     const handlePayment = (methodCheck) => {
         if (methodCheck === 'cash')
             setMethod('cash')
@@ -46,8 +70,6 @@ export default function Checkout() {
 
         if (methodCheck === 'card')
             setMethod('card')
-
-        console.log(method)
     }
 
     return (
@@ -61,18 +83,18 @@ export default function Checkout() {
                     </select>
                     <label>Full Name</label>
                     <div className='billing-info-input'>
-                        <input itype='text' placeholder='Full Name'></input>
+                        <input itype='text' placeholder='Full Name' value={fullname}></input>
                         <label className='error'></label>
                     </div>
                     <div className='billing-info-input'>
                         <label>Phone Number</label>
-                        <input type='text' placeholder='Phone Number'></input>
+                        <input type='text' placeholder='Phone Number' value={phone}></input>
                         <label className='error'></label>
                     </div>
                     <div id='newAddress'>
                         <div className='billing-info-input'>
                             <label>Address</label>
-                            <input type='text' placeholder='Address'></input>
+                            <input type='text' placeholder='Address' value={address}></input>
                             <label className='form-group'></label>
                         </div>
                     </div>
@@ -125,18 +147,20 @@ export default function Checkout() {
 
             <div className='payment-info'>
                 <div className='payment-info-container'>
-                    {cart.map((c, _) => (
+                    {cart.items.map((c, _) => (
                         <CheckoutItems key={c._id} order={c} />
                     ))}
                 </div>
                 <div className='payment-info-summary'>
                     <div className='subtotal'>
                         <span>Subtotal • {cart.length} items</span>
-                        <span>${cart.total}</span>
+                        <span>${cart.items.reduce((total, item) => 
+                                            total + item.quantity * item.mangaID.price, 0).toFixed(2)}</span>
                     </div>
                     <div className='total'>
                         <span>Total</span>
-                        <span className='order-price'>${cart.total}</span>
+                        <span className='order-price'>${cart.items.reduce((total, item) => 
+                                            total + item.quantity * item.mangaID.price, 0).toFixed(2)}</span>
                     </div>
                 </div>
             </div>

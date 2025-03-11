@@ -27,7 +27,7 @@ export default function Cart() {
             // console.log(json)
 
             if (response.ok) {
-                dispatch({ type: 'DISPLAY_ITEM', payload: json })
+                dispatch({type: 'DISPLAY_ITEM', payload: json})
             }
         }
 
@@ -60,8 +60,8 @@ export default function Cart() {
                         </div>
                     </div>
                     <div className='cart-summary'>
-                        <h3>Total of order: ${cart.items.reduce((total, item) => 
-                                            total + item.quantity * item.price, 0).toFixed(2)}</h3>
+                        <h3>Total of order: ${cart.items && cart.items.reduce((total, item) => 
+                                            total + item.quantity * item.mangaID.price, 0).toFixed(2)}</h3>
                         <Link to='/checkout'><button id='checkout-btn'>Checkout</button></Link>
                     </div>
                 </div>
