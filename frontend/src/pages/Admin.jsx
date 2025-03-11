@@ -61,18 +61,18 @@ export default function Admin() {
             
             <div className='content'>
             <div className='order-container'>
-                    <div className='order-header'>
-                        <span>Order</span>
-                        <span>Customer</span>
-                        <span>Order Date</span>
-                        <span>Total</span>
-                        <span>Status</span>
-                        <span>Details</span>
-                    </div>
-                    <OrderCard/>
-                    <OrderCard/>
-                    <OrderCard/>
+                <div className='order-header'>
+                    <span>Order</span>
+                    <span>Customer</span>
+                    <span>Order Date</span>
+                    <span>Total</span>
+                    <span>Status</span>
+                    <span>Details</span>
                 </div>
+                <OrderCard/>
+                <OrderCard/>
+                <OrderCard/>
+            </div>
                 
                 {/* <div className='manga-container'>
                     <div className='manga-header'>

@@ -5,7 +5,8 @@ const router = express.Router()
 const requireAuth = require('../middlewares/requireAuth')
 
 const {
-    getOrders, 
+    getOrders,
+    getOrder,
     createOrder,
     deleteOrder,
     updateOrder
@@ -15,6 +16,9 @@ router.use(requireAuth)
 
 // Get orders
 router.get('/', getOrders)
+
+// Get a single order
+router.get('/:id', getOrder)
 
 // Create order
 router.post('/', createOrder)

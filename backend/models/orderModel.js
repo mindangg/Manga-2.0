@@ -31,12 +31,12 @@ const orderModel = new Schema({
     ],
     totalPrice: {
       type: Number,
-      required: true,
+      required: true
     },
     status: {
       type: String,
       enum: ['Pending', 'Delivered', 'Canceled'],
-      default: 'Pending',
+      default: 'Pending'
     }
 },{ timestamps: true })
 

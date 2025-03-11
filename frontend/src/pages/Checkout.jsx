@@ -57,9 +57,26 @@ export default function Checkout() {
 
     // }, [])
 
-    const [fullname, setFullName] = useState(user.user.fullname)
-    const [phone, setPhone] = useState(user.user.phone)
-    const [address, setAddress] = useState(user.user.address)
+    const handleCheckout = async () => {
+        const response = await fetch('http://localhost:4000/api/order', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${user.token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userID: user.user._id, cartID: cart._id })
+        })
+
+        const json = await response.json()
+        console.log(json)
+        if (!response.ok) {
+            // setError(json.error)
+        }
+    }
+
+    const [fullname, setFullName] = useState(user && user.user.fullname)
+    const [phone, setPhone] = useState(user && user.user.phone)
+    const [address, setAddress] = useState(user && user.user.address)
 
     const handlePayment = (methodCheck) => {
         if (methodCheck === 'cash')
@@ -141,7 +158,7 @@ export default function Checkout() {
                     )}
 
 
-                <button className='paynow-btn' type='button'>Pay Now</button>
+                <button className='paynow-btn' type='button' onClick={handleCheckout}>Pay Now</button>
             </div>
             </div>
 
