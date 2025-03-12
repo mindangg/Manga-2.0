@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
+import '../styles/Admin.css'
+
 export default function AdminLogin() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -16,23 +18,19 @@ export default function AdminLogin() {
 
     return (
         <div className='admin-login-container'>
-            <form id='login' onSubmit={handleSubmit}>
-                <h1>Login</h1>
+            <form id='admin-login' onSubmit={handleSubmit}>
+                <h1>Admin</h1>
 
-                <div className='login-input'>
-                    <input type='text' id='login-input--username' placeholder='Username'
+                <div className='admin-login-input'>
+                    <input type='text' id='login-input--username' placeholder='Phone number'
                             value={username} onChange={(e) => setUsername(e.target.value)}></input>
                 </div>
 
-                <div className='login-input'>
+                <div className='admin-login-input'>
                     <input type='password' id='login-input--password' placeholder='Password'
                             value={password} onChange={(e) => setPassword(e.target.value)}></input>
                 </div>
-                <button type='submit' id='login-btn'>Login</button>
-
-                <div id='login-signup'>
-                    <Link to='/signup' id='login-signup--nav'>Sign Up</Link>
-                </div>
+                <button type='submit' id='admin-login-btn'>Login</button>
                 
                 {/* {error && <div className='error'>{error}</div>} */}
             </form>

@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from 'react'
+import { createContext, useReducer } from 'react'
 
 export const AuthContext = createContext()
 
@@ -16,7 +16,7 @@ export const authReducer = (state, action) => {
 
         case 'DELETE_USER':
             return { 
-                users: state.users.filter((u) => u._id !== action.payload._id)
+                users: state.users.filter((u) => u._id !== action.payload)
             }
 
         case 'UPDATE_USER':

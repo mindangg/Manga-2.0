@@ -1,33 +1,28 @@
 import { createContext, useReducer } from 'react'
 
-export const CartContext = createContext()
+export const OrderContext = createContext()
 
-export const cartReducer = (state, action) => {
+export const orderReducer = (state, action) => {
     switch(action.type) {
         case 'DISPLAY_ITEM':
             console.log('Deleted: ', action.payload)
             return {
-                cart: action.payload
-            }
-            
-        case 'UPDATE_ITEM':
-            return {
-                
+                order: action.payload
             }
             
         case 'ADD_ITEM':
             return {
-                cart: [action.payload, ...state.cart]
+                order: [action.payload, ...state.order]
             }
 
         case 'DELETE_ITEM':
             return {
-                cart: state.cart.filter((c) => c._id !== action.payload._id)
+                order: state.order.filter((c) => c._id !== action.payload)
             }
 
         case 'UPDATE_ITEM':
             return {
-                cart: state.cart.map((c) => c._id === action.payload._id ? action.payload : c)
+                order: state.order.map((c) => c._id === action.payload._id ? action.payload : c)
             }
             
         default:
@@ -35,14 +30,14 @@ export const cartReducer = (state, action) => {
     }
 }
 
-export const CartContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(cartReducer, {
-        cart: []
+export const OrderContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(orderReducer, {
+        order: []
     })
 
     return (
-        <CartContext.Provider value={{...state, dispatch}}>
+        <OrderContext.Provider value={{...state, dispatch}}>
             { children }
-        </CartContext.Provider>
+        </OrderContext.Provider>
     )
 }
