@@ -6,10 +6,12 @@ import '../styles/UserInfo.css'
 import Order from '../components/Order'
 
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useOrderContext } from '../hooks/useOrderContext'
 
 export default function UserInfo() {
     const { logout } = useLogout()
     const { user, dispatch } = useAuthContext()
+    const { order, dispatch: orderDispatch } = useOrderContext()
 
     const [isOrder, setIsOrder] = useState(true)
     const [isUser, setIsUser] = useState(false)
@@ -58,6 +60,26 @@ export default function UserInfo() {
         }
     }
 
+    useEffect(() => {
+        const fetchOrder = async () => {
+            const response = await fetch('http://localhost:4000/api/order/', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+
+            const json = await response.json()
+            console.log(json)
+
+            if (response.ok) {
+                orderDispatch({ type: 'DISPLAY_ITEM', payload: json })
+            }
+        }
+
+        fetchOrder()
+
+    }, [])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -102,12 +124,12 @@ export default function UserInfo() {
 
             {isOrder 
             ? (
-                <div id='order-container'>
+                <div id='order-history-container'>
                     <h2>Your Order History</h2>
                     <div className='order-history'>
-                        <Order/>
-                        <Order/>
-                        <Order/>
+                        {order?.map((o) => {
+                            <Order key={o._id} order={o}/>
+                        })}
                     </div>
                 </div>
             ) : (

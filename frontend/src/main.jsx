@@ -7,17 +7,20 @@ import { AuthContextProvider } from './contexts/AuthContext.jsx'
 import { NotificationContextProvider } from './contexts/NotificationContext.jsx'
 import { CardDetailsContextProvider } from './contexts/CardDetailsContext.jsx'
 import { CartContextProvider } from './contexts/CartContext.jsx'
+import { OrderContextProvider } from './contexts/OrderContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
-      <CartContextProvider>
-        <NotificationContextProvider>
-          <CardDetailsContextProvider>
-            <App/>
-          </CardDetailsContextProvider>
-          </NotificationContextProvider>
+      <NotificationContextProvider>
+        <CartContextProvider>
+          <OrderContextProvider>
+            <CardDetailsContextProvider>
+              <App/>
+            </CardDetailsContextProvider>
+          </OrderContextProvider>
         </CartContextProvider>
+      </NotificationContextProvider>
     </AuthContextProvider>
   </StrictMode>,
 )

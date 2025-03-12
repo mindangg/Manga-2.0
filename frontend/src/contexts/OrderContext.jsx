@@ -5,7 +5,6 @@ export const OrderContext = createContext()
 export const orderReducer = (state, action) => {
     switch(action.type) {
         case 'DISPLAY_ITEM':
-            console.log('Deleted: ', action.payload)
             return {
                 order: action.payload
             }
