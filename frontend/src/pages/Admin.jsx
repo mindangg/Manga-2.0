@@ -4,15 +4,15 @@ import logo from '../assets/WEBTOON_Logo.png'
 
 import '../styles/Admin.css'
 
-import UserCard from '../components/UserCard'
-import MangaCard from '../components/MangaCard'
-import OrderCard from '../components/OrderCard'
-import AddProduct from '../components/AddProduct'
+
+
+
+
 
 import AdminLogin from './AdminLogin'
-
-import AddUser from '../components/AddUser'
-
+import AdminOrder from './AdminOrder'
+import AdminUser from './AdminUser'
+import AdminProduct from './AdminProduct'
 
 export default function Admin() {
 
@@ -65,54 +65,7 @@ export default function Admin() {
             </div>
             
             <div className='content'>
-            <AddUser/>
-            
-            {/* <div className='order-container'>
-                <div className='order-header'>
-                    <span>Order</span>
-                    <span>Customer</span>
-                    <span>Order Date</span>
-                    <span>Total</span>
-                    <span>Status</span>
-                    <span>Details</span>
-                </div>
-                <OrderCard/>
-                <OrderCard/>
-                <OrderCard/>
-            </div> */}
-                
-                {/* <div className='manga-container'>
-                    <div className='manga-header'>
-                        <span>Cover</span>
-                        <span>Title</span>
-                        <span>Category</span>
-                        <span>Author</span>
-                        <span>Stock</span>
-                        <span>Price</span>
-                        <span>Edit</span>
-                    </div>
-                    
-                    <MangaCard/>
-                    <MangaCard/>
-                    <MangaCard/>
-                </div> */}
-
-                {/* <div className='user-container'>
-                    <div className='user-header'>
-                        <span>Full Name</span>
-                        <span>Username</span>
-                        <span>Email</span>
-                        <span>Phone Number</span>
-                        <span>Address</span>
-                        <span>Date Created</span>
-                        <span>Status</span>
-                        <span>Edit</span>
-                    </div>
-
-                    <UserCard/>
-                    <UserCard/>
-                    <UserCard/>
-                </div> */}
+                <AdminOrder/>
             </div>
         </div>
     )

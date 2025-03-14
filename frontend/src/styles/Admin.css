@@ -318,6 +318,53 @@ input[type="file"] {
     flex-direction: column;
 }
 
+.order-controller{
+    display: flex;
+    align-items: center;
+}
+
+.order-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 450px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.order-controller input[type='date']{
+    width: 15%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.order-search{
+    position: relative;
+}
+
+.order-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.order-controller i:nth-of-type(1){
+    color: white;
+    /* padding: 10px;
+    background-color: var(--gray); */
+}
+
+.order-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
 .order-header{
     font-weight: bold;
 }
@@ -454,84 +501,6 @@ input[type="file"] {
     width: 0;
 }
 
-
-
-
-
-.tool{
-    display: flex;
-}
-.tool .search-order{
-    background-color: var(--black);
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    height: 40px;
-    cursor: pointer;
-    color: white;
-    margin-right: 25px;
-    width: 70%;
-    padding: 0px 10px;
-
-
-}
-.tool input,
-.modal input{
-    background: transparent;
-    border: none;
-    padding: 10px 0 10px;
-    font-size: 15px;
-    color: white;
-    margin: 0px 10px;
-}
-.tool input{
-    width: 80%;
-}
-.modal input{
-    width: 100%;
-    border: solid 1px #363636;
-    margin: 10px;
-    padding: 10px;
-}
-.tool input:focus,
-.modal input:focus{
-    outline: none;
-
-}
-.tool label{
-    color: white;
-    margin: 10px;
-}
-.tool .date{
-    background-color: var(--black);
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    height: 40px;
-    cursor: pointer;
-    color: white;
-    width: 80%;
-    padding: 0px 10px;
-}
-.tool >i{
-    background-color: var(--black);
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    height: 40px;
-    cursor: pointer;
-    color: white;
-    padding:  10px;
-}
-table{
-    background-color: var(--black);
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    height: 40px;
-    cursor: pointer;
-    color: white;
-    width: 100%;
-    padding: 0px 10px;
-    margin: 20px;
-}
-
 .add-user-container{
     position: fixed; 
     left: 0;
@@ -558,9 +527,15 @@ table{
 
 .add-user i{
     position: absolute;
+    font-size: 18px;
     top: 3%;
     right: 3%;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-user i:hover{
+    transform: translateY(-5px);
 }
 
 .add-user label{
