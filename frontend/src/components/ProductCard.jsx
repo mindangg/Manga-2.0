@@ -15,7 +15,7 @@ export default function ProductCard({ manga }) {
             })
 
             if (!response.ok) {
-                console.error('Failed to delete imanga:', json)
+                console.error('Failed to delete manga')
                 return
             }
 

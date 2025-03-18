@@ -123,7 +123,7 @@ const deleteManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({error: 'No such manga'})
 
-    const manga = await Manga.findOneAndDelete({_id: id})
+    const manga = await Manga.findByIdAndDelete(id)
 
     if(!manga)
         return res.status(400).json({error: 'No such manga'})

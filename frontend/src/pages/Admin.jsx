@@ -66,8 +66,8 @@ export default function Admin() {
             
             <div className='content'>
                 {/* <AdminOrder/> */}
-                {/* <AdminUser/> */}
-                <AdminProduct/>
+                <AdminUser/>
+                {/* <AdminProduct/> */}
             </div>
         </div>
     )
