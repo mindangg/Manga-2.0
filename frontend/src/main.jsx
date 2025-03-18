@@ -8,17 +8,23 @@ import { NotificationContextProvider } from './contexts/NotificationContext.jsx'
 import { CardDetailsContextProvider } from './contexts/CardDetailsContext.jsx'
 import { CartContextProvider } from './contexts/CartContext.jsx'
 import { OrderContextProvider } from './contexts/OrderContext.jsx'
+import { MangaContextProvider } from './contexts/MangaContext.jsx'
+import { UserContextProvider } from './contexts/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthContextProvider>
       <NotificationContextProvider>
         <CartContextProvider>
-          <OrderContextProvider>
-            <CardDetailsContextProvider>
-              <App/>
-            </CardDetailsContextProvider>
-          </OrderContextProvider>
+          <MangaContextProvider>
+            <UserContextProvider>
+              <OrderContextProvider>
+                <CardDetailsContextProvider>
+                  <App/>
+                </CardDetailsContextProvider>
+              </OrderContextProvider>
+            </UserContextProvider>
+          </MangaContextProvider>
         </CartContextProvider>
       </NotificationContextProvider>
     </AuthContextProvider>

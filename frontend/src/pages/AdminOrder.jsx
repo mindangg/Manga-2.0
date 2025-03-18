@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import '../styles/Admin.css'
 
 import OrderCard from '../components/OrderCard'
+import Pagination from '../components/Pagination'
 
 export default function AdminOrder() {
+    const [order, setOrder] = useState([])
+
+    const [currentPage, setCurrentPage] = useState(1) 
+    const [productPerPages, setProductPerPages] = useState(8) 
+
+    useEffect(() => {
+        const fetchOrder = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/api/order')
+
+                if (!response.ok)
+                    console.error('Error fetching order:', response.status)
+
+                const json = await response.json()
+                // console.log(json)
+                setOrder(json)
+            }
+            catch (error) {
+                console.error('Error fetching order:', error)
+            }
+        }
+
+        fetchOrder()
+    }, [])
+
+    const lastPageIndex = currentPage * productPerPages
+    const firstPageIndex = lastPageIndex - productPerPages
+    const currentOrder = order.slice(firstPageIndex, lastPageIndex)
+
     return (
         <div className='order-container'>
             <div className = 'order-controller'>
@@ -36,9 +66,15 @@ export default function AdminOrder() {
                 <span>Status</span>
                 <span>Details</span>
             </div>
-            <OrderCard/>
-            <OrderCard/>
-            <OrderCard/>
+
+            {currentOrder && currentOrder.map((o) => (
+                <OrderCard key={o._id} order={o}/>
+            ))}
+            <Pagination
+                totalProducts={order.length} 
+                productPerPages={productPerPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}/>
         </div>
     )
 }

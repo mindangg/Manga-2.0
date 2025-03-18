@@ -55,6 +55,243 @@
     height: 100%;
     padding: 30px 70px;
 }
+
+
+
+.user-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-controller{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.user-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 420px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.user-controller input[type='date']{
+    width: 15%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.user-controller button{
+    color: black;
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.user-controller button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.user-controller button i{
+    color: black;
+}
+
+.user-search{
+    position: relative;
+}
+
+.user-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.user-controller i:nth-of-type(1){
+    color: white;
+    /* padding: 10px;
+    background-color: var(--gray); */
+}
+
+.user-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
+.user-header{
+    font-weight: bold;
+}
+.user-header,
+.user-info{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2.5fr 2.5fr 4fr 2fr 1.5fr 1fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+} 
+
+.user-status{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.user-status-lock{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.user-action i{
+    cursor: pointer;
+}
+
+.user-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.manga-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-controller{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.manga-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 400px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.manga-controller input[type='date']{
+    width: 12%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.manga-controller button{
+    color: black;
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.manga-controller button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.manga-controller button i{
+    color: black;
+}
+
+.manga-search{
+    position: relative;
+}
+
+.manga-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.manga-controller i:nth-of-type(1){
+    color: white;
+}
+
+.manga-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
+.manga-header{
+    font-weight: bold;
+}
+
+.manga-header,
+.manga-info{
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr 2fr 1.5fr 2fr 1fr;
+    padding: 15px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+}
+
+.manga-info img{
+    width: 80px;
+    height: 100px;
+}
+
+.manga-action i{
+    cursor: pointer;
+}
+
+.manga-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.manga-icon{
+    display: flex;
+
+}
+
+.manga-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.manga-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.manga-icon i{
+    margin-right: 5px;
+    color: black!important;
+}
+
 .add-product{
     display: flex;
     width: 100%;
@@ -72,69 +309,9 @@ select {
     margin-right: 25px;
 }
 
-.form-search {
-    display: flex;
-    justify-content: center;
-    border: 1px solid var(--gray);
-    border-radius: 5px;
-    width: 400px;
-}
-
-.search-btn {
-    border: none;
-    outline: none;
-    font-size: 20px;
-    height: 40px;
-    padding: 0 15px;
-    color: var(--text-color);
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    background-color: var(--black);
-    color: white;
-}
-
-.form-search-input {
-    height: 40px;
-    outline: none;
-    border: none;
-    background-color: var(--black);
-    padding: 10px 20px;
-    padding-left: 0;
-    border-radius: 5px;
-    width: 100%;
-    color: white;
-}
-
-.btn-control-large{
-    background-color: var(--green);
-    height: 40px;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 0 20px;
-    width: auto!important;
-    font-weight: bold;
-    margin-right: 15px;
-}
-
-.btn-control-large:hover{
-    cursor: pointer;
-    background-color: rgba(8, 220, 100, 0.8);
-}
-
-.admin-control-right i {
-    margin-right: 5px;
-    color: black;
-}
-
 .add{
     position: relative;
     width: 60%;
-    /* padding: 30px; */
-    /* border: 1px solid red; */
     margin: 0 auto;
 }
 
@@ -189,13 +366,12 @@ select {
     border-radius: 5px;
 }
 
-
-.add-file {
+.add-file{
     text-align: center;
     margin-top: 20px;
 }
 
-input[type="file"] {
+input[type='file'] {
     display: none;
 }
 
@@ -238,79 +414,6 @@ input[type="file"] {
     background-color: rgba(8, 220, 100, 0.8);
 }
 
-.user-container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.user-header{
-    font-weight: bold;
-}
-.user-header,
-.user-info{
-    display: grid;
-    grid-template-columns: 2fr 2fr 2.5fr 2.5fr 4fr 2fr 1.5fr 1fr;
-    padding: 25px 0;
-    text-align: center;
-    align-items: center;
-    color: white;
-    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
-} 
-
-.user-status{
-    background-color: #28ac64;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.user-status-lock{
-    background-color: #f84c2c;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.user-action i{
-    cursor: pointer;
-}
-
-.user-action i:nth-of-type(1){
-    margin-right: 10px;
-}
-
-
-.manga-container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.manga-header{
-    font-weight: bold;
-}
-
-.manga-header,
-.manga-info{
-    display: grid;
-    grid-template-columns: 2fr 4fr 2fr 2fr 1.5fr 2fr 1fr;
-    padding: 25px 0;
-    text-align: center;
-    align-items: center;
-    color: white;
-    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
-}
-
-.manga-info img{
-    width: 90px;
-}
-
-.manga-action i{
-    cursor: pointer;
-}
-
-.manga-action i:nth-of-type(1){
-    margin-right: 10px;
-}
-
 
 .order-container{
     width: 100%;
@@ -321,6 +424,7 @@ input[type="file"] {
 .order-controller{
     display: flex;
     align-items: center;
+    margin-bottom: 25px;
 }
 
 .order-controller input{
@@ -445,7 +549,7 @@ input[type="file"] {
     font-size: 14px;
     display: block;
     margin: 5px;
-    font-family: "Poppins-Regular", sans-serif;
+    font-family: 'Poppins-Regular', sans-serif;
 } */
 
 #admin-login input{

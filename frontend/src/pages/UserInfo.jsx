@@ -21,29 +21,29 @@ export default function UserInfo() {
     const [phone, setPhone] = useState(user.user.phone)
     const [address, setAddress] = useState(user.user.address)
 
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${user.token}`
+    //             }
+    //         })
+
+    //         const json = await response.json()
+    //         console.log(json)
+
+    //         if (response.ok) {
+    //             dispatch({ type: 'LOGIN', payload: json })
+    //         }
+    //     }
+
+    //     fetchUser()
+
+    //     console.log(user)
+    // }, [])
+
     useEffect(() => {
-        const fetchUser = async () => {
-            const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-
-            const json = await response.json()
-            console.log(json)
-
-            if (response.ok) {
-                dispatch({ type: 'LOGIN', payload: json })
-            }
-        }
-
-        fetchUser()
-
         console.log(user)
-    }, [])
-
-    useEffect(() => {
-        console.log(user.user.address)
     }, [])
     
     const toggleOrder = () => {
@@ -118,7 +118,7 @@ export default function UserInfo() {
                         <li onClick={toggleOrder}>Orders</li>
                         <li onClick={toggleUser}>User Info</li> 
                     </div>
-                    <li onClick={() => logout()}>Logout</li> 
+                    <li onClick={logout}>Logout</li> 
                 </ul>
             </div>
 

@@ -3,6 +3,7 @@ const express = require('express')
 const {
     loginUser,
     signupUser,
+    getAllUsers,
     getUser,
     updateUser
 } = require('../controllers/userControllers')
@@ -16,6 +17,9 @@ router.post('/login', loginUser)
 router.post('/signup', signupUser)
 
 // get a single user
+router.get('/', getAllUsers)
+
+// get all users
 router.get('/:id', getUser)
 
 // update a single user

@@ -22,6 +22,10 @@ const upload = multer({
 const getAllManga = async (req, res) => {
     try {
         const manga = await Manga.find().sort({ title: 1 })
+
+        if (!manga)
+            return res.status(404).json({error: 'Manga not found'})
+        
         res.status(200).json(manga)
     }   
     catch (error){

@@ -1,5 +1,4 @@
 import { createContext, useReducer } from 'react'
-import { CartContext } from './OrderContext'
 
 export const MangaContext = createContext() 
 
@@ -20,7 +19,7 @@ export const mangaReducer = (state, action) => {
                 manga: state.manga.filter((m) => m._id !== action.payload)
             }
 
-        case 'DISPLAY_ITEM':
+        case 'UPDATE_ITEM':
             return {
                 manga: state.manga.map((m) => m._id === action.payload._id ? action.payload : m)
             }
@@ -36,8 +35,8 @@ export const MangaContextProvider = ({ children }) => {
     })
 
     return (
-        <CartContext.Provider value={{...state, dispatch}}>
+        <MangaContext.Provider value={{...state, dispatch}}>
             { children }
-        </CartContext.Provider>
+        </MangaContext.Provider>
     )
 }

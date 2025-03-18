@@ -19,8 +19,12 @@ export default function Product() {
                 const url = searchParams.toString()
                 ? `http://localhost:4000/api/manga/product?${searchParams}`
                 : `http://localhost:4000/api/manga`
-                console.log(url)
+
                 const response = await fetch(url)
+
+                if (!response.ok)
+                    console.error('Error fetching order:', response.status)
+                
                 const json = await response.json()
                 setManga(json)
             } 

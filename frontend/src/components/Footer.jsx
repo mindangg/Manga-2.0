@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
         </div>
         <hr />
-        <p className="copyright">© 2024, Web Development, Powered by J97</p>
+        <p className="copyright">© {new Date().getFullYear()}, Web Development, Powered by J97</p>
       </div>
     </footer>
   );

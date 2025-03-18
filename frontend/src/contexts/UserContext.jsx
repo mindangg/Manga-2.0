@@ -1,8 +1,8 @@
 import { createContext, useReducer } from 'react'
 
-export const AuthContext = createContext()
+export const UserContext = createContext()
 
-export const authReducer = (state, action) => {
+export const userReducer = (state, action) => {
     switch(action.type){
         case 'SET_USER': 
             return { 
@@ -29,14 +29,14 @@ export const authReducer = (state, action) => {
     }
 }
 
-export const AuthContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, {
+export const UserContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(userReducer, {
         users: [],
     })
 
     return (
-        <AuthContext.Provider value={{...state, dispatch}}>
+        <UserContext.Provider value={{...state, dispatch}}>
             { children }
-        </AuthContext.Provider>
+        </UserContext.Provider>
     )
 }

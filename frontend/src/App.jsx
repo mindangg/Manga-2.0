@@ -18,6 +18,8 @@ import Footer from './components/Footer'
 import Notification from './components/Notification'
 import CardDetails from './components/CardDetails'
 
+import ScrollToTop from './components/ScrollToTop'
+
 const Layout = () => {
   const hideLayout = useLocation().pathname === '/admin'
   const { user } = useAuthContext()
@@ -48,6 +50,7 @@ const Layout = () => {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <Layout />
     </BrowserRouter>
   )
