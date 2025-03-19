@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/Admin.css';
 
 import { useUserContext } from '../hooks/useUserContext';
@@ -18,20 +18,20 @@ export default function AddCustomer({ toggleAdd }) {
         console.log('Form submitted!')
 
         try {
-            const response = await fetch('http://localhost:4000/api/user', {
+            const response = await fetch('http://localhost:4000/api/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, email, password, phone, address })
+                body: JSON.stringify({ username, fullname, email, password, phone, address })
             })
 
             if (!response.ok)
-                console.error('Failed to add user')
+                throw new Error(`HTTP error! Status: ${response.status}`)
 
             const json = await response.json()
 
-            dispatch({type: 'ADD_ITEM', payload: json})
+            dispatch({type: 'ADD_USER', payload: json})
         }
         catch (error) {
             console.error(error)
@@ -45,22 +45,28 @@ export default function AddCustomer({ toggleAdd }) {
                 <h2>Add new customer</h2>
                 <form>
                     <label>User name</label>
-                    <input type='text' placeholder='User name' required />
+                    <input type='text' placeholder='User name' value={username} 
+                                onChange={(e) => setUsername(e.target.value)}/>
 
                     <label>Full name</label>
-                    <input type='text' placeholder='Name' required />
+                    <input type='text' placeholder='Name' value={fullname} 
+                                onChange={(e) => setFullname(e.target.value)}/>
 
                     <label>Email</label>
-                    <input type='text' placeholder='abc@gmail.com' required />
+                    <input type='text' placeholder='abc@gmail.com' value={email}
+                                onChange={(e) => setEmail(e.target.value)}/>
 
                     <label>Password</label>
-                    <input type='text' placeholder='Password' required />
+                    <input type='text' placeholder='Password' value={password}
+                                onChange={(e) => setPassword(e.target.value)}/>
 
                     <label>Phone number</label>
-                    <input type='text' placeholder='Phone numer' required />
+                    <input type='text' placeholder='Phone numer' value={phone}
+                                onChange={(e) => setPhone(e.target.value)}/>
 
                     <label>Address</label>
-                    <input type='address' placeholder='Address' required />
+                    <input type='address' placeholder='Address' value={address}
+                                onChange={(e) => setAddress(e.target.value)}/>
 
                     <div style={{textAlign: 'center'}}>
                         <button type='submit' onClick={handleUpload}>+ Add</button>
