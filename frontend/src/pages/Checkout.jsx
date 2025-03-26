@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../styles/Checkout.css'
 
 import QR from '../assets/QR.jpg'
@@ -8,11 +9,22 @@ import CheckoutItems from '../components/CheckoutItems'
 import { useCartContext } from '../hooks/useCartContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
+import { useNotificationContext } from '../hooks/useNotificationContext'
+
 export default function Checkout() {
     const { cart, dispatch } = useCartContext()
     const { user } = useAuthContext()
+    const { showNotification } = useNotificationContext()
+
+    const navigate = useNavigate()
 
     const [method, setMethod] = useState('cash')
+    const [cardNumber, setCardNumber] = useState('')
+    const [cardName, setCardName] = useState('')
+
+    const handlePayment = (methodCheck) => {
+        setMethod(methodCheck)
+    }
 
     useEffect(() => {
         if (!user) 
@@ -37,56 +49,33 @@ export default function Checkout() {
 
     }, [dispatch, user])
 
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${user.token}`
-    //             }
-    //         })
-
-    //         const json = await response.json()
-    //         console.log(json)
-
-    //         if (response.ok) {
-    //             dispatch({ type: 'LOGIN', payload: json })
-    //         }
-    //     }
-
-    //     fetchUser()
-
-    // }, [])
-
     const handleCheckout = async () => {
-        const response = await fetch('http://localhost:4000/api/order', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${user.token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ userID: user.user._id, cartID: cart._id })
-        })
+        if (method === 'card')
+            if (cardNumber === '' || cardName === '') {
+                console.log('Missing card number or name')
+                return
+            }
 
-        const json = await response.json()
-        console.log(json)
-        if (!response.ok) {
-            // setError(json.error)
+        try {
+            const response = await fetch('http://localhost:4000/api/order', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userID: user.user._id, cartID: cart._id })
+            })
+
+            if (!response.ok)
+                return console.error('Error fetching order:', response.status)
+
+            dispatch({type: 'CLEAR_ITEM'})
+            navigate('/user-info')
+            showNotification('Successfully placed order')
         }
-    }
-
-    const [fullname, setFullName] = useState(user && user.user.fullname)
-    const [phone, setPhone] = useState(user && user.user.phone)
-    const [address, setAddress] = useState(user && user.user.address)
-
-    const handlePayment = (methodCheck) => {
-        if (methodCheck === 'cash')
-            setMethod('cash')
-
-        if (methodCheck === 'qr')
-            setMethod('qr')
-
-        if (methodCheck === 'card')
-            setMethod('card')
+        catch (error) {
+            console.error('Checkout failed:', error)
+        }
     }
 
     return (
@@ -94,25 +83,19 @@ export default function Checkout() {
             <div style={{marginRight: 20 + 'px'}}>
                 <div className='billing-form'>
                     <h2>Billing Information</h2>
-                    <select id='selectAddressOrder'>
-                        <option value='userAddress' defaultValue={true}>Address and user information</option>
-                        <option value='newAddress'>New address and user information</option>
-                    </select>
-                    <label>Full Name</label>
+                    <h3 style={{marginBottom: '15px'}}>Address and user information</h3>
+                    <label>Email</label>
                     <div className='billing-info-input'>
-                        <input itype='text' placeholder='Full Name' value={fullname}></input>
-                        <label className='error'></label>
+                        <input type='text' placeholder='Email' value={user && user.user.email} readOnly></input>
                     </div>
                     <div className='billing-info-input'>
                         <label>Phone Number</label>
-                        <input type='text' placeholder='Phone Number' value={phone}></input>
-                        <label className='error'></label>
+                        <input type='text' placeholder='Phone Number' value={user && user.user.phone} readOnly></input>
                     </div>
-                    <div id='newAddress'>
+                    <div>
                         <div className='billing-info-input'>
                             <label>Address</label>
-                            <input type='text' placeholder='Address' value={address}></input>
-                            <label className='form-group'></label>
+                            <input type='text' placeholder='Address' value={user && user.user.address} readOnly></input>
                         </div>
                     </div>
                 </div>
@@ -146,17 +129,18 @@ export default function Checkout() {
                             </select>
                             <div className='billing-info-input'>
                                 <label>Card Number</label>
-                                <input id='billing-info--cardnumber' type='text' placeholder='Card Number' className='form-group'></input>
+                                <input id='billing-info--cardnumber' type='text' placeholder='Card Number' className='form-group'
+                                                    value={cardNumber} onChange={(e) => setCardNumber(e.target.value)}></input>
                                 <label className='error'></label>
                             </div>
                             <div className='billing-info-input'>
                                 <label>Name On Card</label>
-                                <input id='billing-info-nameoncard' type='text' placeholder='Name On Card' className='form-group'></input>
+                                <input id='billing-info-nameoncard' type='text' placeholder='Name On Card' className='form-group'
+                                                    value={cardName} onChange={(e) => setCardName(e.target.value)}></input>
                                 <label className='error' ></label>
                             </div>
                         </div>
                     )}
-
 
                 <button className='paynow-btn' type='button' onClick={handleCheckout}>Pay Now</button>
             </div>

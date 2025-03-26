@@ -1,7 +1,5 @@
 const express = require('express')
 
-const router = express.Router()
-
 const requireAuth = require('../middlewares/requireAuth')
 
 const {
@@ -11,6 +9,8 @@ const {
     deleteCart,
     updateCartQuantity
 } = require('../controllers/cartControllers')
+
+const router = express.Router()
 
 router.use(requireAuth)
 

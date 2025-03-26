@@ -33,7 +33,7 @@ export default function ProductCard({ manga }) {
             </span>
             <span>{manga.title}</span>
             <span>{manga.category}</span>
-            <span>{manga.category}</span>
+            <span>{manga.author}</span>
             <span>{manga.stock}</span>
             <span>$ {manga.price}</span>
             <span className='manga-action'>

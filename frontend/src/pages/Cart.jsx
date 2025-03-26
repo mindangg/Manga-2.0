@@ -17,17 +17,23 @@ export default function Cart() {
             return
         
         const fetchCart = async () => {
-            const response = await fetch('http://localhost:4000/api/cart', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            
-            const json = await response.json()
-            // console.log(json)
-
-            if (response.ok) {
+            try {
+                const response = await fetch('http://localhost:4000/api/cart', {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+    
+                if (!response.ok)
+                    return console.error('Error fetching cart:', response.status)
+                
+                const json = await response.json()
+    
                 dispatch({type: 'DISPLAY_ITEM', payload: json})
+                // console.log(cart)
+            }
+            catch (error) {
+                console.error('Error fetching cart:', error)
             }
         }
 
@@ -54,14 +60,14 @@ export default function Cart() {
                         </div>
 
                         <div className='cart-items'>
-                            {cart.items?.map((c) => (
-                                <CartItems key={c._id} cart={c} />
+                            {cart && cart.items.map((c) => (
+                                <CartItems key={c.mangaID?._id} cart={c} />
                             ))}
                         </div>
                     </div>
                     <div className='cart-summary'>
                         <h3>Total of order: ${cart && cart.items.reduce((total, item) => total + 
-                                item.quantity * (item.mangaID && item.mangaID.price), 0).toFixed(2)}</h3>
+                                item.quantity * (item.mangaID && item.mangaID.price || 0), 0).toFixed(2)}</h3>
                         <Link to='/checkout'><button id='checkout-btn'>Checkout</button></Link>
                     </div>
                 </div>

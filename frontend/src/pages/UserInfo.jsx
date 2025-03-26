@@ -41,10 +41,6 @@ export default function UserInfo() {
 
     //     console.log(user)
     // }, [])
-
-    useEffect(() => {
-        console.log(user)
-    }, [])
     
     const toggleOrder = () => {
         if (!isOrder) {
@@ -62,23 +58,29 @@ export default function UserInfo() {
 
     useEffect(() => {
         const fetchOrder = async () => {
-            const response = await fetch('http://localhost:4000/api/order/', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
+            try {
+                const response = await fetch('http://localhost:4000/api/order/' + user.user._id, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
 
-            const json = await response.json()
-            console.log(json)
+                if (!response.ok)
+                    return console.error('Error fetching order:', response.status)
+    
+                const json = await response.json()        
 
-            if (response.ok) {
                 orderDispatch({ type: 'DISPLAY_ITEM', payload: json })
+                console.log(order)
+            }
+            catch (error) {
+                console.error('Error fetching order:', error)
             }
         }
 
         fetchOrder()
 
-    }, [])
+    }, [orderDispatch])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -127,9 +129,9 @@ export default function UserInfo() {
                 <div id='order-history-container'>
                     <h2>Your Order History</h2>
                     <div className='order-history'>
-                        {order?.map((o) => {
+                        {order && order.map((o) => (
                             <Order key={o._id} order={o}/>
-                        })}
+                        ))}
                     </div>
                 </div>
             ) : (

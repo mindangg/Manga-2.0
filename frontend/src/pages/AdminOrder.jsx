@@ -5,8 +5,12 @@ import '../styles/Admin.css'
 import OrderCard from '../components/OrderCard'
 import Pagination from '../components/Pagination'
 
+import { useOrderContext } from '../hooks/useOrderContext'
+import { useAdminContext } from '../hooks/useAdminContext'
+
 export default function AdminOrder() {
-    const [order, setOrder] = useState([])
+    const { order, dispatch } = useOrderContext()
+    const { admin } = useAdminContext()
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
@@ -14,14 +18,18 @@ export default function AdminOrder() {
     useEffect(() => {
         const fetchOrder = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/order')
+                const response = await fetch('http://localhost:4000/api/order', {
+                    headers: {
+                        'Authorization': `Bearer ${admin.token}`
+                    }
+                })
 
                 if (!response.ok)
-                    console.error('Error fetching order:', response.status)
+                    return console.error('Error fetching order:', response.status)
 
                 const json = await response.json()
-                // console.log(json)
-                setOrder(json)
+                
+                dispatch({type: 'DISPLAY_ITEM', payload: json})
             }
             catch (error) {
                 console.error('Error fetching order:', error)
@@ -29,11 +37,11 @@ export default function AdminOrder() {
         }
 
         fetchOrder()
-    }, [])
+    }, [dispatch])
 
     const lastPageIndex = currentPage * productPerPages
     const firstPageIndex = lastPageIndex - productPerPages
-    const currentOrder = order.slice(firstPageIndex, lastPageIndex)
+    const currentOrder = order && order?.slice(firstPageIndex, lastPageIndex)
 
     return (
         <div className='order-container'>
@@ -56,7 +64,11 @@ export default function AdminOrder() {
                 <label>To</label>
 
                 <input type='date'></input>
-                <i className='fa-solid fa-rotate-right'></i>
+
+                <div className='user-icon'>
+                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    {/* <button onClick={toggleAdd}><i className='fa-solid fa-plus'></i>Add</button> */}
+                </div>
             </div>
             <div className='order-header'>
                 <span>Order</span>
@@ -71,7 +83,7 @@ export default function AdminOrder() {
                 <OrderCard key={o._id} order={o}/>
             ))}
             <Pagination
-                totalProducts={order.length} 
+                totalProducts={order?.length} 
                 productPerPages={productPerPages}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}/>

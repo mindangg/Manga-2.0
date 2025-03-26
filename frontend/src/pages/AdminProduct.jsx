@@ -7,9 +7,11 @@ import AddProduct from '../components/AddProduct'
 import Pagination from '../components/Pagination'
 
 import { useMangaContext } from '../hooks/useMangaContext'
+import { useAdminContext } from '../hooks/useAdminContext'
 
 export default function AdminProduct() {
     const { manga, dispatch } = useMangaContext()
+    const { admin } = useAdminContext()
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
@@ -23,10 +25,14 @@ export default function AdminProduct() {
     useEffect(() => {
         const fetchManga = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/manga')
+                const response = await fetch('http://localhost:4000/api/manga', {
+                    headers: {
+                        'Authorization': `Bearer ${admin.token}`
+                    }
+                })
 
                 if (!response.ok)
-                    console.error('Error fetching manga:', response.status)
+                    return console.error('Error fetching manga:', response.status)
 
                 const json = await response.json()
     
@@ -42,7 +48,7 @@ export default function AdminProduct() {
 
     const lastPageIndex = currentPage * productPerPages
     const firstPageIndex = lastPageIndex - productPerPages
-    const currentManga = manga.slice(firstPageIndex, lastPageIndex)
+    const currentManga = manga?.slice(firstPageIndex, lastPageIndex)
 
     return (
         <div className='manga-container'>
@@ -92,7 +98,7 @@ export default function AdminProduct() {
                 <ProductCard key={m._id} manga={m}/>
             ))}
             <Pagination
-                totalProducts={manga.length} 
+                totalProducts={manga?.length} 
                 productPerPages={productPerPages}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}/>

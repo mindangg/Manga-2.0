@@ -25,8 +25,8 @@ const employeeSchema = new Schema({
 })
 
 // static signup function
-employeeSchema.statics.signup = async function(fullname, phone, password) {
-    if (!fullname || !phone || !password)
+employeeSchema.statics.signup = async function(fullname, phone, password, role) {
+    if (!fullname || !phone || !password || !role)
         throw new Error('All fields must be filled')
 
     if (!validator.isMobilePhone(phone))
@@ -42,7 +42,7 @@ employeeSchema.statics.signup = async function(fullname, phone, password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const employee = await this.create({ fullname, phone, password: hash })
+    const employee = await this.create({ fullname, phone, password: hash, role })
 
     return employee
 }

@@ -1,7 +1,5 @@
 const express = require('express')
 
-const router = express.Router()
-
 const {
     getAllManga,
     getManga,
@@ -9,8 +7,11 @@ const {
     deleteManga,
     updateManga, 
     upload,
-    filterManga
+    filterManga,
+    filterMangaAdmin
 } = require('../controllers/mangaControllers')
+
+const router = express.Router()
 
 // Get all mangas or filter
 router.get('/', getAllManga)

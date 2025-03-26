@@ -12,7 +12,7 @@ const getOrders = async (req, res) => {
         const orders = await Order.find()
             .populate('userID')
             .populate('items.mangaID')
-            .sort({ orderNumber: 1 })
+            .sort({ orderNumber: -1 })
   
         res.status(200).json(orders)
     } 

@@ -11,6 +11,7 @@ const mangaRoutes = require('./routes/mangaRoutes')
 const userRoutes = require('./routes/userRoutes')
 const cartRoutes = require('./routes/cartRoutes')
 const orderRoutes = require('./routes/orderRoutes')
+const employeeRoutes = require('./routes/employeeRoutes')
 
 const app = express()
 
@@ -33,6 +34,7 @@ app.use('/api/manga', mangaRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/cart', cartRoutes)
 app.use('/api/order', orderRoutes)
+app.use('/api/employee', employeeRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

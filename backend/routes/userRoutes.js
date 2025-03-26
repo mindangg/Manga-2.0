@@ -1,5 +1,7 @@
 const express = require('express')
 
+const requireAuth = require('../middlewares/requireAuth')
+
 const {
     loginUser,
     signupUser,
@@ -16,6 +18,8 @@ router.post('/login', loginUser)
 
 // signup user
 router.post('/signup', signupUser)
+
+router.use(requireAuth)
 
 // get all users
 router.get('/', getAllUsers)

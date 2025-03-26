@@ -6,21 +6,16 @@ import { useSignup } from '../hooks/useSignup'
 export default function Signup() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    const [confPassword, setConfPassword] = useState('')
+    const [address, setAddress] = useState('')
 
     const { signup, error, setError, isLoading } = useSignup()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (password !== confPassword) {
-            setError('Password does not match')
-            console.log('not')
-            return
-        }
-
-        await signup(username, email, password)
+        await signup(username, email, phone, password, address)
     }
 
     return (
@@ -33,8 +28,13 @@ export default function Signup() {
             </div>
 
             <div className='signup-input'>
-                <input type='email' id='signup-input--email' placeholder='Email' 
+                <input type='email' placeholder='Email' 
                         value={email} onChange={(e) => setEmail(e.target.value)}></input>
+            </div>
+
+            <div className='signup-input'>
+                <input type='tel' placeholder='Phone Number' 
+                        value={phone} onChange={(e) => setPhone(e.target.value)}></input>
             </div>
 
             <div className='signup-input'>
@@ -43,8 +43,8 @@ export default function Signup() {
             </div>
 
             <div className='signup-input'>
-                <input type='password' placeholder='Confirm Password' 
-                        value={confPassword} onChange={(e) => setConfPassword(e.target.value)}></input>
+                <input type='text' placeholder='Address' 
+                        value={address} onChange={(e) => setAddress(e.target.value)}></input>
             </div>
 
             <button type='submit' id='signup-btn' disabled={isLoading}>Create account</button>

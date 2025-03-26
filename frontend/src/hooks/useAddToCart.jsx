@@ -50,7 +50,7 @@ export const useAddToCart = () => {
             })
     
             if (!response.ok) {
-                console.error('Failed to delete item in cart:', json)
+                console.error('Failed to delete item in cart:')
                 return
             }
 
@@ -72,13 +72,11 @@ export const useAddToCart = () => {
                 body: JSON.stringify({ userID, mangaID, type })
             })
     
+            if (!response.ok)
+                return console.error('Failed to update quantity of item in cart:', response.status)
+
             const json = await response.json()
             // console.log(json)
-    
-            if (!response.ok) {
-                console.error('Failed to update quantity of item in cart:', json)
-                return
-            }
             
             const updatedCart = json.items.find((i) => i.mangaID.toString() === mangaID.toString())
             // console.log(updatedCart.quantity)
@@ -86,7 +84,6 @@ export const useAddToCart = () => {
                 dispatch({type: 'DELETE_ITEM', payload: cartID})
             else
                 dispatch({type: 'UPDATE_QUANTITY', payload: updatedCart})
-
         }
         catch (error){
             console.error(error)

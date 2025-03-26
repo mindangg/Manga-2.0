@@ -55,7 +55,7 @@
 
 .order-history-info{
     display: grid;
-    grid-template-columns: 2fr 3fr 3fr 2.5fr 2.5fr;
+    grid-template-columns: 2.5fr 3fr 3fr 2.5fr 2.5fr;
     padding: 25px 0;
     text-align: center;
     align-items: center;
@@ -64,20 +64,19 @@
     
 }
 
-.order-history-status-pending{
+.order-history-status-Pending{
     color: rgb(230, 158, 25);
     font-weight: bold;
-
 }
 
-.order-history-status-delivered{
+.order-history-status-Delivered{
     color: #28ac64;
-
+    font-weight: bold;
 }
 
-.user-history-status-canceled{
+.order-history-status-Canceled{
     color: #f84c2c;
-
+    font-weight: bold;
 }
 
 .show-history-details{
@@ -144,100 +143,6 @@
 .order-history-details div{
     margin: 20px 0;
 }
-
-/* .order{
-    display: flex;
-    margin: 0 auto;
-}
-
-#order-container h2{
-    color: #ddd;
-    margin: 20px 0;
-    text-align: center;
-}
-
-.order{
-    padding: 15px;
-}
-
-.order:first-child{
-    border-top: 1px solid #ddd;
-}
-
-.order{
-    border-bottom: 1px solid #ddd;
-}
-
-.order:last-child{
-    border-bottom: none;
-}
-
-.order .order-info{
-    width: 30%;
-}
-
-.order .order-items-details{
-    width: 85%;
-}
-
-.order-id,
-.order-date,
-.order-status{
-    font-weight: bold;
-    color: #ddd;
-}
-
-.order-cancel-btn{
-    display: block;
-    height: 35px;
-    width: 130px;
-    margin-top: 5px;
-    padding: 5px;
-    background-color: var(--green);
-    color: black;
-    font-size: 15px;
-    border-radius: 7px;
-    border: none;
-    cursor: pointer;
-}
-
-.order-cancel-btn:hover{
-    background-color: var(--green-l);
-}
-
-.order-items-details ul{
-    list-style: none;
-    padding: 0;
-}
-
-.order-items-details li{
-    padding: 5px 0;
-}
-
-.status--completed{
-    color: green;
-}
-
-.status--pending{
-    color: orange;
-}
-
-.status--cancelled{
-    color: red;
-}
-
-.status-pending{
-    color: orange;
-}
-
-.show-details{
-    cursor: pointer;
-    color: #ddd;
-}
-
-.order-items-details{
-    color: #ddd;
-} */
 
 #user-container{
     max-width: 600px;

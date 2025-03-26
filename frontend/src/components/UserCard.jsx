@@ -4,25 +4,27 @@ import '../styles/Admin.css'
 
 import { useUserContext } from '../hooks/useUserContext'
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, handleEdit }) {
     const { dispatch } = useUserContext()
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-GB') // 'dd/mm/yyyy'
+        return new Date(dateString).toLocaleDateString('en-GB')
     }
 
     const handleDelete = async () => {
         try {
             const response = await fetch('http://localhost:4000/api/user/' + user._id, {
                 method: 'DELETE'
-    
             })
     
             if (!response.ok) {
                 console.error('Failed to delete user')
                 return
             }
-            dispatch({type: 'DELETE_ITEM', payload: user._id})
+            dispatch({type: 'DELETE_USER', payload: user._id})
+
+            // remove user from local storage
+            localStorage.removeItem('user')
         }
         catch (error) {
             console.error(error)
@@ -31,15 +33,14 @@ export default function UserCard({ user }) {
 
     return (
         <div className='user-info'>
-            <span>{user.fullname}</span>
             <span>{user.username}</span>
             <span>{user.email}</span>
             <span>{user.phone}</span>
             <span>{user.address}</span>
             <span>{formatDate(user.createdAt)}</span>
-            <span className='user-status'>{user.status}</span>
+            <span className={`user-status-${user.status}`}>{user.status}</span>
             <span className='user-action'>
-                <i className='fa-solid fa-pen-to-square'></i>
+                <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(user)}></i>
                 <i className='fa-solid fa-trash-can' onClick={handleDelete}></i>
             </span>
         </div>

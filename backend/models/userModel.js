@@ -10,9 +10,6 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    fullname: {
-        type: String,
-    },
     email: {
         type: String,
         required: true,
@@ -24,10 +21,12 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
+        required: true,
         unique: true
     },
     address: {
         type: String,
+        required: true,
         unique: true
     },
     status: {
@@ -56,23 +55,18 @@ userSchema.statics.signup = async function(username, fullname, email, password, 
     // if (!validator.isStrongPassword(password))
     //     throw new Error('Password is not strong enough')
 
-    if (phone) {
-        const phoneExists = await this.findOne({ phone })
-            if (phoneExists)
-                throw new Error('Phone number already in use')
-    }
+    const phoneExists = await this.findOne({ phone })
+    if (phoneExists)
+        throw new Error('Phone number already in use')
 
-    if (address) {
-        const addressExists = await this.findOne({ address })
-            if (addressExists)
-                throw new Error('Address already in use')
-    }
+    const addressExists = await this.findOne({ address })
+    if (addressExists)
+        throw new Error('Address already in use')
 
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const user = await this.create({ username, fullname, email, password: hash, 
-                                    phone: phone || null, address: address || null  })
+    const user = await this.create({ username, email, password: hash, phone, address })
 
     return user
 }

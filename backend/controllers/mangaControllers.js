@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 const path = require('path')
 const removeSpecialChar = require('../helpers/helper')
+const { error } = require('console')
 
 // multer storage
 const storage = multer.diskStorage({
@@ -47,18 +48,6 @@ const getManga = async (req, res) => {
 
     res.status(200).json(manga)
 }
-
-// const filterMangaNavbar = async (req, res) => {
-//     const { category } = req.params
-
-//     const manga = await Manga.find({ category: { $regex: new RegExp(removeSpecialChar(category), 'i') } })
-//                                 .sort({ createAt: -1 })
-
-//     if(!manga)
-//         res.status(400).json({error: 'No such manga'})
-
-//     res.status(200).json(manga)
-// }
 
 const filterManga = async (req, res) => {
     try {
@@ -154,6 +143,33 @@ const updateManga = async (req, res) => {
     res.status(200).json(manga)
 }
 
+const filterMangaAdmin = async (req, res) => {
+    const { title, category, supplier } = req.body
+
+    let manga = []
+
+    try {
+        if (title) 
+            manga = await Manga.find({ title: { $regex: new RegExp(removeSpecialChar(title), 'i') } })
+                                        .sort({ createAt: -1})
+        
+        if (category)
+            manga = await Manga.find({ category })
+
+        if (supplier)
+            manga = await Manga.find({ supplier })
+
+        if (!manga)
+            return res.status(400).json({error: 'No such manga'})
+
+        res.status(200).json(manga)
+
+    }
+    catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
+
 module.exports = {
     getAllManga,
     getManga,
@@ -161,5 +177,6 @@ module.exports = {
     createManga,
     deleteManga,
     updateManga,
-    upload
+    upload,
+    filterMangaAdmin
 }

@@ -18,8 +18,6 @@ export const cartReducer = (state, action) => {
             }
 
         case 'DELETE_ITEM':
-            console.log('State', state.cart)
-            console.log('Delete', action.payload)
             return {
                 cart: {
                     ...state.cart,
@@ -28,8 +26,6 @@ export const cartReducer = (state, action) => {
             }
 
         case 'UPDATE_QUANTITY':
-            console.log('cart state', state.cart.items[0].mangaID._id)
-            console.log('action', action.payload.quantity)
             return {
                 cart: {
                     ...state.cart,
@@ -40,6 +36,11 @@ export const cartReducer = (state, action) => {
                     )
                 }
             }
+
+        case 'CLEAR_ITEM':
+            return {
+                cart: null
+            }  
             
         default:
             return state

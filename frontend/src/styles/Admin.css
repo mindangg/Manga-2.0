@@ -10,11 +10,11 @@
     border-right: 1px solid hsl(0, 0%, 50%, 0.3);
 }
 
-.sidenav i{
+.sidenav li{
     color: white;
 }
 
-.sidenav div:hover{
+.sidenav li:hover{
     cursor: pointer;
 }
 
@@ -26,26 +26,20 @@
     margin: 65px 60px 30px;
 }
 
-.middlenav div{
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    padding: 17px;
-}
-
 .middlenav li{
-    display: flex;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 16px;
+    padding-left: 25px;
 }
 
 .bottomnav li{
-    display: flex;
-}
-
-.bottomnav div{
     color: white;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 17px;
+    padding: 16px;
+    padding-left: 25px;
 }
 
 .content{
@@ -55,8 +49,6 @@
     height: 100%;
     padding: 30px 70px;
 }
-
-
 
 .user-container{
     width: 100%;
@@ -137,7 +129,7 @@
 .user-header,
 .user-info{
     display: grid;
-    grid-template-columns: 2fr 2fr 2.5fr 2.5fr 4fr 2fr 1.5fr 1fr;
+    grid-template-columns: 2fr 3fr 3fr 4fr 2fr 2fr 2fr;
     padding: 25px 0;
     text-align: center;
     align-items: center;
@@ -145,13 +137,13 @@
     border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
 } 
 
-.user-status{
+.user-status-Active{
     background-color: #28ac64;
     padding: 5px;
     border-radius: 5px;
 }
 
-.user-status-lock{
+.user-status-Disabled{
     background-color: #f84c2c;
     padding: 5px;
     border-radius: 5px;
@@ -163,6 +155,33 @@
 
 .user-action i:nth-of-type(1){
     margin-right: 10px;
+}
+
+.user-icon{
+    display: flex;
+}
+
+.user-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.user-icon i{
+    margin-right: 5px;
+    color: black!important;
 }
 
 .manga-container{
@@ -266,7 +285,6 @@
 
 .manga-icon{
     display: flex;
-
 }
 
 .manga-icon button{
@@ -492,19 +510,19 @@ input[type='file'] {
     margin-right: 10px;
 }
 
-.order-status-pending{
+.order-status-Pending{
     background-color: rgb(230, 158, 25);
     padding: 5px;
     border-radius: 5px;
 }
 
-.order-status-delivered{
+.order-status-Delivered{
     background-color: #28ac64;
     padding: 5px;
     border-radius: 5px;
 }
 
-.user-status-canceled{
+.order-status-Canceled{
     background-color: #f84c2c;
     padding: 5px;
     border-radius: 5px;
@@ -512,6 +530,91 @@ input[type='file'] {
 
 .order-action{
     cursor: pointer;
+}
+
+.order-icon{
+    display: flex;
+}
+
+.order-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.order-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.order-icon i{
+    margin-right: 5px;
+    color: black!important;
+}
+
+.order-approve-container{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.order-approve{
+    position: relative;
+    background-color: var(--black);
+    width: 90%;
+    max-width: 450px;
+    min-height: 300px;
+    max-height: 80vh;
+    margin: 90px auto;
+    padding: 20px 20px 10px;
+    color: white;
+    bottom: unset;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+    overflow-y: auto; /* Enables scrolling when needed */
+    text-align: left;
+}
+
+.order-approve i{
+    position: absolute;
+    right: 3%;
+    top: 3%;
+    color: rgba(255, 255, 255, 0.752);
+    cursor: pointer;
+}
+
+.order-approve img{
+    width: 50px;
+}
+
+.order-approve div{
+    margin: 20px 0;
+}
+
+.order-approve button{
+    margin-top: 10px;
+    padding: 10px;
+    width: 120px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    border: none;
+}
+
+.order-approve button i{
+    color: white;
+    position: static;
 }
 
 .admin-login-container{

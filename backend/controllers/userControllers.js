@@ -1,7 +1,6 @@
 const User = require('../models/userModel')
 const JWT = require('jsonwebtoken')
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const createToken = (_id) => {
     return JWT.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -17,16 +16,15 @@ const loginUser = async (req, res) => {
         res.status(200).json({user, token})
     }
     catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(500).json({error: error.message})
     }
 }
 
 const signupUser = async (req, res) => {
-    const { username, fullname, email, password, phone, address } = req.body
-    console.log(req.body)
+    const { username,  email, password, phone, address } = req.body
 
     try {
-        const user = await User.signup(username, fullname, email, password, phone, address)
+        const user = await User.signup(username, email, password, phone, address)
         
         // create a token
         const token = createToken(user._id)
@@ -34,7 +32,7 @@ const signupUser = async (req, res) => {
         res.status(200).json({user, token})
     }
     catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(500).json({error: error.message})
     }
 }
 
@@ -47,8 +45,8 @@ const getAllUsers = async (req, res) => {
 
         res.status(200).json(users)
     }
-    catch(error) {
-        res.status(400).json({error: error.message})
+    catch (error) {
+        res.status(500).json({error: error.message})
     }
 }
 
@@ -66,8 +64,8 @@ const getUser = async (req, res) => {
 
         res.status(200).json(user)
     }
-    catch(error) {
-        res.status(400).json({error: error.message})
+    catch (error) {
+        res.status(500).json({error: error.message})
     }
 }
 
@@ -85,24 +83,16 @@ const deleteUser = async (req, res) => {
 
         res.status(200).json(user)
     }
-    catch(error) {
-        res.status(400).json({error: error.message})
+    catch (error) {
+        res.status(500).json({error: error.message})
     }
 }
 
 const updateUser = async (req, res) => {
     const { id } = req.params
-    // const { phone } = req.body
 
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({error: 'No such user'})
-
-    // if (!validator.isMobilePhone(phone))
-    //     return res.status(400).json({error: 'Phone number is not valid'})
-
-    // const phoneExists = await User.findOne({ phone })
-    // if (phoneExists)
-    //     throw new Error('Phone number already in use')
 
     try {
         const user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
@@ -113,7 +103,7 @@ const updateUser = async (req, res) => {
         res.status(200).json(user)
     } 
     catch (error) {
-        res.status(400).json({ error: error.message })
+        res.status(500).json({ error: error.message })
     }
 }
 
