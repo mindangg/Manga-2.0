@@ -22,29 +22,46 @@ export default function AdminProduct() {
         setIsAdd(!isAdd)
     }
 
-    useEffect(() => {
-        const fetchManga = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/manga', {
-                    headers: {
-                        'Authorization': `Bearer ${admin.token}`
-                    }
-                })
+    const fetchManga = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/manga', {
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
 
-                if (!response.ok)
-                    return console.error('Error fetching manga:', response.status)
+            if (!response.ok)
+                return console.error('Error fetching manga:', response.status)
 
-                const json = await response.json()
-    
-                dispatch({type: 'DISPLAY_ITEM', payload: json})
-            }
-            catch (error) {
-                console.error('Error fetching manga:', error)
-            }
+            const json = await response.json()
+
+            dispatch({type: 'DISPLAY_ITEM', payload: json})
+
+            return json
         }
+        catch (error) {
+            console.error('Error fetching manga:', error)
+        }
+    }
 
+    useEffect(() => {
         fetchManga()
     }, [dispatch])
+    
+    const filterManga = async (category) => {
+        try {
+            const manga = await fetchManga()
+            let filteredManga = manga
+    
+            if (category !== 'All')
+                filteredManga = manga.filter((m) => m.category === category)
+
+            dispatch({ type: 'DISPLAY_ITEM', payload: filteredManga })
+        } 
+        catch (error) {
+            console.error('Error filtering manga:', error)
+        }
+    }
 
     const lastPageIndex = currentPage * productPerPages
     const firstPageIndex = lastPageIndex - productPerPages
@@ -53,7 +70,7 @@ export default function AdminProduct() {
     return (
         <div className='manga-container'>
             <div className = 'manga-controller'>
-                <select>
+                <select onChange={(e) => filterManga(e.target.value)}>
                     <option value='All'>All</option>
                     <option value='Shounen'>Shounen</option>
                     <option value='Rom Com'>Rom Com</option>

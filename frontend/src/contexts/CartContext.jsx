@@ -39,7 +39,7 @@ export const cartReducer = (state, action) => {
 
         case 'CLEAR_ITEM':
             return {
-                cart: null
+                cart: { items: [] }
             }  
             
         default:

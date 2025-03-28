@@ -19,14 +19,64 @@ export default function AdminUser() {
     const [address, setAddress] = useState('')
     const [status, setStatus] = useState('')
 
-    const [isAdd, setIsAdd] = useState(false)
-    const [isSave, setIsSave] = useState(false)
+    const [isToggle, setIsToggle] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
 
-    const toggleAdd = () => {
-        setIsAdd(!isAdd)
+    const fetchUser = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/user', {
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
+
+            if (!response.ok)
+                return console.error('Error fetching user:', response.status)
+            
+            const json = await response.json()
+
+            dispatch({type: 'SET_USER', payload: json})
+
+            return json
+        }
+        catch (error) {
+            console.error('Error fetching user:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchUser()
+    }, [dispatch])
+    
+    const filterUser = async (status) => {
+        try {
+            const user = await fetchUser()
+            let filteredUser = user
+    
+            if (status !== 'All')
+                filteredUser = user.filter((u) => u.status === status)
+            
+            dispatch({ type: 'SET_USER', payload: filteredUser })
+        } 
+        catch (error) {
+            console.error('Error filtering user:', error)
+        }
+    }
+
+    const toggle = () => {
+        setIsToggle(!isToggle)
+        if (selectedUser) {
+            setUsername('')
+            setEmail('')
+            setPassword('')
+            setPhone('')
+            setAddress('')
+            setStatus('')
+        }
+
+        setSelectedUser(null)
     }
 
     const [selectedUser, setSelectedUser] = useState(null)
@@ -38,7 +88,7 @@ export default function AdminUser() {
         setPhone(user.phone)
         setAddress(user.address)
         setStatus(user.status)
-        setIsAdd(true)
+        setIsToggle(true)
     }
 
     const handleSave = async (e) => {
@@ -62,37 +112,18 @@ export default function AdminUser() {
             const json = await response.json()
             dispatch({ type: 'UPDATE_USER', payload: json })
 
-            setIsAdd(false)
-
+            setIsToggle(false)
+            setUsername('')
+            setEmail('')
+            setPassword('')
+            setPhone('')
+            setAddress('')
+            setStatus('')
             setSelectedUser(null)
         } catch (error) {
             console.error('Error updating user:', error)
         }
     }
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/user', {
-                    headers: {
-                        'Authorization': `Bearer ${admin.token}`
-                    }
-                })
-
-                if (!response.ok)
-                    return console.error('Error fetching user:', response.status)
-                
-                const json = await response.json()
-
-                dispatch({type: 'SET_USER', payload: json})
-            }
-            catch (error) {
-                console.error('Error fetching user:', error)
-            }
-        }
-
-        fetchUser()
-    }, [dispatch])
 
     const handleUpload = async (e) => {
         e.preventDefault()
@@ -114,7 +145,7 @@ export default function AdminUser() {
 
             dispatch({type: 'ADD_USER', payload: json})
 
-            setIsAdd(false)
+            setIsToggle(false)
         }
         catch (error) {
             console.error(error)
@@ -128,10 +159,10 @@ export default function AdminUser() {
     return (
         <div className='user-container'>
             <div className = 'user-controller'>
-                <select id='option'>
-                    <option value='all'>All</option>
-                    <option value='active'>Active</option>
-                    <option value='disable'>Disable</option>
+                <select onChange={(e) => filterUser(e.target.value)}>
+                    <option value='All'>All</option>
+                    <option value='Active'>Active</option>
+                    <option value='Disabled'>Disabled</option>
                 </select>
 
                 <div className='user-search'>
@@ -149,7 +180,7 @@ export default function AdminUser() {
 
                 <div className='user-icon'>
                     <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                    <button onClick={toggleAdd}><i className='fa-solid fa-plus'></i>Add</button>
+                    <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
                 </div>
             </div>
             <div className='user-header'>
@@ -171,12 +202,16 @@ export default function AdminUser() {
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}/>
 
-            {isAdd && (
+            {isToggle && (
                 <div className='add-user-container'>
                     <div className='add-user'>
-                        <i className='fa-solid fa-xmark' onClick={toggleAdd}></i>
-                        <h2>Add new customer</h2>
-                        <form>
+                        <i className='fa-solid fa-xmark' onClick={toggle}></i>
+                        {selectedUser ? (
+                            <h2>Edit customer</h2>
+                        ) : (
+                            <h2>Add new customer</h2>
+                        )}
+                        <form onSubmit={selectedUser ? handleSave : handleUpload}>
                             <label>User name</label>
                             <input type='text' placeholder='User name' value={username} 
                                         onChange={(e) => setUsername(e.target.value)}/>
@@ -213,9 +248,9 @@ export default function AdminUser() {
         
                             <div style={{ textAlign: 'center' }}>
                                 {selectedUser ? (
-                                    <button type='submit' onClick={handleSave}>Save</button>
+                                    <button type='submit'>Save</button>
                                 ) : (
-                                    <button type='submit' onClick={handleUpload}>+ Add</button>
+                                    <button type='submit'>+ Add</button>
                                 )}
                             </div>
                         </form>

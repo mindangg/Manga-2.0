@@ -16,7 +16,7 @@ export const useLogout = () => {
 
         // dispatch logout action'
         dispatch({ type: 'LOGOUT' })
-        cartDispatch({ type: 'DISPLAY_ITEM', payload: null })
+        cartDispatch({type: 'CLEAR_ITEM'})
     }
 
     return { logout }

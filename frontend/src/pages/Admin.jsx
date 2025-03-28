@@ -7,6 +7,7 @@ import AdminLogin from './AdminLogin'
 import AdminOrder from './AdminOrder'
 import AdminUser from './AdminUser'
 import AdminProduct from './AdminProduct'
+import AdminEmployee from './AdminEmployee'
 
 import { useAdminContext } from '../hooks/useAdminContext'
 import { useAdminLogout } from '../hooks/useAdminLogout'
@@ -54,7 +55,7 @@ export default function Admin() {
                 ) : toggle === 'order' ? (
                     <AdminOrder/>
                 ) : toggle === 'employee' ? (
-                    <AdminOrder/>
+                    <AdminEmployee/>
                 ) : toggle === 'statistic' ? (
                     <AdminOrder/>
                 ) : null}

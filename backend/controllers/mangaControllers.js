@@ -41,12 +41,17 @@ const getManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({error: 'No such manga'})
 
-    const manga = await Manga.findById(id)
+    try {
+        const manga = await Manga.findById(id)
 
-    if(!manga)
-        return res.status(400).json({error: 'No such manga'})
-
-    res.status(200).json(manga)
+        if(!manga)
+            return res.status(400).json({error: 'No such manga'})
+    
+        res.status(200).json(manga)
+    }
+    catch (error) {
+        res.status(500).json({error: error.message})
+    }
 }
 
 const filterManga = async (req, res) => {
@@ -83,7 +88,8 @@ const filterManga = async (req, res) => {
         }
 
         res.status(200).json(manga)
-    } catch (error) {
+    } 
+    catch (error) {
         res.status(500).json({ error: 'Server error', details: error.message })
     }
 }
@@ -98,6 +104,10 @@ const createManga = async (req, res) => {
     try {
         const manga = await Manga.create({ title, series, category, author, supplier, 
                                                 stock, price, description, cover1, cover2 })
+
+        if (!manga)
+            return res.status(400).json({error: 'Failed to create manga'})
+        
         res.status(200).json(manga)
     }
     catch (error) {
@@ -112,12 +122,17 @@ const deleteManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({error: 'No such manga'})
 
-    const manga = await Manga.findByIdAndDelete(id)
+    try {
+        const manga = await Manga.findByIdAndDelete(id)
 
-    if(!manga)
-        return res.status(400).json({error: 'No such manga'})
-
-    res.status(200).json(manga)
+        if(!manga)
+            return res.status(400).json({error: 'No such manga'})
+    
+        res.status(200).json(manga)
+    }
+    catch (error) {
+        res.status(500).json({error: error.message})
+    }
 }
 
 // Update a manga
@@ -127,20 +142,25 @@ const updateManga = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({error: 'No such manga'})
 
-    const manga = await Manga.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
-
-    // const updatedData = { ...req.body }
-    // if (req.files['cover1']) updatedData.cover1 = req.files['cover1'][0].path
-    // if (req.files['cover2']) updatedData.cover2 = req.files['cover2'][0].path
-
-    // const manga = await Manga.findOneAndUpdate({ _id: id }, updatedData, { new: true })
-
-    if(!manga)
-        return res.status(400).json({error: 'No such manga'})
-
-    res.status(200).json(manga)
+    try {
+        const manga = await Manga.findOneAndUpdate({_id: id}, {
+            ...req.body
+        })
+    
+        // const updatedData = { ...req.body }
+        // if (req.files['cover1']) updatedData.cover1 = req.files['cover1'][0].path
+        // if (req.files['cover2']) updatedData.cover2 = req.files['cover2'][0].path
+    
+        // const manga = await Manga.findOneAndUpdate({ _id: id }, updatedData, { new: true })
+    
+        if(!manga)
+            return res.status(400).json({error: 'No such manga'})
+    
+        res.status(200).json(manga)
+    }
+    catch (error) {
+        res.status(500).json({error: error.message})
+    }
 }
 
 const filterMangaAdmin = async (req, res) => {

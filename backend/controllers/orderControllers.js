@@ -4,10 +4,6 @@ const mongoose = require('mongoose')
 
 // Get all orders
 const getOrders = async (req, res) => {
-    // if (!req.user || !req.user.isAdmin) {
-    //     return res.status(403).json({ error: 'Access denied' });
-    // }
-
     try {
         const orders = await Order.find()
             .populate('userID')
@@ -21,7 +17,7 @@ const getOrders = async (req, res) => {
     }
 }
 
-// Get a single orders
+// Get a single order
 const getOrder = async (req, res) => {
     const userID = req.user._id
 
@@ -41,8 +37,6 @@ const getOrder = async (req, res) => {
 // Add to cart
 const createOrder = async (req, res) => {
     const { userID, cartID } = req.body
-    console.log('user', userID)
-    console.log('cart', cartID)
 
     if (!userID || !cartID)
         return res.status(400).json({ error: 'Missing userID or cartID' })
@@ -100,13 +94,18 @@ const updateOrder = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id))
         res.status(400).json({ error: 'No such order' })
+    
+    try {
+        const order = await Order.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
 
-    const order = await Order.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
-
-    if(!order)
-        res.status(400).json({ error: 'No such order' })
-
-    res.status(200).json(order)
+        if(!order)
+            res.status(400).json({ error: 'No such order' })
+    
+        res.status(200).json(order)
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 }
 
 module.exports = { getOrders, getOrder, createOrder, deleteOrder, updateOrder }

@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        .order-approve{
+            position: relative;
+            background-color: var(--black);
+            width: 90%;
+            max-width: 450px;
+            min-height: 300px;
+            max-height: 80vh;
+            margin: 90px auto;
+            padding: 20px 20px 10px;
+            color: white;
+            bottom: unset;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+            overflow-y: auto; /* Enables scrolling when needed */
+            text-align: left;
+        }
+
+        .order-approve i{
+            position: absolute;
+            right: 3%;
+            top: 3%;
+            color: rgba(255, 255, 255, 0.752);
+            cursor: pointer;
+        }
+
+        .order-approve img{
+            width: 50px;
+        }
+
+        .order-approve div{
+            margin: 20px 0;
+        }
+
+        .order-approve button{
+            margin-top: 10px;
+            padding: 10px;
+            width: 120px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+            border: none;
+        }
+
+        .order-approve button i{
+            color: white;
+            position: static;
+        }
+    </style>
+</head>
+<body>
+    <div className='order-approve'>
+    <h2 style="text-align: center;">Order: {order && order.orderNumber}</h2>
+    <div>Customer: {order && order.userID.email}</div>
+    <div>Phone number: {order && order.userID.phone}</div>
+    <div>Address: {order && order.userID.address}</div>
+    <h3>Items: </h3>
+    {order && order.items.map((o) => (
+        <div key={o._id}>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src={`http://localhost:4000/${o.mangaID.cover1}`} alt='Product Image' />
+                {o.mangaID.title}
+            </div>
+            <div>Quantity: {o.quantity} <span style="margin-left: 50px;">Order Price: ${o.price}</span></div>
+        </div>
+    ))}
+    <h3>Total: ${order && order.totalPrice}</h3>
+    <h3>Status: {order && order.status}</h3>
+    </div>
+</body>
+</html>

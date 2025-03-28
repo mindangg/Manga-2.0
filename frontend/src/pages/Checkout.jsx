@@ -115,7 +115,7 @@ export default function Checkout() {
 
                     {method === 'card' && (
                         <div id='paymentByCard'>
-                            <select  defaultValue='Vietcombank'>
+                            <select defaultValue='Vietcombank'>
                                 <option value='Vietcombank'>Vietcombank</option>
                                 <option value='Agribank'>Agribank</option>
                                 <option value='ACB'>ACB</option>

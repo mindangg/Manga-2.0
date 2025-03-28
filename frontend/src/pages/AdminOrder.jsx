@@ -15,41 +15,95 @@ export default function AdminOrder() {
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
 
-    useEffect(() => {
-        const fetchOrder = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/order', {
-                    headers: {
-                        'Authorization': `Bearer ${admin.token}`
-                    }
-                })
+    const fetchOrder = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/order', {
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
 
-                if (!response.ok)
-                    return console.error('Error fetching order:', response.status)
+            if (!response.ok)
+                return console.error('Error fetching order:', response.status)
+            
+            const json = await response.json()
+            
+            dispatch({type: 'DISPLAY_ITEM', payload: json})
 
-                const json = await response.json()
-                
-                dispatch({type: 'DISPLAY_ITEM', payload: json})
-            }
-            catch (error) {
-                console.error('Error fetching order:', error)
-            }
+            return json
         }
+        catch (error) {
+            console.error('Error fetching order:', error)
+        }
+    }
+
+    useEffect(() => {
 
         fetchOrder()
+
     }, [dispatch])
 
+    const [status, setStatus] = useState('All')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+
+    const handleFilterChange = (newStatus, newStartDate, newEndDate) => {
+        setStatus(newStatus ?? status)
+        setStartDate(newStartDate ?? startDate)
+        setEndDate(newEndDate ?? endDate)
+        filterOrder(newStatus ?? status, newStartDate ?? startDate, newEndDate ?? endDate)
+    }    
+
+    const filterOrder = async (status, startDate, endDate) => {
+        try {
+            const orders = await fetchOrder()
+            let filteredOrders = orders
+
+            if (status !== 'All') {
+                filteredOrders = filteredOrders.filter((o) => o.status === status)
+            }
+
+            if (startDate && endDate) {
+                const start = new Date(startDate)
+                const end = new Date(endDate)
+
+                if (start > end) {
+                    alert('Wrong date format')
+                    return
+                }
+
+                filteredOrders = filteredOrders.filter((o) => {
+                    const orderDate = new Date(o.createdAt)
+                    return orderDate >= start && orderDate <= end
+                })
+            }
+    
+            dispatch({ type: 'DISPLAY_ITEM', payload: filteredOrders })
+        } 
+        catch (error) {
+            console.error('Error filtering orders:', error)
+        }
+    }
+
+    const handleRefresh = () => {
+        setStatus('All')
+        setStartDate('')
+        setEndDate('')
+        fetchOrder()
+    }
+    
     const lastPageIndex = currentPage * productPerPages
     const firstPageIndex = lastPageIndex - productPerPages
-    const currentOrder = order && order?.slice(firstPageIndex, lastPageIndex)
+    const currentOrder = order?.slice(firstPageIndex, lastPageIndex)
 
     return (
         <div className='order-container'>
             <div className = 'order-controller'>
-                <select id='option'>
-                    <option value='all'>All</option>
-                    <option value='pending'>Pending</option>
-                    <option value='delivered'>Delivered</option>
+                <select value={status} onChange={(e) => handleFilterChange(e.target.value, startDate, endDate)}>
+                    <option value='All'>All</option>
+                    <option value='Delivered'>Delivered</option>
+                    <option value='Pending'>Pending</option>
+                    <option value='Canceled'>Canceled</option>
                 </select>
 
                 <div className='order-search'>
@@ -59,14 +113,22 @@ export default function AdminOrder() {
                 
                 <label>From</label>
 
-                <input type='date'></input>
+                <input 
+                    type='date' 
+                    value={startDate || ''}  // Ensuring value is never undefined
+                    onChange={(e) => handleFilterChange(status, e.target.value, endDate)} 
+                />
 
                 <label>To</label>
 
-                <input type='date'></input>
+                <input 
+                    type='date' 
+                    value={endDate || ''} 
+                    onChange={(e) => handleFilterChange(status, startDate, e.target.value)} 
+                />
 
                 <div className='user-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                     {/* <button onClick={toggleAdd}><i className='fa-solid fa-plus'></i>Add</button> */}
                 </div>
             </div>

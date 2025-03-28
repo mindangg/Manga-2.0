@@ -22,7 +22,7 @@ const employeeSchema = new Schema({
         enum: ['Admin', 'Seller', 'Stocker'],
         required: true
     }
-})
+},{ timestamps: true })
 
 // static signup function
 employeeSchema.statics.signup = async function(fullname, phone, password, role) {

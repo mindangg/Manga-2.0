@@ -12,6 +12,8 @@ const userRoutes = require('./routes/userRoutes')
 const cartRoutes = require('./routes/cartRoutes')
 const orderRoutes = require('./routes/orderRoutes')
 const employeeRoutes = require('./routes/employeeRoutes')
+const supplierRoutes = require('./routes/supplierRoutes')
+const pdfRoutes = require('./routes/pdfRoutes')
 
 const app = express()
 
@@ -27,7 +29,10 @@ app.use((req, res, next) => {
 app.use(cors({origin: 'http://localhost:5173'}))
 
 // serve static files from the '/uploads'
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+// print pdf files
+app.use('/api/pdf', pdfRoutes)
 
 // routes
 app.use('/api/manga', mangaRoutes)
@@ -35,6 +40,7 @@ app.use('/api/user', userRoutes)
 app.use('/api/cart', cartRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/employee', employeeRoutes)
+app.use('/api/supplier', supplierRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
@@ -46,10 +52,10 @@ mongoose.connect(process.env.MONGO_URI)
             if (count === 0) {
                 Manga.insertMany(initializerArray)
                 .then(() => console.log('Manga data initialized.', initializerArray.length))
-                .catch(err => console.error('Error initializing manga data:', err));
+                .catch(err => console.error('Error initializing manga data:', err))
             }
             else {
-            console.log('Manga data already exists. Skipping initialization.');
+            console.log('Manga data already exists. Skipping initialization.')
           }
         })
     })

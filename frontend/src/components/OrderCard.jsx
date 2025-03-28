@@ -5,10 +5,14 @@ import '../styles/Admin.css'
 import { useAdminContext } from '../hooks/useAdminContext'
 import { useOrderContext } from '../hooks/useOrderContext'
 
+import { usePDF } from '../hooks/usePDF'
+
 export default function OrderCard({ order }) {
     const { admin } = useAdminContext()
     const { dispatch } = useOrderContext()
     const [isApprove, setIsApprove] = useState(false)
+
+    const { generatePDF } = usePDF()
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-GB')
@@ -59,7 +63,7 @@ export default function OrderCard({ order }) {
                     <div className='order-approve'>
                         <i class='fa-solid fa-xmark' onClick={toggleApprove}></i>
                         <h2 style={{textAlign: 'center'}}>Order: {order && order.orderNumber}</h2>
-                        <div>Customer: {order && order.userID.fullname}</div>
+                        <div>Customer: {order && order.userID.email}</div>
                         <div>Phone number: {order && order.userID.phone}</div>
                         <div>Address: {order && order.userID.address}</div>
                         <h3>Items: </h3>
@@ -74,9 +78,21 @@ export default function OrderCard({ order }) {
                         ))}
                         <h3>Total: ${order && order.totalPrice}</h3>
                         <h3>Status: {order && order.status}</h3>
-                        <div style={{margin: '0', display: 'flex', gap: '10px', justifyContent: 'center'}}>
-                            {order && <button onClick={() => approveOrder('Delivered')} style={{backgroundColor: '#28ac64'}}>Delivered</button>}
-                            {order && <button onClick={() => approveOrder('Canceled')} style={{backgroundColor: '#f84c2c'}}>Canceled</button>}
+                        {
+                            order?.status === 'Pending' && (
+                                <div style={{margin: '0', display: 'flex', gap: '10px', justifyContent: 'center'}}>
+                                    {order && <button onClick={() => approveOrder('Delivered')} style={{backgroundColor: '#28ac64'}}>Delivered</button>}
+                                    {order && <button onClick={() => approveOrder('Canceled')} style={{backgroundColor: '#f84c2c'}}>Canceled</button>}
+                                </div>
+                            )
+                        }
+                        <div style={{textAlign: 'center'}}>
+                            <button onClick={() => generatePDF(order)}
+                                    style={{
+                                        backgroundColor: "var(--green)",
+                                        color: "black",
+                                        cursor: "pointer",
+                                    }}>Save PDF File</button>
                         </div>
                     </div>
                 </div>

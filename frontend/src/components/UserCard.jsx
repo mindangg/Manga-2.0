@@ -3,9 +3,11 @@ import React from 'react'
 import '../styles/Admin.css'
 
 import { useUserContext } from '../hooks/useUserContext'
+import { useAdminContext } from '../hooks/useAdminContext'
 
 export default function UserCard({ user, handleEdit }) {
     const { dispatch } = useUserContext()
+    const { admin } = useAdminContext()
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-GB')
@@ -14,7 +16,10 @@ export default function UserCard({ user, handleEdit }) {
     const handleDelete = async () => {
         try {
             const response = await fetch('http://localhost:4000/api/user/' + user._id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
             })
     
             if (!response.ok) {
