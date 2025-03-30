@@ -50,6 +50,17 @@
     padding: 30px 70px;
 }
 
+select {
+    background-color: var(--black);
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    margin-right: 25px;
+}
+
 .user-container{
     width: 100%;
     display: flex;
@@ -387,128 +398,122 @@
     color: black!important;
 }
 
-.add-product{
-    display: flex;
+.add-manga-container{
+    position: fixed; 
+    left: 0;
+    top: 0;
     width: 100%;
-    column-gap: 40px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
 }
 
-select {
+.add-manga{
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    padding: 20px;
     background-color: var(--black);
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    height: 40px;
+    width: 90%;
+    max-width: 520px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+}
+
+.add-manga i{
+    position: absolute;
+    font-size: 18px;
+    top: 3%;
+    right: 3%;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-manga i:hover{
+    transform: translateY(-5px);
+}
+
+.add-manga label{
     color: white;
-    margin-right: 25px;
+    font-weight: bold;
 }
 
-.add{
-    position: relative;
-    width: 60%;
-    margin: 0 auto;
-}
-
-.add-info *{
-    margin-bottom: 15px;
-}
-
-.add h2{
+.add-manga input{
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
     color: white;
-    text-align: center;
-}
-
-.add label{
-    color: white;
-}
-
-.add input{
     width: 100%;
-    height: 40px;
+    border: solid 1px #363636;
     outline: none;
+    margin: 10px 0 10px;
+    border-radius: 5px;
+}
+
+.add-manga select{
+    width: 100%;
+}
+
+.add-manga button{
+    padding: 7px 7px 7px 5px;
+    background-color: var(--green);
+    color: black;
     border: none;
-    background-color: white;
-    border-radius: 5px;
-    color: black;
-    padding: 10px;
-}
-
-.add textarea{
-    width: 100%;
-    height: 70px;
-    padding: 10px;
-}
-
-.add select{
-    background-color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid var(--gray);
-    height: 40px;
+    font-size: 20px;
+    width: 100px;
     cursor: pointer;
-    color: black;
-    width: 100%;
-}
-
-.add-imgs{
-    display: flex;
-    justify-content: space-between;
-}
-
-.add-img img{
-    width: 320px;
+    margin-top: 20px;
+    margin: auto;
     border-radius: 5px;
 }
 
-.add-file{
+.add-manga button:hover {
+    background-color: var(--green-l);
+}
+
+.add-manga h2 {
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.add-manga-imgs{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5px;
+}
+
+.add-manga-imgs img{
+    width: 125px;
+    height: 80px;
+}
+
+.add-manga-imgs i{
+    position: static;
+    color: black;
+}
+
+.add-manga-imgs label{
+    color: black;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.add-manga-file{
+    background-color: var(--green);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.add-manga-file:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
 }
 
 input[type='file'] {
     display: none;
 }
-
-
-.add-label {
-    background-color: var(--green-l);
-    color: #fff;
-    padding: 15px 45px;
-    text-align: center;
-    border-radius: 5px;
-    font-size: 16px;
-    display: inline-block;
-    position: relative;
-    margin: auto;
-    cursor: pointer;
-}
-
-.add-label i {
-    font-size: 15px;
-    margin-right: 8px;
-    cursor: pointer;
-}
-
-.add-btns button{
-    background-color: var(--green);
-    height: 40px;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 0 20px;
-    width: 100%;
-    font-size: 16px;
-    font-weight: bold;
-    margin-right: 15px;
-    margin: 20px 0;
-}
-
-.add-btns button:hover{
-    cursor: pointer;
-    background-color: rgba(8, 220, 100, 0.8);
-}
-
 
 .order-container{
     width: 100%;
@@ -906,6 +911,361 @@ input[type='file'] {
 }
 
 
+
+.supplier-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.supplier-controller{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.supplier-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 300px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.supplier-controller input[type='date']{
+    width: 12%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.supplier-controller button{
+    color: black;
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.supplier-controller button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.supplier-controller button i{
+    color: black;
+}
+
+.supplier-search{
+    position: relative;
+}
+
+.supplier-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.supplier-controller i:nth-of-type(1){
+    color: white;
+    /* padding: 10px;
+    background-color: var(--gray); */
+}
+
+.supplier-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
+.supplier-header{
+    font-weight: bold;
+}
+.supplier-header,
+.supplier-info{
+    display: grid;
+    grid-template-columns: 2fr 3.5fr 2.5fr 3.5fr 2fr 2fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+} 
+
+.supplier-status-Active{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.supplier-status-Disabled{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.supplier-action i{
+    cursor: pointer;
+}
+
+.supplier-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.supplier-icon{
+    display: flex;
+}
+
+.supplier-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.supplier-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.supplier-icon i{
+    margin-right: 5px;
+    color: black!important;
+}
+
+.add-supplier-container{
+    position: fixed; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+}
+
+.add-supplier{
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    padding: 20px;
+    background-color: var(--black);
+    width: 90%;
+    max-width: 520px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+}
+
+.add-supplier i{
+    position: absolute;
+    font-size: 18px;
+    top: 3%;
+    right: 3%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-supplier i:hover{
+    transform: translateY(-5px);
+}
+
+.add-supplier label{
+    color: white;
+    font-weight: bold;
+}
+
+.add-supplier input{
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    width: 100%;
+    border: solid 1px #363636;
+    outline: none;
+    margin: 10px 0 10px;
+    border-radius: 5px;
+}
+
+.add-supplier button{
+    padding: 7px 7px 7px 5px;
+    background-color: var(--green);
+    color: black;
+    border: none;
+    font-size: 20px;
+    width: 100px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.add-supplier button:hover {
+    background-color: var(--green-l);
+}
+
+.add-supplier h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* StockIn Modal (Same style as add-supplier) */
+.add-stock-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.add-stock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: var(--black);
+    width: 90%;
+    max-width: 520px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -55%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.add-stock i {
+    position: absolute;
+    font-size: 18px;
+    top: 3%;
+    right: 3%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-stock i:hover {
+    transform: translateY(-5px);
+}
+
+.add-stock label {
+    color: white;
+    font-weight: bold;
+}
+
+.add-stock input {
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    width: 100%;
+    border: solid 1px #363636;
+    outline: none;
+    margin: 10px 0;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.stock-search {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.stock-search i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+.stock-search input {
+    padding-left: 40px;
+}
+
+.search-results {
+    background: var(--black);
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+    margin-top: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+
+.search-results li {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.3s;
+}
+
+.search-results li:hover {
+    background: var(--green);
+}
+
+.stock-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #222;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.stock-item label {
+    flex: 1;
+}
+
+.stock-item input {
+    width: 80px;
+    text-align: center;
+}
+
+.add-stock button {
+    padding: 7px;
+    background-color: var(--green);
+    color: black;
+    border: none;
+    font-size: 18px;
+    width: 100px;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.add-stock button:hover {
+    background-color: var(--green-l);
+}
 
 
 

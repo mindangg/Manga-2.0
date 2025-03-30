@@ -19,7 +19,6 @@ export default function AddProduct() {
     const [description, setDescription] = useState('')
     const [cover1, setCover1] = useState('')
     const [cover2, setCover2] = useState('')
-    const [error, setError] = useState(null)
 
     const handleUpload = async (e) => {
         e.preventDefault()
@@ -64,7 +63,6 @@ export default function AddProduct() {
             setDescription('')
             setCover1(null)
             setCover2(null)
-            setError(null)
 
             dispatch({type: 'ADD_ITEM', payload: json})
             console.log('New manga added', json)
@@ -78,13 +76,13 @@ export default function AddProduct() {
             <div className='add-info'>
                 <label>Title</label><br/>
                 <input type='text' placeholder='Enter title'
-                        value={title} onChange={(e) => setTitle(e.target.value)}></input><br/>
+                        value={title} onChange={(e) => setTitle(e.target.value)}></input>
 
                 <label>Series</label><br/>
                 <input type='text' placeholder='Enter series'
-                        value={series} onChange={(e) => setSeries(e.target.value)}></input><br/>
+                        value={series} onChange={(e) => setSeries(e.target.value)}></input>
 
-                <label>Category</label><br/>
+                <label>Category</label>
                 <select className='category' value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option value='All'>--All--</option>
                     <option value='Shounen'>Shounen</option>

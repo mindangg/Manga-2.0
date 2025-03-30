@@ -4,14 +4,13 @@ import '../styles/Admin.css'
 
 import { useMangaContext } from '../hooks/useMangaContext'
 
-export default function ProductCard({ manga }) {
+export default function ProductCard({ manga, handleEdit }) {
     const { dispatch } = useMangaContext()
 
     const handleDelete = async () => {
         try {
             const response = await fetch('http://localhost:4000/api/manga/' + manga._id, {
                 method: 'DELETE',
-                
             })
 
             if (!response.ok) {
@@ -37,7 +36,7 @@ export default function ProductCard({ manga }) {
             <span>{manga.stock}</span>
             <span>$ {manga.price}</span>
             <span className='manga-action'>
-                <i className='fa-solid fa-pen-to-square'></i>
+                <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(manga)}></i>
                 <i className='fa-solid fa-trash-can' onClick={handleDelete}></i>
             </span>
         </div>

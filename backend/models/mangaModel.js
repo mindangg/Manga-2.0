@@ -19,13 +19,14 @@ const mangaModel = new Schema({
         type: String,
         required: true
     },
-    supplier: {
-        type: String,
+    supplierID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Supplier',
         required: true
     },
     stock: {
         type: Number,
-        required: true
+        default: 0
     },
     price: {
         type: Number,
@@ -36,12 +37,10 @@ const mangaModel = new Schema({
         required: true
     },
     cover1: {
-        type: String,
-        required: false
+        type: String
     },
     cover2: {
-        type: String,
-        required: false
+        type: String
     }
 }, { timestamps: true })
 

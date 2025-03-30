@@ -8,6 +8,7 @@ import AdminOrder from './AdminOrder'
 import AdminUser from './AdminUser'
 import AdminProduct from './AdminProduct'
 import AdminEmployee from './AdminEmployee'
+import AdminSupplier from './AdminSupplier'
 
 import { useAdminContext } from '../hooks/useAdminContext'
 import { useAdminLogout } from '../hooks/useAdminLogout'
@@ -49,7 +50,7 @@ export default function Admin() {
                 {toggle === 'product' ? (
                     <AdminProduct/>
                 ) : toggle === 'supplier' ? (
-                    <AdminUser/>
+                    <AdminSupplier/>
                 ) : toggle === 'user' ? (
                     <AdminUser/>
                 ) : toggle === 'order' ? (

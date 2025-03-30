@@ -115,7 +115,7 @@ export default function AdminOrder() {
 
                 <input 
                     type='date' 
-                    value={startDate || ''}  // Ensuring value is never undefined
+                    value={startDate || ''}
                     onChange={(e) => handleFilterChange(status, e.target.value, endDate)} 
                 />
 

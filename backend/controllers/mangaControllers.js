@@ -97,12 +97,12 @@ const filterManga = async (req, res) => {
 
 // Create a manga
 const createManga = async (req, res) => {
-    const { title, series, category, author, supplier, stock, price, description } = req.body
+    const { title, series, category, author, supplierID, stock, price, description } = req.body
     const cover1 = req.files['cover1'] ? req.files['cover1'][0].path : null
     const cover2 = req.files['cover2'] ? req.files['cover2'][0].path : null
 
     try {
-        const manga = await Manga.create({ title, series, category, author, supplier, 
+        const manga = await Manga.create({ title, series, category, author, supplierID, 
                                                 stock, price, description, cover1, cover2 })
 
         if (!manga)

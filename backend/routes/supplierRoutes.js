@@ -24,9 +24,9 @@ router.get('/:id', getSupplier)
 router.post('/', createSupplier)
 
 // Delete Supplier
-router.delete('/', deleteSupplier)
+router.delete('/:id', deleteSupplier)
 
 // Update Supplier
-router.patch('/', updateSupplier)
+router.patch('/:id', updateSupplier)
 
 module.exports = router
