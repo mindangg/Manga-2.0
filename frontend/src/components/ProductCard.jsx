@@ -34,7 +34,7 @@ export default function ProductCard({ manga, handleEdit }) {
             <span>{manga.category}</span>
             <span>{manga.author}</span>
             <span>{manga.stock}</span>
-            <span>$ {manga.price}</span>
+            <span>$ {manga.priceIn}</span>
             <span className='manga-action'>
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(manga)}></i>
                 <i className='fa-solid fa-trash-can' onClick={handleDelete}></i>

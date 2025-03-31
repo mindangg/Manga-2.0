@@ -7,9 +7,9 @@ const getStocks = async (req, res) => {
     try {
         const stocks = await Stock.find()
             .populate('employeeID')
-            .populate('supplierID')
+            .populate('items.supplierID')
             .populate('items.mangaID')
-            .sort({ stockNumber: -1 })
+            .sort({ createdAt: -1 })
   
         res.status(200).json(stocks)
     } 
@@ -20,14 +20,14 @@ const getStocks = async (req, res) => {
 
 // Get a single Stock
 const getStock = async (req, res) => {
-    const userID = req.user._id
+    const id = req.params
 
     try {
-        const stock = await Stock.find({ userID })
+        const stock = await Stock.findById(id)
             .populate('employeeID')
-            .populate('supplierID')
+            .populate('items.supplierID')
             .populate('items.mangaID')
-            .sort({ stockNumber: -1 })
+            .sort({ createdAt: -1 })
   
         res.status(200).json(stock)
     } 
@@ -41,10 +41,9 @@ const createStock = async (req, res) => {
     const { employeeID, stockItems } = req.body
 
     if (!employeeID || !stockItems)
-        return res.status(400).json({ error: 'Missing userID or cartID or stockItems' })
+        return res.status(400).json({ error: 'Missing employeeID or stockItems' })
 
     try {
-
         // Update manga quantities in the database
         await Promise.all(stockItems.map(async (i) => {
             await Manga.findByIdAndUpdate(i._id, { $inc: { stock: i.quantity } })
@@ -52,17 +51,18 @@ const createStock = async (req, res) => {
 
         const items = stockItems.map(i => ({
             mangaID: i._id,
-            stockQuantity: i.quantity
+            supplierID: i.supplierID,
+            stockQuantity: i.quantity,
         }))
 
-        const totalPrice = stockItems.reduce((total, i) => total + i.quantity * i.price, 0)
+        const totalPrice = stockItems.reduce((total, i) => total + i.quantity * i.priceIn, 0)
 
         const stock = await Stock.create({ employeeID, items, totalPrice })
 
         res.status(200).json(stock)
     } 
     catch (error) {
-        res.status(500).json({ error: 'Failed to create stock' })
+        res.status(500).json({ error: error.message })
     }
 }
 

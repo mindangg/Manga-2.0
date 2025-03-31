@@ -1122,7 +1122,203 @@ input[type='file'] {
     margin-bottom: 25px;
 }
 
-/* StockIn Modal (Same style as add-supplier) */
+
+.stock-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.stock-controller{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.stock-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 300px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.stock-controller input[type='date']{
+    width: 12%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.stock-controller button{
+    color: black;
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.stock-controller button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.stock-controller button i{
+    color: black;
+}
+
+.stock-search{
+    position: relative;
+}
+
+.stock-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.stock-controller i:nth-of-type(1){
+    color: white;
+    /* padding: 10px;
+    background-color: var(--gray); */
+}
+
+.stock-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
+.stock-header{
+    font-weight: bold;
+}
+.stock-header,
+.stock-info{
+    display: grid;
+    grid-template-columns: 2fr 3.5fr 2.5fr 3.5fr 2fr 2fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+} 
+
+.stock-status-Active{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.stock-status-Disabled{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.stock-action{
+    cursor: pointer;
+}
+
+.stock-action i{
+    cursor: pointer;
+}
+
+.stock-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.stock-icon{
+    display: flex;
+}
+
+.stock-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.stock-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.stock-icon i{
+    margin-right: 5px;
+    color: black!important;
+}
+
+.stock-details-container{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.stock-details{
+    position: relative;
+    background-color: var(--black);
+    width: 90%;
+    max-width: 450px;
+    min-height: 300px;
+    max-height: 80vh;
+    margin: 90px auto;
+    padding: 20px 20px 10px;
+    color: white;
+    bottom: unset;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+    overflow-y: auto; /* Enables scrolling when needed */
+    text-align: left;
+}
+
+.stock-details i{
+    position: absolute;
+    right: 3%;
+    top: 3%;
+    color: rgba(255, 255, 255, 0.752);
+    cursor: pointer;
+}
+
+.stock-details img{
+    width: 50px;
+}
+
+.stock-details div{
+    margin: 20px 0;
+}
+
+.stock-details button{
+    margin-top: 10px;
+    padding: 10px;
+    width: 120px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    border: none;
+}
+
+.stock-details button i{
+    color: white;
+    position: static;
+}
+
 .add-stock-container {
     position: fixed;
     left: 0;

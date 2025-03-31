@@ -12,11 +12,6 @@ const stockModel = new Schema({
       ref: 'Employee',
       required: true
     },
-    supplierID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Supplier',
-      // required: true
-    },
     items: [
       {
         mangaID: {
@@ -24,10 +19,15 @@ const stockModel = new Schema({
           ref: 'Manga',
           required: true
         },
+        supplierID: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Supplier',
+          required: true
+        },
         stockQuantity: {
-            type: Number,
-            default: 1
-        }
+          type: Number,
+          default: 1
+        },
       }
     ],
     totalPrice: {
@@ -41,7 +41,7 @@ stockModel.pre('save', async function (next) {
     const count = await mongoose.model('Stock').countDocuments()
     const stockNum = count + 1
 
-    this.orderNumber = `NH${String(stockNum).padStart(3, '0')}`
+    this.stockNumber = `NH${String(stockNum).padStart(3, '0')}`
   }
 
   next()

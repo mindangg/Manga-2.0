@@ -27,7 +27,7 @@ export default function AdminProduct() {
     const [author, setAuthor] = useState('')
     const [supplier, setSupplier] = useState('')
     const [stock, setStock] = useState('')
-    const [price, setPrice] = useState('')
+    const [priceIn, setPriceIn] = useState('')
     const [description, setDescription] = useState('')
     const [cover1, setCover1] = useState('')
     const [cover2, setCover2] = useState('')
@@ -42,7 +42,7 @@ export default function AdminProduct() {
         setAuthor(product.author)
         setSupplier(product.supplier)
         // setStock(product.stock)
-        setPrice(product.price)
+        setPriceIn(product.priceIn)
         setDescription(product.description)
         setIsToggle(true)
     }
@@ -59,7 +59,7 @@ export default function AdminProduct() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${admin.token}`
                 },
-                body: JSON.stringify({ title, series, category, author, supplier, price, description })
+                body: JSON.stringify({ title, series, category, author, supplier, priceIn, description })
             })
         
             if (!response.ok)
@@ -75,7 +75,7 @@ export default function AdminProduct() {
             setAuthor('')
             setSupplier('')
             setStock('')
-            setPrice('')
+            setPriceIn('')
             setDescription('')
             setSelectedProduct(null)
         } catch (error) {
@@ -93,7 +93,7 @@ export default function AdminProduct() {
         formData.append('author', author)
         formData.append('supplierID', supplier)
         // formData.append('stock', stock)
-        formData.append('price', price)
+        formData.append('priceIn', priceIn)
         formData.append('description', description)
     
         if (cover1) 
@@ -121,7 +121,7 @@ export default function AdminProduct() {
             setAuthor('')
             setSupplier('')
             setStock('')
-            setPrice('')
+            setPriceIn('')
             setDescription('')
             setCover1(null)
             setCover2(null)
@@ -187,7 +187,7 @@ export default function AdminProduct() {
     }, [dispatch, userDispatch])
 
     const toggle = () => {
-        if (!users) {
+        if (!users || users.length <= 0) {
             alert('No supplier')
             return
         }
@@ -199,7 +199,7 @@ export default function AdminProduct() {
             setAuthor('')
             setSupplier('')
             // setStock('')
-            setPrice('')
+            setPriceIn('')
             setDescription('')
             setCover1('')
             setCover2('')
@@ -244,11 +244,13 @@ export default function AdminProduct() {
                     <option value='Dark Fantasy'>Dark Fantasy</option>
                 </select>
 
-                <div className='manga-search'>
-                    <input type='text' placeholder='Search for...'></input> 
-                    <i className='fa-solid fa-magnifying-glass'></i>
-                </div>
-                
+                <select onChange={(e) => filterManga(e.target.value)}>
+                    <option value='All'>All</option>
+                    {users.map((u) => (
+                        <option key={u._id} value={u._id}>{u.name}</option>
+                    ))}
+                </select>
+
                 <label>From</label>
 
                 <input type='date'></input>
@@ -268,7 +270,7 @@ export default function AdminProduct() {
                 <span>Category</span>
                 <span>Author</span>
                 <span>Stock</span>
-                <span>Price</span>
+                <span>PriceIn</span>
                 <span>Edit</span>
             </div>
             
@@ -325,8 +327,8 @@ export default function AdminProduct() {
                             {/* <input type='text' placeholder='Stock' value={stock}
                                         onChange={(e) => setStock(e.target.value)}/> */}
 
-                            <input type='text' placeholder='Price' value={price}
-                                        onChange={(e) => setPrice(e.target.value)}/>
+                            <input type='text' placeholder='PriceIn' value={priceIn}
+                                        onChange={(e) => setPriceIn(e.target.value)}/>
 
                             <input type='text' placeholder='Description' value={description}
                                         onChange={(e) => setDescription(e.target.value)}/>

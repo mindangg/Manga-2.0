@@ -69,16 +69,13 @@ const filterManga = async (req, res) => {
         }
 
         if (minPrice || maxPrice) {
-            // Initialize price filter object
-            filter.price = {}
+            filter.priceOut = {}
 
-            if (minPrice && !isNaN(parseFloat(minPrice))) {
-                filter.price.$gte = parseFloat(minPrice)
-            }
+            if (minPrice && !isNaN(parseFloat(minPrice)))
+                filter.priceOut.$gte = parseFloat(minPrice)
 
-            if (maxPrice && !isNaN(parseFloat(maxPrice))) {
-                filter.price.$lte = parseFloat(maxPrice)
-            }
+            if (maxPrice && !isNaN(parseFloat(maxPrice)))
+                filter.priceOut.$lte = parseFloat(maxPrice)
         }
 
         const manga = await Manga.find(filter).sort({ title: 1 })
@@ -94,16 +91,15 @@ const filterManga = async (req, res) => {
     }
 }
 
-
 // Create a manga
 const createManga = async (req, res) => {
-    const { title, series, category, author, supplierID, stock, price, description } = req.body
+    const { title, series, category, author, supplierID, stock, priceIn, description } = req.body
     const cover1 = req.files['cover1'] ? req.files['cover1'][0].path : null
     const cover2 = req.files['cover2'] ? req.files['cover2'][0].path : null
 
     try {
         const manga = await Manga.create({ title, series, category, author, supplierID, 
-                                                stock, price, description, cover1, cover2 })
+                                                stock, priceIn, description, cover1, cover2 })
 
         if (!manga)
             return res.status(400).json({error: 'Failed to create manga'})

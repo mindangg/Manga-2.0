@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const getAllSuppliers = async(req, res) => {
     try {
         const suppliers = await Supplier.find()
-            .populate('employeeID')
             .sort({ createdAt: -1 })
   
         res.status(200).json(suppliers)
@@ -21,7 +20,6 @@ const getSupplier = async (req, res) => {
 
     try {
         const supplier = await Supplier.findById(id)
-            .populate('employeeID')
             .sort({ createdAt: -1 })
   
         res.status(200).json(supplier)
@@ -33,10 +31,10 @@ const getSupplier = async (req, res) => {
 
 // Create a supplier
 const createSupplier = async (req, res) => {
-    const { employeeID, name, email, phone, address } = req.body
+    const { name, email, phone, address } = req.body
 
     try {
-        const supplier = await Supplier.create({ employeeID, name, email, phone, address })
+        const supplier = await Supplier.create({ name, email, phone, address })
 
         if(!supplier)
             return res.status(400).json({error: 'Failed to create supplier'})

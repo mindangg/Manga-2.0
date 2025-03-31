@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import '../styles/Admin.css'
 
@@ -9,10 +9,12 @@ import Pagination from '../components/Pagination'
 
 import { useUserContext } from '../hooks/useUserContext'
 import { useAdminContext } from '../hooks/useAdminContext'
+import { useOrderContext } from '../hooks/useOrderContext'
 
 export default function AdminSupplier() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
+    const { order, dispatch: orderDispatch } = useOrderContext()
 
     const [products, setProducts] = useState([])
 
@@ -50,6 +52,27 @@ export default function AdminSupplier() {
         }
     }
 
+    const fetchStock = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/stock', {
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
+
+            if (!response.ok)
+                return console.error('Error fetching stock:', response.status)
+            
+            const json = await response.json()
+
+            orderDispatch({ type: 'DISPLAY_ITEM', payload: json})
+            console.log(order)
+        }
+        catch (error) {
+            console.error('Error fetching stockp:', error)
+        }
+    }
+
     const fetchManga = async () => {
         try {
             const response = await fetch('http://localhost:4000/api/manga', {
@@ -73,6 +96,7 @@ export default function AdminSupplier() {
     useEffect(() => {
         fetchSupplier()
         fetchManga()
+        fetchStock()
     }, [dispatch])
     
     const filterSupplier = async (status) => {
@@ -158,7 +182,7 @@ export default function AdminSupplier() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${admin.token}`
                 },
-                body: JSON.stringify({ employeeID: admin.employee._id, name, email, phone, address })
+                body: JSON.stringify({ name, email, phone, address })
             })
 
             if (!response.ok)
@@ -187,7 +211,7 @@ export default function AdminSupplier() {
     else {
         const lastPageIndex = currentPage * productPerPages
         const firstPageIndex = lastPageIndex - productPerPages
-        currentStock = users?.slice(firstPageIndex, lastPageIndex)
+        currentStock = order?.slice(firstPageIndex, lastPageIndex)
     }
 
     return (
@@ -224,33 +248,45 @@ export default function AdminSupplier() {
                     }        
                 </div>
             </div>
-            <div className='supplier-header'>
-                <span>Name</span>
-                <span>Email</span>
-                <span>Phone Number</span>
-                <span>Address</span>
-                <span>Date Created</span>
-                <span>Edit</span>
-            </div>
-            {
-                action === 'Supplier' 
-                ? (
-                    currentSupplier && currentSupplier.map((s) => (
-                        <SupplierCard key={s._id} supplier={s} handleEdit={handleEdit}/>
-                    ))
-                )
-                : (
-                    currentStock && currentStock.map((s) => (
-                        <StockCard key={s._id} stock={s} handleEdit={handleEdit}/>
-                    ))
-                )
-            }
-
-            <Pagination
-                totalProducts={users?.length} 
-                productPerPages={productPerPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}/>
+            {action === 'Supplier' ? (
+                <>
+                    <div className='supplier-header'>
+                        <span>Name</span>
+                        <span>Email</span>
+                        <span>Phone Number</span>
+                        <span>Address</span>
+                        <span>Date Created</span>
+                        <span>Edit</span>
+                    </div>
+                    {currentSupplier?.map((s) => (
+                        <SupplierCard key={s._id} supplier={s} handleEdit={handleEdit} />
+                    ))}
+                    <Pagination
+                        totalProducts={users?.length} 
+                        productPerPages={productPerPages}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}/>
+                </>
+            ) : (
+                <>
+                    <div className='stock-header'>
+                        <span>Stock</span>
+                        <span>Employee</span>
+                        <span>Supplier</span>
+                        <span>Date Created</span>
+                        <span>Total</span>
+                        <span>Details</span>
+                    </div>
+                    {currentStock?.map((s) => (
+                        <StockCard key={s._id} stock={s}/>
+                    ))}
+                    <Pagination
+                        totalProducts={order?.length} 
+                        productPerPages={productPerPages}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}/>
+                </>
+            )}
 
             {isToggle && action === 'Supplier' && (
                 <div className='add-supplier-container'>

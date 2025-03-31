@@ -3,9 +3,11 @@ import { useState } from 'react'
 import '../styles/Admin.css'
 
 import { useAdminContext } from '../hooks/useAdminContext'
+import { useOrderContext } from '../hooks/useOrderContext'
 
 export default function StockInForm({ products, toggle }) {
     const { admin } = useAdminContext()
+    const { order, dispatch } = useOrderContext()
 
     const [search, setSearch] = useState('')
     const [selectedProducts, setSelectedProducts] = useState([])
@@ -52,11 +54,9 @@ export default function StockInForm({ products, toggle }) {
 
             const json = await response.json()
 
-            console.log(json)
+            dispatch({type: 'ADD_ITEM', payload: json})
 
-            // dispatch({type: 'ADD_USER', payload: json})
-
-            setIsToggle(false)
+            toggle()
         }
         catch (error) {
             console.error(error)

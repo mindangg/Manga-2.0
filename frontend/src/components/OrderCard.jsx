@@ -87,7 +87,7 @@ export default function OrderCard({ order }) {
                             )
                         }
                         <div style={{textAlign: 'center'}}>
-                            <button onClick={() => generatePDF(order)}
+                            <button onClick={() => generatePDF(order, 'order')}
                                     style={{
                                         backgroundColor: "var(--green)",
                                         color: "black",

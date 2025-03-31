@@ -3,11 +3,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const supplierSchema = new Schema({
-    employeeID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Employee',
-      required: true
-    },
     name: {
       type: String,
       required: true
