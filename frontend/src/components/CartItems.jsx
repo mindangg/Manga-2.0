@@ -34,7 +34,7 @@ export default function CartItems({ cart }) {
                 </div>
             </div>
             <div className='cart-total'>
-                <p>{cart.mangaID && (cart.mangaID.price * cart.quantity).toFixed(2)}</p>
+                <p>{cart.mangaID && (cart.mangaID.priceOut * cart.quantity).toFixed(2)}</p>
             </div>
             <div className='cart-delete'>
                 <button id='cart-quantityremove' onClick={() => handleDelete(cart._id, user.user._id, cart.mangaID._id)}>Remove</button>

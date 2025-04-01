@@ -52,12 +52,12 @@ const createOrder = async (req, res) => {
         const orderItems = cart.items.map(i => ({
             mangaID: i.mangaID._id,
             quantity: i.quantity,
-            price: i.mangaID.price
+            price: i.mangaID.priceOut
         }))
 
-        const totalPrice = cart.items.reduce((total, i) => total + i.quantity * i.mangaID.price, 0)
+        const totalPrice = cart.items.reduce((total, i) => total + i.quantity * i.mangaID.priceOut, 0)
 
-        const order = await Order.create({ userID, items: orderItems, totalPrice })
+        const order = await Order.create({ userID, items: orderItems, totalPrice: totalPrice.toFixed(2) })
 
         await Cart.findOneAndDelete({ _id: cartID })
 

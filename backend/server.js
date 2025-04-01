@@ -15,6 +15,8 @@ const employeeRoutes = require('./routes/employeeRoutes')
 const supplierRoutes = require('./routes/supplierRoutes')
 const stockRoutes = require('./routes/stockRoutes')
 const pdfRoutes = require('./routes/pdfRoutes')
+const orderStatisticRoutes = require('./routes/orderStatisticRoutes')
+const stockStatisticRoutes = require('./routes/stockStatisticRoutes')
 
 const app = express()
 
@@ -43,6 +45,8 @@ app.use('/api/order', orderRoutes)
 app.use('/api/employee', employeeRoutes)
 app.use('/api/supplier', supplierRoutes)
 app.use('/api/stock', stockRoutes)
+app.use('/api/order-statistic', orderStatisticRoutes)
+app.use('/api/stock-statistic', stockStatisticRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

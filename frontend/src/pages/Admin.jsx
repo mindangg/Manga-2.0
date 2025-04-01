@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/WEBTOON_Logo.png'
-
 import '../styles/Admin.css'
 
 import AdminLogin from './AdminLogin'
@@ -18,8 +17,23 @@ import { useAdminLogout } from '../hooks/useAdminLogout'
 export default function Admin() {
     const { admin } = useAdminContext()
     const { logout } = useAdminLogout()
+    
+    const [toggle, setToggle] = useState('')
+    const role = admin?.employee?.role
 
-    const [toggle, setToggle] = useState('product')
+    const accessMap = {
+        'Seller': ['order', 'order-statistic'],
+        'Stocker': ['product', 'supplier', 'stock-statistic'],
+        'Admin': ['user', 'employee'],
+        'Manager': ['product', 'supplier', 'user', 'order', 'employee', 'order-statistic', 'stock-statistic']
+    }
+    
+    const accessiblePages = accessMap[role] || []
+    const canAccess = (page) => accessiblePages.includes(page)
+    
+    if (!canAccess(toggle) && accessiblePages.length > 0) {
+        setToggle(accessiblePages[0])
+    }
 
     return admin ? (
         <div>
@@ -30,44 +44,36 @@ export default function Admin() {
                     </div>
                     <div className='middlenav'>
                         <ul>
-                            <li onClick={() => setToggle('product')}><i className='fa-solid fa-book'></i> Product</li>
-                            <li onClick={() => setToggle('supplier')}><i class='fa-solid fa-truck-field'></i> Supplier</li>
-                            <li onClick={() => setToggle('user')}><i className='fa-solid fa-users'></i> User</li>
-                            <li onClick={() => setToggle('order')}><i className='fa-solid fa-basket-shopping'></i> Order</li>
-                            <li onClick={() => setToggle('employee')}><i class='fa-solid fa-user-tie'></i> Employee</li>
-                            <li onClick={() => setToggle('statistic')}><i className='fa-solid fa-chart-simple'></i> Statistic</li>
+                            {canAccess('product') && <li onClick={() => setToggle('product')}><i className='fa-solid fa-book'></i> Product</li>}
+                            {canAccess('supplier') && <li onClick={() => setToggle('supplier')}><i className='fa-solid fa-truck-field'></i> Supplier</li>}
+                            {canAccess('user') && <li onClick={() => setToggle('user')}><i className='fa-solid fa-users'></i> User</li>}
+                            {canAccess('order') && <li onClick={() => setToggle('order')}><i className='fa-solid fa-basket-shopping'></i> Order</li>}
+                            {canAccess('employee') && <li onClick={() => setToggle('employee')}><i className='fa-solid fa-user-tie'></i> Employee</li>}
+                            {canAccess('order-statistic') && <li onClick={() => setToggle('order-statistic')}><i className='fa-solid fa-chart-simple'></i> Order Statistic</li>}
+                            {canAccess('stock-statistic') && <li onClick={() => setToggle('stock-statistic')}><i className='fa-solid fa-chart-simple'></i> Stock Statistic</li>}
                         </ul>
                     </div>
                 </div>
                 <div className='bottomnav'>
                     <ul>
-                        <li><i className='fa-regular fa-circle-user'></i> {admin && admin.employee.role}</li>
-                        <li><i class='fa-solid fa-phone'></i> {admin && admin.employee.phone}</li>
+                        <li><i className='fa-regular fa-circle-user'></i> {role}</li>
+                        <li><i className='fa-solid fa-phone'></i> {admin?.employee?.phone}</li>
                         <li onClick={logout}><i className='fa-solid fa-arrow-right-from-bracket'></i> Logout</li>
                     </ul>
                 </div>
             </div>
 
             <div className='content'>
-                {toggle === 'product' ? (
-                    <AdminProduct/>
-                ) : toggle === 'supplier' ? (
-                    <AdminSupplier/>
-                ) : toggle === 'user' ? (
-                    <AdminUser/>
-                ) : toggle === 'order' ? (
-                    <AdminOrder/>
-                ) : toggle === 'employee' ? (
-                    <AdminEmployee/>
-                ) : toggle === 'statistic' ? (
-                    // <AdminStockStatistic/>
-                    <AdminOrderStatistic/>
-                ) : null}
+                {toggle === 'product' && canAccess('product') && <AdminProduct />}
+                {toggle === 'supplier' && canAccess('supplier') && <AdminSupplier />}
+                {toggle === 'user' && canAccess('user') && <AdminUser />}
+                {toggle === 'order' && canAccess('order') && <AdminOrder />}
+                {toggle === 'employee' && canAccess('employee') && <AdminEmployee />}
+                {toggle === 'order-statistic' && canAccess('order-statistic') && <AdminOrderStatistic />}
+                {toggle === 'stock-statistic' && canAccess('stock-statistic') && <AdminStockStatistic />}
             </div>
-
         </div>
     ) : (
         <AdminLogin />
     )
 }
-

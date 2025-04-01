@@ -156,12 +156,12 @@ export default function Checkout() {
                     <div className='subtotal'>
                         <span>Subtotal • {cart.length} items</span>
                         <span>${cart.items.reduce((total, item) => 
-                                            total + item.quantity * item.mangaID.price, 0).toFixed(2)}</span>
+                                            total + item.quantity * item.mangaID.priceOut, 0).toFixed(2)}</span>
                     </div>
                     <div className='total'>
                         <span>Total</span>
                         <span className='order-price'>${cart.items.reduce((total, item) => 
-                                            total + item.quantity * item.mangaID.price, 0).toFixed(2)}</span>
+                                            total + item.quantity * item.mangaID.priceOut, 0).toFixed(2)}</span>
                     </div>
                 </div>
             </div>

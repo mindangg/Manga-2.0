@@ -16,6 +16,8 @@ export default function AdminProduct() {
     const { users, dispatch: userDispatch } = useUserContext()
     const { admin } = useAdminContext()
 
+    const [filters, setFilters] = useState({ category: 'All', supplier: 'All' })
+
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
 
@@ -209,19 +211,29 @@ export default function AdminProduct() {
         setIsToggle(!isToggle)
     }
     
-    const filterManga = async (category) => {
+    const filterManga = async (newFilters) => {
         try {
             const manga = await fetchManga()
             let filteredManga = manga
+            console.log(newFilters.supplier)
     
-            if (category !== 'All')
-                filteredManga = manga.filter((m) => m.category === category)
-
+            if (newFilters.category !== 'All')
+                filteredManga = filteredManga.filter(m => m.category === newFilters.category)
+    
+            if (newFilters.supplier !== 'All')
+                filteredManga = filteredManga.filter(m => m.supplierID === newFilters.supplier)
+    
             dispatch({ type: 'DISPLAY_ITEM', payload: filteredManga })
         } 
         catch (error) {
             console.error('Error filtering manga:', error)
         }
+    }
+
+    const handleFilterChange = (type, value) => {
+        const newFilters = { ...filters, [type]: value }
+        setFilters(newFilters)
+        filterManga(newFilters)
     }
 
     const lastPageIndex = currentPage * productPerPages
@@ -231,20 +243,19 @@ export default function AdminProduct() {
     return (
         <div className='manga-container'>
             <div className = 'manga-controller'>
-                <select onChange={(e) => filterManga(e.target.value)}>
+                <select onChange={(e) => handleFilterChange('category', e.target.value)}>
                     <option value='All'>All</option>
                     <option value='Shounen'>Shounen</option>
                     <option value='Rom Com'>Rom Com</option>
                     <option value='Family'>Family</option>
                     <option value='Fantasy'>Fantasy</option>
-                    <option value='Slice Of Slice'>Slice Of Slice</option>
                     <option value='Action'>Action</option>
                     <option value='Comedy'>Comedy</option>
                     <option value='Drama'>Drama</option>
                     <option value='Dark Fantasy'>Dark Fantasy</option>
                 </select>
 
-                <select onChange={(e) => filterManga(e.target.value)}>
+                <select onChange={(e) => handleFilterChange('supplier', e.target.value)}>
                     <option value='All'>All</option>
                     {users.map((u) => (
                         <option key={u._id} value={u._id}>{u.name}</option>

@@ -10,7 +10,7 @@ export default function CheckoutItems({ order }) {
             <div class='payment-info-item-details'>
                 <p>{order.mangaID && order.mangaID.title}</p>
             </div>
-            <div class='payment-info-item-price'>{order.mangaID && order.mangaID.price}</div>
+            <div class='payment-info-item-price'>${order.mangaID && order.mangaID.priceOut}</div>
         </div>
     )
 }

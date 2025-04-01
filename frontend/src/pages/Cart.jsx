@@ -67,7 +67,7 @@ export default function Cart() {
                     </div>
                     <div className='cart-summary'>
                         <h3>Total of order: ${cart && cart.items.reduce((total, item) => total + 
-                                item.quantity * (item.mangaID && item.mangaID.price || 0), 0).toFixed(2)}</h3>
+                                item.quantity * (item.mangaID && item.mangaID.priceOut || 0), 0).toFixed(2)}</h3>
                         <Link to='/checkout'><button id='checkout-btn'>Checkout</button></Link>
                     </div>
                 </div>
