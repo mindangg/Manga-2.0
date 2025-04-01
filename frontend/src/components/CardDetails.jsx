@@ -58,11 +58,11 @@ export default function CardDetails() {
                         <i className='fa-solid fa-star'></i>
                         <i className='fa-solid fa-star'></i>
                     </div>
-                    <p>Price: ${manga.price}</p>
+                    <p>Price: ${manga.priceOut}</p>
                     <p>Author:</p>
                     <h2>{manga.author}</h2>
                     <p>{manga.category}</p><br/>
-                    <button onClick={() => addToCart(manga._id)}>Add to cart</button><br/>
+                    <button onClick={() => addToCart(manga._id, manga.stock)}>Add to cart</button><br/>
 
                     <p>Stock: {manga.stock}</p><br/>
                     <h3>Description: </h3><br/>

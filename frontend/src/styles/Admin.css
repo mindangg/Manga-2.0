@@ -1463,6 +1463,326 @@ input[type='file'] {
     background-color: var(--green-l);
 }
 
+.stock-statistic-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.stock-statistic-controller{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.stock-statistic-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 420px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.stock-statistic-controller input[type='date']{
+    width: 15%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.stock-statistic-controller button{
+    color: black;
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.stock-statistic-controller button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.stock-statistic-controller button i{
+    color: black;
+}
+
+.stock-statistic-search{
+    position: relative;
+}
+
+.stock-statistic-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.stock-statistic-controller i:nth-of-type(1){
+    color: white;
+    /* padding: 10px;
+    background-color: var(--gray); */
+}
+
+.stock-statistic-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
+.stock-statistic-header{
+    font-weight: bold;
+}
+.stock-statistic-header,
+.stock-statistic-info{
+    display: grid;
+    grid-template-columns: 2fr 3.5fr 2.5fr 4fr 2.5fr 2fr 2fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+} 
+
+.stock-statistic-status-Active{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.stock-statistic-status-Disabled{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.stock-statistic-action i{
+    cursor: pointer;
+}
+
+.stock-statistic-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.stock-statistic-icon{
+    display: flex;
+}
+
+.stock-statistic-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.stock-statistic-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.stock-statistic-icon i{
+    margin-right: 5px;
+    color: black!important;
+}
+
+.stock-statistic-items{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 36px;
+}
+
+.stock-statistic-item{
+    display: flex;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+    width: 33%;
+    height: 150px;
+    padding: 20px 40px;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.stock-statistic-item-icon i{
+    font-size: 45px;
+    margin-right: 25px;
+    color: white;
+}
+
+
+
+
+
+.order-statistic-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-statistic-controller{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.order-statistic-controller input{
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    height: 36px;
+    color: white;
+    margin-right: 25px;
+    width: 420px;
+    padding: 0 10px 0 40px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.order-statistic-controller input[type='date']{
+    width: 15%;
+    padding: 0 10px;
+    color: var(--gray);
+}
+
+.order-statistic-controller button{
+    color: black;
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    width: 90px;
+    height: 35px;
+    margin-left: 15px;
+}
+
+.order-statistic-controller button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.order-statistic-controller button i{
+    color: black;
+}
+
+.order-statistic-search{
+    position: relative;
+}
+
+.order-statistic-search i{
+    position: absolute;
+    left: 10px;   
+    top: 50%;
+    transform: translateY(-50%); 
+    color: white;
+}
+
+.order-statistic-controller i:nth-of-type(1){
+    color: white;
+    /* padding: 10px;
+    background-color: var(--gray); */
+}
+
+.order-statistic-controller label{
+    color: white;
+    margin: 0 10px;
+}
+
+.order-statistic-header{
+    font-weight: bold;
+}
+.order-statistic-header,
+.order-statistic-info{
+    display: grid;
+    grid-template-columns: 2fr 3.5fr 2.5fr 4fr 2.5fr 2fr 2fr;
+    padding: 25px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+} 
+
+.order-statistic-status-Active{
+    background-color: #28ac64;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.order-statistic-status-Disabled{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.order-statistic-action i{
+    cursor: pointer;
+}
+
+.order-statistic-action i:nth-of-type(1){
+    margin-right: 10px;
+}
+
+.order-statistic-icon{
+    display: flex;
+}
+
+.order-statistic-icon button{
+    background-color: var(--green);
+    height: 40px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: auto;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.order-statistic-icon button:hover{
+    cursor: pointer;
+    background-color: var(--green-l);
+}
+
+.order-statistic-icon i{
+    margin-right: 5px;
+    color: black!important;
+}
+
+.order-statistic-items{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 36px;
+}
+
+.order-statistic-item{
+    display: flex;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+    width: 33%;
+    height: 150px;
+    padding: 20px 40px;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.order-statistic-item-icon i{
+    font-size: 45px;
+    margin-right: 25px;
+    color: white;
+}
+
 
 
 

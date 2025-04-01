@@ -7,10 +7,14 @@ export const useAddToCart = () => {
     const { user } = useAuthContext()
     const { showNotification } = useNotificationContext()
 
-    const addToCart = async (mangaID) => {
+    const addToCart = async (mangaID, stock) => {
         if (!user) {
             showNotification('Please log in to add to cart')
-            // console.error('User not logged in')
+            return
+        }
+
+        if (stock <= 0) {
+            showNotification('Out of stock')
             return
         }
 

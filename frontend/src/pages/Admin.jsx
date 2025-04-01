@@ -10,6 +10,7 @@ import AdminProduct from './AdminProduct'
 import AdminEmployee from './AdminEmployee'
 import AdminSupplier from './AdminSupplier'
 import AdminStockStatistic from './AdminStockStatistic'
+import AdminOrderStatistic from './AdminOrderStatistic'
 
 import { useAdminContext } from '../hooks/useAdminContext'
 import { useAdminLogout } from '../hooks/useAdminLogout'
@@ -59,7 +60,8 @@ export default function Admin() {
                 ) : toggle === 'employee' ? (
                     <AdminEmployee/>
                 ) : toggle === 'statistic' ? (
-                    <AdminStockStatistic/>
+                    // <AdminStockStatistic/>
+                    <AdminOrderStatistic/>
                 ) : null}
             </div>
 

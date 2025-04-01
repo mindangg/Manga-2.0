@@ -34,6 +34,9 @@ const mangaModel = new Schema({
     },
     priceOut: {
         type: Number,
+        default: function() { 
+            return parseFloat((this.priceIn * 1.2).toFixed(2))
+        }
     },
     description: {
         type: String,
@@ -47,17 +50,17 @@ const mangaModel = new Schema({
     }
 }, { timestamps: true })
 
-mangaModel.pre('save', function (next) {
-    if (this.isModified('priceIn'))
-        this.priceOut = this.priceIn * 1.2
+// mangaModel.pre('save', function (next) {
+//     if (this.isModified('priceIn'))
+//         this.priceOut = this.priceIn * 1.2
 
-    next()
-})
+//     next()
+// })
 
 mangaModel.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate()
     if (update.priceIn) {
-        update.priceOut = update.priceIn * 1.2
+        update.priceOut = parseFloat((update.priceIn * 1.2).toFixed(2))
         this.setUpdate(update)
     }
     next()

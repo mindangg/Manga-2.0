@@ -15,8 +15,8 @@ export default function Card({ manga }) {
                 <img src={`http://localhost:4000/${manga.cover2}`}></img>
             </a>
             <h4>{manga.title}</h4>
-            <p>${manga.price}</p>
-            <button onClick={() => addToCart(manga._id)}>+ Add to cart</button>
+            <p>${manga.priceOut}</p>
+            <button onClick={() => addToCart(manga._id, manga.stock)}>+ Add to cart</button>
         </div>
   )
 }
