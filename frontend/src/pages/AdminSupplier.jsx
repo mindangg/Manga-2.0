@@ -272,8 +272,8 @@ export default function AdminSupplier() {
                     <div className='stock-header'>
                         <span>Stock</span>
                         <span>Employee</span>
-                        <span>Supplier</span>
                         <span>Date Created</span>
+                        <span>Quantity</span>
                         <span>Total</span>
                         <span>Details</span>
                     </div>

@@ -37,16 +37,17 @@ const getStatsByMonths = async (req, res) => {
                     totalCost: { $sum: '$totalPrice' }
                 }
             },
-            { $sort: { '_id.year': -1, '_id.month': -1 } } // Sort by most recent
-        ]);
+            { $sort: { '_id.year': 1, '_id.month': 1 } }
+        ])
 
-        res.json(stats);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching monthly stock stats', error });
+        res.json(stats)
+    } 
+    catch (error) {
+        res.status(500).json({ message: 'Error fetching monthly stock stats', error })
     }
-};
+}
 
-const getStatsByYear = async (req, res) => {
+const getStatsByYears = async (req, res) => {
     try {
         const stats = await Stock.aggregate([
             { $unwind: '$items' },
@@ -58,14 +59,13 @@ const getStatsByYear = async (req, res) => {
                     totalCost: { $sum: '$totalPrice' }
                 }
             },
-            { $sort: { '_id.year': -1 } } // Sort by most recent year
-        ]);
+            { $sort: { '_id.year': -1 } }
+        ])
 
-        res.json(stats);
+        res.json(stats)
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching yearly stock stats', error });
+        res.status(500).json({ message: 'Error fetching yearly stock stats', error })
     }
-};
+}
 
-
-module.exports = { getStats, getStatsByMonths, getStatsByYear }
+module.exports = { getStatsByMonths, getStatsByYears }

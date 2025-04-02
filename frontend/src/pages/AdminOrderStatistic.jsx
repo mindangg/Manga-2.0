@@ -16,9 +16,6 @@ export default function AdminOrderStatistic() {
         labels: [],
         datasets: []
     })
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
-    const [status, setStatus] = useState('All')
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -32,39 +29,17 @@ export default function AdminOrderStatistic() {
                     return console.error('Error fetching order statistic:', response.status)
                 
                 const json = await response.json()
-                // console.log(json)
+                console.log(json)
     
                 setStats(json)
-            }
-            catch (error) {
-                console.error('Error fetching stats:', error)
-            }
-        }
-
-        fetchStats()
-    }, [])
-
-    useEffect(() => {
-        const fetchStatsByMonths = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/order-statistic/months', {
-                    headers: {
-                        'Authorization': `Bearer ${admin.token}`
-                    }
-                })
-                if (!response.ok)
-                    return console.error('Error fetching order statistic:', response.status)
-                
-                const json = await response.json()
-    
-                setStatsByMonths(json)
-
+                const labels = json.map(stat => `${stat._id.month}/${stat._id.year}`)
                 const salesData = json.map((stat) => stat.totalSales)
                 const revenueData = json.map((stat) => stat.totalRevenue)
                 const profitData = json.map((stat) => stat.totalProfit)
     
                 setChartData({
-                    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    // labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    labels,
                     datasets: [
                         {
                             label: 'Total Sales',
@@ -88,50 +63,67 @@ export default function AdminOrderStatistic() {
                 console.error('Error fetching stats:', error)
             }
         }
-    
-        fetchStatsByMonths()
+
+        fetchStats()
     }, [])
+
+    // useEffect(() => {
+    //     const fetchStatsByMonths = async () => {
+    //         try {
+    //             const response = await fetch('http://localhost:4000/api/order-statistic/months', {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${admin.token}`
+    //                 }
+    //             })
+    //             if (!response.ok)
+    //                 return console.error('Error fetching order statistic:', response.status)
+                
+    //             const json = await response.json()
+    
+    //             setStatsByMonths(json)
+    //             const labels = json.map((stat) => stat._id)
+    //             const salesData = json.map((stat) => stat.totalSales)
+    //             const revenueData = json.map((stat) => stat.totalRevenue)
+    //             const profitData = json.map((stat) => stat.totalProfit)
+    
+    //             setChartData({
+    //                 // labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    //                 labels,
+    //                 datasets: [
+    //                     {
+    //                         label: 'Total Sales',
+    //                         data: salesData,
+    //                         backgroundColor: '#e69e19',
+    //                     },
+    //                     {
+    //                         label: 'Total Revenue ($)',
+    //                         data: revenueData,
+    //                         backgroundColor: '#28ac64',
+    //                     },
+    //                     {
+    //                         label: 'Total Profit ($)',
+    //                         data: profitData,
+    //                         backgroundColor: '#f84c2c',
+    //                     }
+    //                 ]
+    //             })
+    //         }
+    //         catch (error) {
+    //             console.error('Error fetching stats:', error)
+    //         }
+    //     }
+    
+    //     fetchStatsByMonths()
+    // }, [])
  
     return (
         <div className='order-statistic-container'>
-            <div className='order-statistic-controller'>
-                <select>
-                    <option value='Manager'>Manager</option>
-                    <option value='Seller'>Seller</option>
-                    <option value='Stocker'>Stocker</option>
-                </select>
-
-                <div className='order-statistic-search'>
-                    <input type='text' placeholder='Search for...'></input> 
-                    <i className='fa-solid fa-magnifying-glass'></i>
-                </div>
-                
-                <label>From</label>
-
-                <input 
-                    type='date' 
-                    // value={startDate || ''}
-                    // onChange={(e) => handleFilterChange(status, e.target.value, endDate)} 
-                />
-
-                <label>To</label>
-
-                <input 
-                    type='date' 
-                    // value={endDate || ''} 
-                    // onChange={(e) => handleFilterChange(status, startDate, e.target.value)} 
-                />
-
-                <div className='order-statistic-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                </div>
-            </div>
 
             <div className='order-statistic-items'>
                 <div className='order-statistic-item'>
                     <div className='order-statistic-item-content'>
                         <p>Quantity Sold</p>
-                        <h4>{stats && stats.totalSales}</h4>
+                        <h4>{stats && stats.reduce((total, i) => total + i.totalSales || 0, 0)}</h4>
                     </div>
                     <div className='order-statistic-item-icon'>
                         <i className='fa-solid fa-book'></i>
@@ -140,7 +132,7 @@ export default function AdminOrderStatistic() {
                 <div className='order-statistic-item'>
                     <div className='order-statistic-item-content'>
                         <p>Total Revenue</p>
-                        <h4>$ {stats && stats.totalRevenue}</h4>
+                        <h4>$ {stats && stats.reduce((total, i) => total + i.totalRevenue || 0, 0).toFixed(2)}</h4>
                     </div>
                     <div className='order-statistic-item-icon'>
                         <i class='fa-solid fa-file-lines'></i>
@@ -149,7 +141,7 @@ export default function AdminOrderStatistic() {
                 <div className='order-statistic-item'>
                     <div className='order-statistic-item-content'>
                         <p>Total Profit</p>
-                        <h4>$ {stats && stats.totalProfit}</h4>
+                        <h4>$ {stats && stats.reduce((total, i) => total + i.totalProfit || 0, 0).toFixed(2)}</h4>
                     </div>
                     <div className='order-statistic-item-icon'>
                         <i className='fa-solid fa-dollar-sign'></i>

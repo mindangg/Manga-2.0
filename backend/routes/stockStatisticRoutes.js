@@ -3,9 +3,8 @@ const express = require('express')
 const requireAuth = require('../middlewares/requireAuth')
 
 const {
-    getStats,
     getStatsByMonths,
-    getStatsByYear
+    getStatsByYears
 } = require('../controllers/stockStatisticControllers')
 
 const router = express.Router()
@@ -13,10 +12,9 @@ const router = express.Router()
 router.use(requireAuth)
 
 // Get All Stats
-router.get('/', getStats)
 
-router.get('/months', getStatsByMonths)
+router.get('/month', getStatsByMonths)
 
-router.get('/years', getStatsByYear)
+router.get('/year', getStatsByYears)
 
 module.exports = router

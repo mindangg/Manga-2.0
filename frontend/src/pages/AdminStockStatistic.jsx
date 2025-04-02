@@ -16,33 +16,69 @@ export default function AdminStockStatistic() {
         labels: [],
         datasets: []
     })
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
-    const [status, setStatus] = useState('All')
+
+    const [option, setOption] = useState('month')
+    
+    const fetchStats = async (option) => {
+        try {
+            let url = `http://localhost:4000/api/stock-statistic`
+
+            if (option)
+                url += `/${option}`
+
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
+
+            if (!response.ok)
+                return console.error('Error fetching order statistic:', response.status)
+            
+            const json = await response.json()
+            // console.log(json)
+
+            setStats(json)
+                let labels = ''
+                if (option === 'month')
+                    labels = json.map(stat => `${stat._id.month}/${stat._id.year}`)
+                else
+                    labels = json.map(stat => `${stat._id.year}`)
+
+                const productsData = json.map((stat) => stat.totalProducts)
+                const quanityData = json.map((stat) => stat.totalQuantity)
+                const costData = json.map((stat) => stat.totalCost)
+    
+                setChartData({
+                    // labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Total Products',
+                            data: productsData,
+                            backgroundColor: '#e69e19',
+                        },
+                        {
+                            label: 'Total Quantity',
+                            data: quanityData,
+                            backgroundColor: '#28ac64',
+                        },
+                        {
+                            label: 'Total Cost ($)',
+                            data: costData,
+                            backgroundColor: '#f84c2c',
+                        }
+                    ]
+                })
+        }
+        catch (error) {
+            console.error('Error fetching stats:', error)
+        }
+    }
 
     useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/stock-statistic', {
-                    headers: {
-                        'Authorization': `Bearer ${admin.token}`
-                    }
-                })
-                if (!response.ok)
-                    return console.error('Error fetching order statistic:', response.status)
-                
-                const json = await response.json()
-                // console.log(json)
-    
-                setStats(json)
-            }
-            catch (error) {
-                console.error('Error fetching stats:', error)
-            }
-        }
-
-        fetchStats()
-    }, [])
+        fetchStats(option)
+    }, [option])
 
     // useEffect(() => {
     //     const fetchStatsByMonths = async () => {
@@ -95,32 +131,10 @@ export default function AdminStockStatistic() {
     return (
         <div className='stock-statistic-container'>
             <div className='stock-statistic-controller'>
-                <select>
-                    <option value='Manager'>Manager</option>
-                    <option value='Seller'>Seller</option>
-                    <option value='Stocker'>Stocker</option>
+                <select value={option} onChange={(e) => setOption(e.target.value)}>
+                    <option value='month'>Month</option>
+                    <option value='year'>Year</option>
                 </select>
-
-                <div className='stock-statistic-search'>
-                    <input type='text' placeholder='Search for...'></input> 
-                    <i className='fa-solid fa-magnifying-glass'></i>
-                </div>
-                
-                <label>From</label>
-
-                <input 
-                    type='date' 
-                    // value={startDate || ''}
-                    // onChange={(e) => handleFilterChange(status, e.target.value, endDate)} 
-                />
-
-                <label>To</label>
-
-                <input 
-                    type='date' 
-                    // value={endDate || ''} 
-                    // onChange={(e) => handleFilterChange(status, startDate, e.target.value)} 
-                />
 
                 <div className='stock-statistic-icon'>
                     <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
@@ -130,8 +144,8 @@ export default function AdminStockStatistic() {
             <div className='stock-statistic-items'>
                 <div className='stock-statistic-item'>
                     <div className='stock-statistic-item-content'>
-                        <p>Imported Products</p>
-                        <h4>{stats.totalProducts}</h4>
+                        <p>Total Products</p>
+                        <h4>{stats && stats.reduce((total, i) => total + i.totalProducts || 0, 0)}</h4>
                     </div>
                     <div className='stock-statistic-item-icon'>
                         <i className='fa-solid fa-book'></i>
@@ -139,8 +153,8 @@ export default function AdminStockStatistic() {
                 </div>
                 <div className='stock-statistic-item'>
                     <div className='stock-statistic-item-content'>
-                        <p>Imported Quantity</p>
-                        <h4>{stats.totalQuantity}</h4>
+                        <p>Total Quantity</p>
+                        <h4>{stats && stats.reduce((total, i) => total + i.totalQuantity || 0, 0)}</h4>
                     </div>
                     <div className='stock-statistic-item-icon'>
                         <i class='fa-solid fa-file-lines'></i>
@@ -149,7 +163,7 @@ export default function AdminStockStatistic() {
                 <div className='stock-statistic-item'>
                     <div className='stock-statistic-item-content'>
                         <p>Total Cost</p>
-                        <h4>$ {stats.totalCost}</h4>
+                        <h4>$ {stats && stats.reduce((total, i) => total + i.totalCost || 0, 0).toFixed(2)}</h4>
                     </div>
                     <div className='stock-statistic-item-icon'>
                         <i className='fa-solid fa-dollar-sign'></i>
