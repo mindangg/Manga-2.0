@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import '../styles/Admin.css'
 
@@ -11,6 +12,8 @@ import { useAdminContext } from '../hooks/useAdminContext'
 export default function AdminUser() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
+    
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [fullname, setFullname] = useState('')
     const [phone, setPhone] = useState('')
@@ -24,7 +27,11 @@ export default function AdminUser() {
 
     const fetchEmployee = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/employee', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/employee?${searchParams}`
+            : `http://localhost:4000/api/employee`
+
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }
@@ -46,22 +53,7 @@ export default function AdminUser() {
 
     useEffect(() => {
         fetchEmployee()
-    }, [dispatch])
-
-    const filterEmployee = async (role) => {
-        try {
-            const employee = await fetchEmployee()
-            let filteredEmployee = employee
-    
-            if (role !== 'All')
-                filteredEmployee = employee.filter((o) => o.role === role)
-
-            dispatch({ type: 'SET_USER', payload: filteredEmployee })
-        } 
-        catch (error) {
-            console.error('Error filtering employee:', error)
-        }
-    }
+    }, [dispatch, searchParams])
 
     const toggle = () => {
         setIsToggle(!isToggle)
@@ -128,13 +120,37 @@ export default function AdminUser() {
 
             const json = await response.json()
 
-            dispatch({type: 'ADD_USER', payload: json})
+            dispatch({type: 'ADD_USER', payload: json.employee})
 
             setIsToggle(false)
         }
         catch (error) {
             console.error(error)
         }
+    }
+    
+    const handleRefresh = () => {
+        setSearchParams({})
+    }
+
+    const [filter, setFilter] = useState('')
+    
+    const handleFilter = (fullname, role) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (fullname.trim() !== '') {
+            newParams.set('fullname', fullname.trim())
+        } 
+        else
+            newParams.delete('fullname')
+
+        if (role !== '') {
+            newParams.set('role', role)
+        } 
+        else
+            newParams.delete('role')
+
+        setSearchParams(newParams)
     }
       
     const lastPageIndex = currentPage * productPerPages
@@ -144,7 +160,7 @@ export default function AdminUser() {
     return (
         <div className='employee-container'>
             <div className = 'employee-controller'>
-                <select onChange={(e) => filterEmployee(e.target.value)}>
+                <select onChange={(e) => handleFilter('', e.target.value)}>
                     <option value='All'>All</option>
                     <option value='Admin'>Admin</option>
                     <option value='Seller'>Seller</option>
@@ -152,20 +168,18 @@ export default function AdminUser() {
                 </select>
 
                 <div className='employee-search'>
-                    <input type='text' placeholder='Search for...'></input> 
+                    <input
+                    type='text'
+                    placeholder='Search for...'
+                    value={filter}
+                    onChange={(e) => {
+                        handleFilter(e.target.value, '');
+                        setFilter(e.target.value)}}/>
                     <i className='fa-solid fa-magnifying-glass'></i>
                 </div>
-                
-                <label>From</label>
-
-                <input type='date'></input>
-
-                <label>To</label>
-
-                <input type='date'></input>
 
                 <div className='employee-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                     <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
                 </div>
             </div>

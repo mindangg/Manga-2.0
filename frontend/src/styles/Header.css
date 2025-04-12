@@ -54,6 +54,17 @@ header{
     width: 100%;
 }
 
+.navbar a.active::after{
+    content: '';
+    background-color: white;
+    height: 2.4px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -2.1px;
+    transition: 0.3s;
+}
+
 .icons{
     margin: 0 20px;
     display: flex;

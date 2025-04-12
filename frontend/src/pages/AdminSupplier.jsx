@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import '../styles/Admin.css'
 
@@ -15,6 +16,8 @@ export default function AdminSupplier() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
     const { order, dispatch: orderDispatch } = useOrderContext()
+    
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [products, setProducts] = useState([])
 
@@ -32,7 +35,11 @@ export default function AdminSupplier() {
 
     const fetchSupplier = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/supplier', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/supplier?${searchParams}`
+            : `http://localhost:4000/api/supplier`
+
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }
@@ -54,7 +61,11 @@ export default function AdminSupplier() {
 
     const fetchStock = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/stock', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/stock?${searchParams}`
+            : `http://localhost:4000/api/stock`
+
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }
@@ -97,22 +108,7 @@ export default function AdminSupplier() {
         fetchSupplier()
         fetchManga()
         fetchStock()
-    }, [dispatch])
-    
-    const filterSupplier = async (status) => {
-        try {
-            const supplier = await fetchSupplier()
-            let filteredSupplier = supplier
-    
-            if (status !== 'All')
-                filteredSupplier = supplier.filter((s) => s.status === status)
-            
-            dispatch({ type: 'SET_USER', payload: filteredSupplier })
-        } 
-        catch (error) {
-            console.error('Error filtering supplier:', error)
-        }
-    }
+    }, [dispatch, searchParams])
 
     const toggle = () => {
         setIsToggle(!isToggle)
@@ -212,6 +208,36 @@ export default function AdminSupplier() {
         const lastPageIndex = currentPage * productPerPages
         const firstPageIndex = lastPageIndex - productPerPages
         currentStock = order?.slice(firstPageIndex, lastPageIndex)
+    }
+
+    const handleRefresh = () => {
+        setSearchParams({})
+    }
+
+    const [filter, setFilter] = useState('')
+    
+    const handleFilter = (title, category, supplier) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (title.trim() !== '') {
+            newParams.set('title', title.trim())
+        } 
+        else
+            newParams.delete('title')
+
+        if (category !== '') {
+            newParams.set('category', category)
+        } 
+        else
+            newParams.delete('category')
+
+        if (supplier !== '') {
+            newParams.set('supplier', supplier)
+        } 
+        else
+            newParams.delete('supplier')
+
+        setSearchParams(newParams)
     }
 
     return (

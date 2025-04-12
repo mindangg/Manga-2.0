@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Order = require('../models/orderModel')
 const JWT = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
@@ -38,9 +39,19 @@ const signupUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find().sort({createdAt: -1})
+        const { username, status } = req.query
+        
+        let filter = {}
 
-        if (!users)
+        if (username)
+            filter.username = { $regex: `.*${removeSpecialChar(username)}.*`, $options: 'i' };
+
+        if (status)
+            filter.status = status
+
+        const users = await User.find({ filter, isDelete: false }).sort({createdAt: -1})
+
+        if (!users || users.length === 0)
             return res.status(404).json({error: 'Users not found'})
 
         res.status(200).json(users)
@@ -57,7 +68,7 @@ const getUser = async (req, res) => {
         return res.status(400).json({error: 'No such user'})
 
     try {
-        const user = await User.findById(id)
+        const user = await User.findOne({_id: id, isDelete: false})
 
         if (!user)
             return res.status(404).json({error: 'User not found'})
@@ -76,10 +87,18 @@ const deleteUser = async (req, res) => {
         return res.status(400).json({error: 'No such user'})
 
     try {
-        const user = await User.findByIdAndDelete(id)
+        const user = await User.findById(id)
 
-        if (!user)
-            return res.status(404).json({error: 'User not found'})
+        if (!user || user.isDelete)
+            return res.status(404).json({error: 'User not found or already deleted'})
+
+        const order = await Order.findOne({userID: id})
+
+        if (order)
+            user = await User.findByIdAndUpdate(id, { isDelete: true }, { new: true, runValidators: true })
+
+        else
+            user = await User.findByIdAndDelete(id)
 
         res.status(200).json(user)
     }
@@ -95,10 +114,12 @@ const updateUser = async (req, res) => {
         return res.status(400).json({error: 'No such user'})
 
     try {
-        const user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        const user = await User.findById(id)
 
-        if (!user)
-            return res.status(404).json({ error: 'User not found' })
+        if (!user || user.isDelete)
+            return res.status(404).json({error: 'User not found or already deleted'})
+
+        user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
 
         res.status(200).json(user)
     } 

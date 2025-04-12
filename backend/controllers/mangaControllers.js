@@ -21,52 +21,31 @@ const upload = multer({
 
 // Get all manga
 const getAllManga = async (req, res) => {
-    try {
-        const manga = await Manga.find().sort({ title: 1 })
+    // try {
+    //     const manga = await Manga.find().sort({ title: 1 })
 
-        if (!manga)
-            return res.status(404).json({error: 'Manga not found'})
+    //     if (!manga)
+    //         return res.status(404).json({error: 'Manga not found'})
         
-        res.status(200).json(manga)
-    }   
-    catch (error){
-        res.status(400).json(error)
-    }
-}
-
-// Get a single manga
-const getManga = async (req, res) => {
-    const { id } = req.params
-
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return res.status(400).json({error: 'No such manga'})
+    //     res.status(200).json(manga)
+    // }   
+    // catch (error){
+    //     res.status(400).json(error)
+    // }
 
     try {
-        const manga = await Manga.findById(id)
-
-        if(!manga)
-            return res.status(400).json({error: 'No such manga'})
-    
-        res.status(200).json(manga)
-    }
-    catch (error) {
-        res.status(500).json({error: error.message})
-    }
-}
-
-const filterManga = async (req, res) => {
-    try {
-        const { title, category, minPrice, maxPrice } = req.query
+        const { title, category, supplier, minPrice, maxPrice } = req.query
         
         let filter = {}
 
-        if (title) {
+        if (title)
             filter.title = { $regex: `.*${removeSpecialChar(title)}.*`, $options: 'i' };
-        }
 
-        if (category) {
+        if (category)
             filter.category = { $regex: removeSpecialChar(category), $options: 'i' }
-        }
+
+        if (supplier)
+            filter.supplierID = { $regex: removeSpecialChar(supplier), $options: 'i' }
 
         if (minPrice || maxPrice) {
             filter.priceOut = {}
@@ -88,6 +67,26 @@ const filterManga = async (req, res) => {
     } 
     catch (error) {
         res.status(500).json({ error: 'Server error', details: error.message })
+    }
+}
+
+// Get a single manga
+const getManga = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(400).json({error: 'No such manga'})
+
+    try {
+        const manga = await Manga.findById(id)
+
+        if(!manga)
+            return res.status(400).json({error: 'No such manga'})
+    
+        res.status(200).json(manga)
+    }
+    catch (error) {
+        res.status(500).json({error: error.message})
     }
 }
 
@@ -159,40 +158,11 @@ const updateManga = async (req, res) => {
     }
 }
 
-const filterMangaAdmin = async (req, res) => {
-    const { title, category, supplier } = req.body
-
-    let manga = []
-
-    try {
-        if (title) 
-            manga = await Manga.find({ title: { $regex: new RegExp(removeSpecialChar(title), 'i') } })
-                                        .sort({ createAt: -1})
-        
-        if (category)
-            manga = await Manga.find({ category })
-
-        if (supplier)
-            manga = await Manga.find({ supplier })
-
-        if (!manga)
-            return res.status(400).json({error: 'No such manga'})
-
-        res.status(200).json(manga)
-
-    }
-    catch (error) {
-        res.status(500).json({error: error.message})
-    }
-}
-
 module.exports = {
     getAllManga,
     getManga,
-    filterManga,
     createManga,
     deleteManga,
     updateManga,
-    upload,
-    filterMangaAdmin
+    upload
 }

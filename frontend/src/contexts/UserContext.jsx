@@ -23,6 +23,11 @@ export const userReducer = (state, action) => {
             return { 
                 users: state.users.map((u) => u._id === action.payload._id ? action.payload : u)
             }
+
+        case 'CLEAR_USER':
+            return { 
+                users: []
+            }
             
         default:
             return state

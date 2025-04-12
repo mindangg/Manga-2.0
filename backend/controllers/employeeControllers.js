@@ -36,7 +36,18 @@ const signupEmployee = async (req, res) => {
 
 const getAllEmployees = async (req, res) => {
     try {
-        const employees = await Employee.find().sort({createdAt: -1})
+        const { fullname, role } = req.query
+        console.log(fullname)
+        
+        let filter = {}
+
+        if (fullname)
+            filter.fullname = { $regex: `.*${removeSpecialChar(fullname)}.*`, $options: 'i' }
+
+        if (role)
+            filter.role = role
+
+        const employees = await Employee.find(filter).sort({createdAt: -1})
 
         if (!employees)
             return res.status(404).json({error: 'Employees not found'})

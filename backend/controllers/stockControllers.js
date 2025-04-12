@@ -5,7 +5,14 @@ const mongoose = require('mongoose')
 // Get all Stocks
 const getStocks = async (req, res) => {
     try {
-        const stocks = await Stock.find()
+        const { stock } = req.query
+        
+        let filter = {}
+
+        if (stock)
+            filter.stockNumber = { $regex: `.*${removeSpecialChar(stock)}.*`, $options: 'i' }
+
+        const stocks = await Stock.find(filter)
             .populate('employeeID')
             .populate('items.supplierID')
             .populate('items.mangaID')

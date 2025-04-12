@@ -6,21 +6,13 @@ const {
     createManga,
     deleteManga,
     updateManga, 
-    upload,
-    filterManga,
-    filterMangaAdmin
+    upload
 } = require('../controllers/mangaControllers')
 
 const router = express.Router()
 
 // Get all mangas or filter
 router.get('/', getAllManga)
-
-// Filter navbar
-// router.get('/product/:category', filterMangaNavbar)
-
-// Filter navbar
-router.get('/product', filterManga)
 
 // Get a single manga
 router.get('/:id', getManga)
@@ -36,6 +28,5 @@ router.delete('/:id', deleteManga)
 router.patch('/:id', updateManga)
 
 // router.patch('/:id', upload.fields([{ name: 'cover1' }, { name: 'cover2' }]), updateManga);
-
 
 module.exports = router

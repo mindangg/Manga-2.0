@@ -5,7 +5,17 @@ const mongoose = require('mongoose')
 // Get all orders
 const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find()
+        const { status, order } = req.query
+        
+        let filter = {}
+
+        if (status)
+            filter.status = status
+
+        if (order)
+            filter.orderNumber = { $regex: removeSpecialChar(order), $options: 'i' }
+
+        const orders = await Order.find(filter)
             .populate('userID')
             .populate('items.mangaID')
             .sort({ createdAt: -1 })

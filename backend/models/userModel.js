@@ -33,6 +33,10 @@ const userSchema = new Schema({
         type: String,
         enum: ['Active', 'Disabled'],
         default: 'Active'
+    },
+    isDelete: {
+        type: Boolean, 
+        default: false
     }
 }, {timestamps: true})
 
@@ -79,8 +83,14 @@ userSchema.statics.login = async function(username, password) {
 
     const user = await this.findOne({ username })
 
-    if(!user)
+    if (!user)
         throw new Error('No user found')
+
+    if (user.isDelete)
+        throw new Error('User is deleted')
+
+    if (user.status == 'Disable')
+        throw new Error('User is disabled')
 
     const match = await bcrypt.compare(password, user.password)
 

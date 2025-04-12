@@ -4,7 +4,7 @@ import { useFilter } from '../hooks/useFilter'
 
 import '../styles/Search.css'
 
-export default function Search() {
+export default function Search({ setToggle }) {
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
     const [minPrice, setMinPrice] = useState('')
@@ -15,6 +15,7 @@ export default function Search() {
     const { handleFilter } = useFilter()
 
     const handleSearch = () => {
+        setToggle('product')
         handleFilter(title, category, minPrice, maxPrice)
         close()
     }

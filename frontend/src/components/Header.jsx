@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/WEBTOON_Logo.png'
 import '../styles/Header.css'
 import Search from './Search'
@@ -27,6 +27,8 @@ export default function Header() {
             navigate('/cart')
     }
 
+    const [toggle, setToggle] = useState('home')
+
     return (
         <header>
             <div className='logo'>
@@ -34,27 +36,27 @@ export default function Header() {
             </div>
 
             <nav className='navbar'>
-                <Link to='/'>Home</Link>
-                <Link to='/product'>Product</Link>
+                <Link className={toggle === 'home' ? 'active' : ''} onClick={() => (setToggle('home'))} to='/'>Home</Link>
+                <Link className={toggle === 'product' ? 'active' : ''} onClick={() => (setToggle('product'))} to='/product'>Product</Link>
                 <div className='category'>
-                    <Link>Category</Link>
-                    <div className='category-dropdown'>
-                        <span onClick={() => handleFilter('', 'shounen', '', '')}>Shounen</span>
-                        <span onClick={() => handleFilter('', 'seinen', '', '')}>Seinen</span>
-                        <span onClick={() => handleFilter('', 'rom-com', '', '')}>Rom Com</span>
-                        <span onClick={() => handleFilter('', 'action', '', '')}>Action</span>
-                        <span onClick={() => handleFilter('', 'family', '', '')}>Family</span>
-                        <span onClick={() => handleFilter('', 'comedy', '', '')}>Comedy</span>
-                        <span onClick={() => handleFilter('', 'fantasy', '', '')}>Fantasy</span>
-                        <span onClick={() => handleFilter('', 'dark-fantasy', '', '')}>Dark Fantasy</span>
+                    <Link className={toggle === 'category' ? 'active' : ''} onClick={() => (setToggle('category'))}>Category</Link>
+                    <div className="category-dropdown">
+                        <span onClick={() => { handleFilter('', 'shounen', '', ''); setToggle('category') }}>Shounen</span>
+                        <span onClick={() => { handleFilter('', 'seinen', '', ''); setToggle('category') }}>Seinen</span>
+                        <span onClick={() => { handleFilter('', 'rom-com', '', ''); setToggle('category') }}>Rom Com</span>
+                        <span onClick={() => { handleFilter('', 'action', '', ''); setToggle('category') }}>Action</span>
+                        <span onClick={() => { handleFilter('', 'family', '', ''); setToggle('category') }}>Family</span>
+                        <span onClick={() => { handleFilter('', 'comedy', '', ''); setToggle('category') }}>Comedy</span>
+                        <span onClick={() => { handleFilter('', 'fantasy', '', ''); setToggle('category') }}>Fantasy</span>
+                        <span onClick={() => { handleFilter('', 'dark-fantasy', '', ''); setToggle('category'); }}>Dark Fantasy</span>
                     </div>
                 </div>
-                <Link to='/'>About Us</Link>
+                <Link onClick={() => (setToggle('home'))} to='/'>About Us</Link>
             </nav>
 
             <div className='icons'>
                 <i className='fa-solid fa-magnifying-glass' onClick={() => search()}></i>
-                <Search/>
+                <Search setToggle={setToggle}/>
                 <div className='user'>
                     {user && <Link to='/user-info'><i className='fa-regular fa-user'></i></Link>}
                     {!user && <Link to='/login'><i className='fa-regular fa-user'></i></Link>}

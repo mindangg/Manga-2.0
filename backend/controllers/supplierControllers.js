@@ -4,7 +4,16 @@ const mongoose = require('mongoose')
 // Get all suppliers
 const getAllSuppliers = async(req, res) => {
     try {
-        const suppliers = await Supplier.find()
+        const { name } = req.query
+        
+        let filter = {}
+
+        if (name)
+            filter.name = { $regex: `.*${removeSpecialChar(name)}.*`, $options: 'i' }
+
+        // filter by date
+
+        const suppliers = await Supplier.find(filter)
             .sort({ createdAt: -1 })
   
         res.status(200).json(suppliers)

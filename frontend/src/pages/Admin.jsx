@@ -44,13 +44,13 @@ export default function Admin() {
                     </div>
                     <div className='middlenav'>
                         <ul>
-                            {canAccess('product') && <li onClick={() => setToggle('product')}><i className='fa-solid fa-book'></i> Product</li>}
-                            {canAccess('supplier') && <li onClick={() => setToggle('supplier')}><i className='fa-solid fa-truck-field'></i> Supplier</li>}
-                            {canAccess('user') && <li onClick={() => setToggle('user')}><i className='fa-solid fa-users'></i> User</li>}
-                            {canAccess('order') && <li onClick={() => setToggle('order')}><i className='fa-solid fa-basket-shopping'></i> Order</li>}
-                            {canAccess('employee') && <li onClick={() => setToggle('employee')}><i className='fa-solid fa-user-tie'></i> Employee</li>}
-                            {canAccess('order-statistic') && <li onClick={() => setToggle('order-statistic')}><i className='fa-solid fa-chart-simple'></i> Order Statistic</li>}
-                            {canAccess('stock-statistic') && <li onClick={() => setToggle('stock-statistic')}><i className='fa-solid fa-chart-simple'></i> Stock Statistic</li>}
+                            {canAccess('product') && <li className={toggle === 'product' ? 'active' : ''} onClick={() => setToggle('product')}><i className='fa-solid fa-book'></i> Product</li>}
+                            {canAccess('supplier') && <li className={toggle === 'supplier' ? 'active' : ''} onClick={() => setToggle('supplier')}><i className='fa-solid fa-truck-field'></i> Supplier</li>}
+                            {canAccess('user') && <li className={toggle === 'user' ? 'active' : ''} onClick={() => setToggle('user')}><i className='fa-solid fa-users'></i> User</li>}
+                            {canAccess('order') && <li className={toggle === 'order' ? 'active' : ''} onClick={() => setToggle('order')}><i className='fa-solid fa-basket-shopping'></i> Order</li>}
+                            {canAccess('employee') && <li className={toggle === 'employee' ? 'active' : ''} onClick={() => setToggle('employee')}><i className='fa-solid fa-user-tie'></i> Employee</li>}
+                            {canAccess('order-statistic') && <li className={toggle === 'order-statistic' ? 'active' : ''} onClick={() => setToggle('order-statistic')}><i className='fa-solid fa-chart-simple'></i> Order Statistic</li>}
+                            {canAccess('stock-statistic') && <li className={toggle === 'stock-statistic' ? 'active' : ''} onClick={() => setToggle('stock-statistic')}><i className='fa-solid fa-chart-simple'></i> Stock Statistic</li>}
                         </ul>
                     </div>
                 </div>

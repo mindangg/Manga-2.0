@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import Pagination from '../components/Pagination'
 import Display from '../components/Display'
@@ -17,7 +16,7 @@ export default function Product() {
         const fetchManga = async () => {
             try {
                 const url = searchParams.toString()
-                ? `http://localhost:4000/api/manga/product?${searchParams}`
+                ? `http://localhost:4000/api/manga?${searchParams}`
                 : `http://localhost:4000/api/manga`
 
                 const response = await fetch(url)
@@ -26,6 +25,7 @@ export default function Product() {
                     console.error('Error fetching order:', response.status)
                 
                 const json = await response.json()
+                console.log(json)
                 setManga(json)
             } 
             catch (error) {

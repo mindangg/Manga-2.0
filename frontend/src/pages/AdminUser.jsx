@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import '../styles/Admin.css'
 
@@ -11,6 +12,8 @@ import { useAdminContext } from '../hooks/useAdminContext'
 export default function AdminUser() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
+    
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -26,7 +29,11 @@ export default function AdminUser() {
 
     const fetchUser = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/user', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/user?${searchParams}`
+            : `http://localhost:4000/api/user`
+
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }
@@ -36,10 +43,9 @@ export default function AdminUser() {
                 return console.error('Error fetching user:', response.status)
             
             const json = await response.json()
-
+            console.log(json)
+            dispatch({type: 'CLEAR_USER'})
             dispatch({type: 'SET_USER', payload: json})
-
-            return json
         }
         catch (error) {
             console.error('Error fetching user:', error)
@@ -48,22 +54,7 @@ export default function AdminUser() {
 
     useEffect(() => {
         fetchUser()
-    }, [dispatch])
-    
-    const filterUser = async (status) => {
-        try {
-            const user = await fetchUser()
-            let filteredUser = user
-    
-            if (status !== 'All')
-                filteredUser = user.filter((u) => u.status === status)
-            
-            dispatch({ type: 'SET_USER', payload: filteredUser })
-        } 
-        catch (error) {
-            console.error('Error filtering user:', error)
-        }
-    }
+    }, [dispatch, searchParams])
 
     const toggle = () => {
         setIsToggle(!isToggle)
@@ -120,7 +111,8 @@ export default function AdminUser() {
             setAddress('')
             setStatus('')
             setSelectedUser(null)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error updating user:', error)
         }
     }
@@ -143,13 +135,36 @@ export default function AdminUser() {
 
             const json = await response.json()
 
-            dispatch({type: 'ADD_USER', payload: json})
-
+            dispatch({type: 'ADD_USER', payload: json.user})
             setIsToggle(false)
         }
         catch (error) {
             console.error(error)
         }
+    }
+    
+    const handleRefresh = () => {
+        setSearchParams({})
+    }
+
+    const [filter, setFilter] = useState('')
+    
+    const handleFilter = (username, status) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (username.trim() !== '') {
+            newParams.set('username', username.trim())
+        } 
+        else
+            newParams.delete('username')
+
+        if (status !== '') {
+            newParams.set('status', status)
+        } 
+        else
+            newParams.delete('status')
+
+        setSearchParams(newParams)
     }
       
     const lastPageIndex = currentPage * productPerPages
@@ -159,27 +174,25 @@ export default function AdminUser() {
     return (
         <div className='user-container'>
             <div className = 'user-controller'>
-                <select onChange={(e) => filterUser(e.target.value)}>
+                <select onChange={(e) => handleFilter('', e.target.value)}>
                     <option value='All'>All</option>
                     <option value='Active'>Active</option>
                     <option value='Disabled'>Disabled</option>
                 </select>
 
                 <div className='user-search'>
-                    <input type='text' placeholder='Search for...'></input> 
+                    <input
+                    type='text'
+                    placeholder='Search for...'
+                    value={filter}
+                    onChange={(e) => {
+                        handleFilter(e.target.value, '');
+                        setFilter(e.target.value)}}/>
                     <i className='fa-solid fa-magnifying-glass'></i>
                 </div>
-                
-                <label>From</label>
-
-                <input type='date'></input>
-
-                <label>To</label>
-
-                <input type='date'></input>
 
                 <div className='user-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                     <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
                 </div>
             </div>
@@ -217,7 +230,7 @@ export default function AdminUser() {
                                         onChange={(e) => setUsername(e.target.value)}/>
         
                             <label>Email</label>
-                            <input type='text' placeholder='abc@gmail.com' value={email}
+                            <input type='text' placeholder='Email' value={email}
                                         onChange={(e) => setEmail(e.target.value)}/>
         
                             {!selectedUser && (

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import '../styles/Admin.css'
 
@@ -16,7 +17,7 @@ export default function AdminProduct() {
     const { users, dispatch: userDispatch } = useUserContext()
     const { admin } = useAdminContext()
 
-    const [filters, setFilters] = useState({ category: 'All', supplier: 'All' })
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
@@ -141,7 +142,11 @@ export default function AdminProduct() {
     
     const fetchManga = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/manga', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/manga?${searchParams}`
+            : `http://localhost:4000/api/manga`
+
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }
@@ -186,7 +191,7 @@ export default function AdminProduct() {
     useEffect(() => {
         fetchManga()
         fetchSupplier()
-    }, [dispatch, userDispatch])
+    }, [dispatch, userDispatch, searchParams])
 
     const toggle = () => {
         if (!users || users.length <= 0) {
@@ -210,30 +215,35 @@ export default function AdminProduct() {
 
         setIsToggle(!isToggle)
     }
-    
-    const filterManga = async (newFilters) => {
-        try {
-            const manga = await fetchManga()
-            let filteredManga = manga
-            console.log(newFilters.supplier)
-    
-            if (newFilters.category !== 'All')
-                filteredManga = filteredManga.filter(m => m.category === newFilters.category)
-    
-            if (newFilters.supplier !== 'All')
-                filteredManga = filteredManga.filter(m => m.supplierID === newFilters.supplier)
-    
-            dispatch({ type: 'DISPLAY_ITEM', payload: filteredManga })
-        } 
-        catch (error) {
-            console.error('Error filtering manga:', error)
-        }
+
+    const handleRefresh = () => {
+        setSearchParams({})
     }
 
-    const handleFilterChange = (type, value) => {
-        const newFilters = { ...filters, [type]: value }
-        setFilters(newFilters)
-        filterManga(newFilters)
+    const [filter, setFilter] = useState('')
+    
+    const handleFilter = (title, category, supplier) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (title.trim() !== '') {
+            newParams.set('title', title.trim())
+        } 
+        else
+            newParams.delete('title')
+
+        if (category !== '') {
+            newParams.set('category', category)
+        } 
+        else
+            newParams.delete('category')
+
+        if (supplier !== '') {
+            newParams.set('supplier', supplier)
+        } 
+        else
+            newParams.delete('supplier')
+
+        setSearchParams(newParams)
     }
 
     const lastPageIndex = currentPage * productPerPages
@@ -243,8 +253,8 @@ export default function AdminProduct() {
     return (
         <div className='manga-container'>
             <div className = 'manga-controller'>
-                <select onChange={(e) => handleFilterChange('category', e.target.value)}>
-                    <option value='All'>All</option>
+                <select onChange={(e) => handleFilter('', e.target.value, '')}>
+                    <option value=''>All</option>
                     <option value='Shounen'>Shounen</option>
                     <option value='Rom Com'>Rom Com</option>
                     <option value='Family'>Family</option>
@@ -255,23 +265,26 @@ export default function AdminProduct() {
                     <option value='Dark Fantasy'>Dark Fantasy</option>
                 </select>
 
-                <select onChange={(e) => handleFilterChange('supplier', e.target.value)}>
+                <select onChange={(e) => handleFilter('', '', e.target.value)}>
                     <option value='All'>All</option>
                     {users.map((u) => (
                         <option key={u._id} value={u._id}>{u.name}</option>
                     ))}
                 </select>
 
-                <label>From</label>
-
-                <input type='date'></input>
-
-                <label>To</label>
-
-                <input type='date'></input>
+                <div className='manga-search'>
+                    <input
+                    type='text'
+                    placeholder='Search for...'
+                    value={filter}
+                    onChange={(e) => {
+                        handleFilter(e.target.value, '', '');
+                        setFilter(e.target.value)}}/>
+                    <i className='fa-solid fa-magnifying-glass'></i>
+                </div>
 
                 <div className='manga-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                     <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
                 </div>
             </div>

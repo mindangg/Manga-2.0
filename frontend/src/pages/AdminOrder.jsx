@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import '../styles/Admin.css'
 
@@ -11,13 +12,19 @@ import { useAdminContext } from '../hooks/useAdminContext'
 export default function AdminOrder() {
     const { order, dispatch } = useOrderContext()
     const { admin } = useAdminContext()
+    
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
 
     const fetchOrder = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/order', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/order?${searchParams}`
+            : `http://localhost:4000/api/order`
+
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }
@@ -38,58 +45,87 @@ export default function AdminOrder() {
     }
 
     useEffect(() => {
-
         fetchOrder()
+    }, [dispatch, searchParams])
 
-    }, [dispatch])
+    // const [status, setStatus] = useState('All')
+    // const [startDate, setStartDate] = useState('')
+    // const [endDate, setEndDate] = useState('')
 
-    const [status, setStatus] = useState('All')
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
+    // const handleFilterChange = (newStatus, newStartDate, newEndDate) => {
+    //     setStatus(newStatus ?? status)
+    //     setStartDate(newStartDate ?? startDate)
+    //     setEndDate(newEndDate ?? endDate)
+    //     filterOrder(newStatus ?? status, newStartDate ?? startDate, newEndDate ?? endDate)
+    // }    
 
-    const handleFilterChange = (newStatus, newStartDate, newEndDate) => {
-        setStatus(newStatus ?? status)
-        setStartDate(newStartDate ?? startDate)
-        setEndDate(newEndDate ?? endDate)
-        filterOrder(newStatus ?? status, newStartDate ?? startDate, newEndDate ?? endDate)
-    }    
+    // const filterOrder = async (status, startDate, endDate) => {
+    //     try {
+    //         const orders = await fetchOrder()
+    //         let filteredOrders = orders
 
-    const filterOrder = async (status, startDate, endDate) => {
-        try {
-            const orders = await fetchOrder()
-            let filteredOrders = orders
+    //         if (status !== 'All') {
+    //             filteredOrders = filteredOrders.filter((o) => o.status === status)
+    //         }
 
-            if (status !== 'All') {
-                filteredOrders = filteredOrders.filter((o) => o.status === status)
-            }
+    //         if (startDate && endDate) {
+    //             const start = new Date(startDate)
+    //             const end = new Date(endDate)
 
-            if (startDate && endDate) {
-                const start = new Date(startDate)
-                const end = new Date(endDate)
+    //             if (start > end) {
+    //                 alert('Wrong date format')
+    //                 return
+    //             }
 
-                if (start > end) {
-                    alert('Wrong date format')
-                    return
-                }
-
-                filteredOrders = filteredOrders.filter((o) => {
-                    const orderDate = new Date(o.createdAt)
-                    return orderDate >= start && orderDate <= end
-                })
-            }
+    //             filteredOrders = filteredOrders.filter((o) => {
+    //                 const orderDate = new Date(o.createdAt)
+    //                 return orderDate >= start && orderDate <= end
+    //             })
+    //         }
     
-            dispatch({ type: 'DISPLAY_ITEM', payload: filteredOrders })
-        } 
-        catch (error) {
-            console.error('Error filtering orders:', error)
-        }
+    //         dispatch({ type: 'DISPLAY_ITEM', payload: filteredOrders })
+    //     } 
+    //     catch (error) {
+    //         console.error('Error filtering orders:', error)
+    //     }
+    // }
+
+    // const handleRefresh = () => {
+    //     setStatus('All')
+    //     setStartDate('')
+    //     setEndDate('')
+    //     fetchOrder()
+    // }
+
+    
+    const handleRefresh = () => {
+        setSearchParams({})
     }
 
-    const handleRefresh = () => {
-        setStatus('All')
-        setStartDate('')
-        setEndDate('')
-        fetchOrder()
+    const [filter, setFilter] = useState('')
+    
+    const handleFilter = (title, category, supplier) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (title.trim() !== '') {
+            newParams.set('title', title.trim())
+        } 
+        else
+            newParams.delete('title')
+
+        if (category !== '') {
+            newParams.set('category', category)
+        } 
+        else
+            newParams.delete('category')
+
+        if (supplier !== '') {
+            newParams.set('supplier', supplier)
+        } 
+        else
+            newParams.delete('supplier')
+
+        setSearchParams(newParams)
     }
     
     const lastPageIndex = currentPage * productPerPages
@@ -107,7 +143,16 @@ export default function AdminOrder() {
                 </select>
 
                 <div className='order-search'>
-                    <input type='text' placeholder='Search for...'></input> 
+                    <input
+                    type='text'
+                    placeholder='Search for...'
+                //     value={filter}
+                //     onChange={(e) => {
+                //         handleFilter('', e.target.value);
+                //         setFilter(e.target.value);
+                //     }
+                // }
+                    />
                     <i className='fa-solid fa-magnifying-glass'></i>
                 </div>
                 
@@ -127,7 +172,7 @@ export default function AdminOrder() {
                     onChange={(e) => handleFilterChange(status, startDate, e.target.value)} 
                 />
 
-                <div className='user-icon'>
+                <div className='order-icon'>
                     <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                     {/* <button onClick={toggleAdd}><i className='fa-solid fa-plus'></i>Add</button> */}
                 </div>
