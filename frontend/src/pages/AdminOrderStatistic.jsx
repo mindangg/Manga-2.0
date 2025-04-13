@@ -5,6 +5,8 @@ import { Bar } from 'react-chartjs-2'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
+import { useSearchParams } from 'react-router-dom'
+
 import { useAdminContext } from '../hooks/useAdminContext'
 
 export default function AdminOrderStatistic() {
@@ -16,6 +18,8 @@ export default function AdminOrderStatistic() {
         labels: [],
         datasets: []
     })
+
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -67,54 +71,9 @@ export default function AdminOrderStatistic() {
         fetchStats()
     }, [])
 
-    // useEffect(() => {
-    //     const fetchStatsByMonths = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:4000/api/order-statistic/months', {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${admin.token}`
-    //                 }
-    //             })
-    //             if (!response.ok)
-    //                 return console.error('Error fetching order statistic:', response.status)
-                
-    //             const json = await response.json()
-    
-    //             setStatsByMonths(json)
-    //             const labels = json.map((stat) => stat._id)
-    //             const salesData = json.map((stat) => stat.totalSales)
-    //             const revenueData = json.map((stat) => stat.totalRevenue)
-    //             const profitData = json.map((stat) => stat.totalProfit)
-    
-    //             setChartData({
-    //                 // labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    //                 labels,
-    //                 datasets: [
-    //                     {
-    //                         label: 'Total Sales',
-    //                         data: salesData,
-    //                         backgroundColor: '#e69e19',
-    //                     },
-    //                     {
-    //                         label: 'Total Revenue ($)',
-    //                         data: revenueData,
-    //                         backgroundColor: '#28ac64',
-    //                     },
-    //                     {
-    //                         label: 'Total Profit ($)',
-    //                         data: profitData,
-    //                         backgroundColor: '#f84c2c',
-    //                     }
-    //                 ]
-    //             })
-    //         }
-    //         catch (error) {
-    //             console.error('Error fetching stats:', error)
-    //         }
-    //     }
-    
-    //     fetchStatsByMonths()
-    // }, [])
+    useEffect(() => {
+        setSearchParams({})
+    }, [])
  
     return (
         <div className='order-statistic-container'>
@@ -157,28 +116,6 @@ export default function AdminOrderStatistic() {
                 : (
                     <p className='loading-message'>Loading chart data...</p>
                 )}
-
-                    {/* data={{
-                        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                        datasets: [
-                            {
-                                label: 'Total Sales',
-                                data: [10,20,30],
-                                backgroundColor: '#e69e19'
-                            },
-                            {
-                                label: 'Total Revenue ($)',
-                                data: [300,200,400],
-                                backgroundColor: '#28ac64',
-                            },
-                            {
-                                label: 'Total Profit ($)',
-                                data: [100,120,150],
-                                backgroundColor: '#f84c2c',
-                            }
-                        ]
-                    }} */}
-
             </div>
         </div>
     )

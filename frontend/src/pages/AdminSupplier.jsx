@@ -213,29 +213,46 @@ export default function AdminSupplier() {
     const handleRefresh = () => {
         setSearchParams({})
     }
+  
+    useEffect(() => {
+        setFilterSupplier('')
+        setFilterStock('')
+        handleRefresh()
+    }, [action])
 
-    const [filter, setFilter] = useState('')
+    const [filterSupplier, setFilterSupplier] = useState('')
+    const [filterStock, setFilterStock] = useState('')
     
-    const handleFilter = (title, category, supplier) => {
+    const handleFilterSupplier = (name) => {
         const newParams = new URLSearchParams(searchParams)
 
-        if (title.trim() !== '') {
-            newParams.set('title', title.trim())
+        if (name.trim() !== '') {
+            newParams.set('name', name.trim())
         } 
         else
-            newParams.delete('title')
+            newParams.delete('name')
 
-        if (category !== '') {
-            newParams.set('category', category)
-        } 
-        else
-            newParams.delete('category')
+        setSearchParams(newParams)
+    }
 
-        if (supplier !== '') {
-            newParams.set('supplier', supplier)
-        } 
-        else
-            newParams.delete('supplier')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    
+    const handleFilterStock = (startDate, endDate) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (startDate !== '' || endDate !== '') {
+            if (startDate !== '')
+                newParams.set('startDate', startDate)
+
+            if (endDate !== '') 
+                newParams.set('endDate', endDate)
+        }
+
+        else {
+            newParams.delete('startDate')
+            newParams.delete('endDate')
+        }
 
         setSearchParams(newParams)
     }
@@ -249,20 +266,39 @@ export default function AdminSupplier() {
                 </select>
 
                 <div className='supplier-search'>
-                    <input type='text' placeholder='Search for...'></input> 
+                    <input type='text' 
+                    placeholder='Search for...'
+                    value={filterSupplier}
+                    onChange={(e) => {
+                        handleFilterSupplier(e.target.value);
+                        setFilterSupplier(e.target.value)}}/> 
                     <i className='fa-solid fa-magnifying-glass'></i>
                 </div>
+
+                {
+                    action !== 'Supplier' && (
+                        <>
+                            <label>From</label>
+
+                            <input 
+                                type='date' 
+                                value={startDate || ''}
+                                onChange={(e) => handleFilterStock(e.target.value, '')} 
+                            />
+            
+                            <label>To</label>
+            
+                            <input 
+                                type='date' 
+                                value={endDate || ''} 
+                                onChange={(e) => handleFilterStock('', e.target.value)} 
+                            />
+                        </>
+                    )
+                }  
                 
-                <label>From</label>
-
-                <input type='date'></input>
-
-                <label>To</label>
-
-                <input type='date'></input>
-
                 <div className='supplier-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                     {
                         action === 'Supplier' 
                         ? (
@@ -339,16 +375,6 @@ export default function AdminSupplier() {
                             <label>Address</label>
                             <input type='address' placeholder='Address' value={address}
                                         onChange={(e) => setAddress(e.target.value)}/>
-
-                            {selectedSupplier && (
-                                <>
-                                    <label>Status</label><br/>
-                                    <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                                        <option value='Active'>Active</option>
-                                        <option value='Disabled'>Disabled</option>
-                                    </select>
-                                </>
-                            )}
         
                             <div style={{ textAlign: 'center' }}>
                                 {selectedSupplier ? (

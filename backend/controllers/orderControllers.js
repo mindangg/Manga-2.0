@@ -1,19 +1,30 @@
 const Order = require('../models/orderModel')
 const Cart = require('../models/cartModel')
 const mongoose = require('mongoose')
+const removeSpecialChar = require('../helpers/helper')
 
 // Get all orders
 const getOrders = async (req, res) => {
     try {
-        const { status, order } = req.query
+        const { order, status, startDate, endDate } = req.query
         
         let filter = {}
 
-        if (status)
-            filter.status = status
-
         if (order)
             filter.orderNumber = { $regex: removeSpecialChar(order), $options: 'i' }
+
+        if (status)
+            filter.status = status
+        
+        if (startDate || endDate) {
+            filter.createdAt = {}
+            
+            if (startDate) 
+                filter.createdAt.$gte = new Date(startDate)
+
+            if (endDate) 
+                filter.createdAt.$lte = new Date(endDate)
+        }
 
         const orders = await Order.find(filter)
             .populate('userID')

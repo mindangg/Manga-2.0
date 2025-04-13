@@ -219,6 +219,10 @@ export default function AdminProduct() {
     const handleRefresh = () => {
         setSearchParams({})
     }
+        
+    useEffect(() => {
+        handleRefresh()
+    }, [])
 
     const [filter, setFilter] = useState('')
     
@@ -261,12 +265,12 @@ export default function AdminProduct() {
                     <option value='Fantasy'>Fantasy</option>
                     <option value='Action'>Action</option>
                     <option value='Comedy'>Comedy</option>
-                    <option value='Drama'>Drama</option>
+                    <option value='Seinen'>Seinen</option>
                     <option value='Dark Fantasy'>Dark Fantasy</option>
                 </select>
 
                 <select onChange={(e) => handleFilter('', '', e.target.value)}>
-                    <option value='All'>All</option>
+                    <option value=''>All</option>
                     {users.map((u) => (
                         <option key={u._id} value={u._id}>{u.name}</option>
                     ))}

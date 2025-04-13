@@ -1,5 +1,6 @@
 const Supplier = require('../models/supplierModel')
 const mongoose = require('mongoose')
+const removeSpecialChar = require('../helpers/helper')
 
 // Get all suppliers
 const getAllSuppliers = async(req, res) => {
@@ -10,8 +11,6 @@ const getAllSuppliers = async(req, res) => {
 
         if (name)
             filter.name = { $regex: `.*${removeSpecialChar(name)}.*`, $options: 'i' }
-
-        // filter by date
 
         const suppliers = await Supplier.find(filter)
             .sort({ createdAt: -1 })

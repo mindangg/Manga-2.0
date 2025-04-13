@@ -5,7 +5,7 @@ import '../styles/Admin.css'
 import { useAdminLogin } from '../hooks/useAdminLogin'
 
 export default function AdminLogin() {
-    const [phone, setPhone] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const { login, error, isLoading } = useAdminLogin()
@@ -13,7 +13,7 @@ export default function AdminLogin() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await login(phone, password)
+        await login(email, password)
     }
 
     return (
@@ -22,8 +22,8 @@ export default function AdminLogin() {
                 <h1>Admin</h1>
 
                 <div className='admin-login-input'>
-                    <input type='text' placeholder='Phone number' value={phone} 
-                            onChange={(e) => setPhone(e.target.value)}></input>
+                    <input type='text' placeholder='Email' value={email} 
+                            onChange={(e) => setEmail(e.target.value)}></input>
                 </div>
 
                 <div className='admin-login-input'>

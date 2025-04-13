@@ -5,7 +5,11 @@ const cors = require('cors')
 const path = require('path')
 
 const Manga = require('./models/mangaModel')
-const initializerArray = require('./initializer')
+const User = require('./models/userModel')
+const Employee = require('./models/employeeModel')
+const initializerArray1 = require('./initializer1')
+const initializerArray2 = require('./initializer2')
+const initializerArray3 = require('./initializer3')
 
 const mangaRoutes = require('./routes/mangaRoutes')
 const userRoutes = require('./routes/userRoutes')
@@ -56,13 +60,33 @@ mongoose.connect(process.env.MONGO_URI)
 
         Manga.countDocuments().then(count => {
             if (count === 0) {
-                Manga.insertMany(initializerArray)
-                .then(() => console.log('Manga data initialized.', initializerArray.length))
+                Manga.insertMany(initializerArray1)
+                .then(() => console.log('Manga data initialized.', initializerArray1.length))
                 .catch(err => console.error('Error initializing manga data:', err))
             }
             else {
-            console.log('Manga data already exists. Skipping initialization.')
+            console.log('Manga data already exists.')
           }
+        })
+
+        User.countDocuments().then(async count => {
+            if (count === 0) {
+                const hashedUsers = await initializerArray2
+                await User.insertMany(hashedUsers)
+                console.log('Initialized users.')
+            } else {
+                console.log('Users already exist.')
+            }
+        })
+
+        Employee.countDocuments().then(async count => {
+            if (count === 0) {
+                const hashedEmployees = await initializerArray3
+                await Employee.insertMany(hashedEmployees)
+                console.log('Initialized employees.')
+            } else {
+                console.log('Employees already exist.')
+            }
         })
     })
     .catch((error) => {

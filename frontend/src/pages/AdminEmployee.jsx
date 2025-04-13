@@ -16,6 +16,7 @@ export default function AdminUser() {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const [fullname, setFullname] = useState('')
+    const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('Admin')
@@ -64,6 +65,7 @@ export default function AdminUser() {
     const handleEdit = (employee) => {
         setSelectedEmployee(employee)
         setFullname(employee.fullname)
+        setEmail(employee.email)
         setPhone(employee.phone)
         setRole(employee.role)
         setIsToggle(true)
@@ -82,7 +84,7 @@ export default function AdminUser() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${admin.token}`
                 },
-                body: JSON.stringify({ fullname, phone, role })
+                body: JSON.stringify({ fullname, email, phone, role })
             })
 
             if (!response.ok)
@@ -93,11 +95,12 @@ export default function AdminUser() {
 
             setIsToggle(false)
             setFullname('')
-            setPassword('')
+            setEmail('')
             setPhone('')
             setRole('Admin')
             setSelectedEmployee(null)
-        } catch (error) {
+        } 
+        catch (error) {
             console.error('Error updating employee:', error)
         }
     }
@@ -112,7 +115,7 @@ export default function AdminUser() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${admin.token}`
                 },
-                body: JSON.stringify({ fullname, phone, password, role })
+                body: JSON.stringify({ fullname, email, phone, password, role })
             })
 
             if (!response.ok)
@@ -132,6 +135,10 @@ export default function AdminUser() {
     const handleRefresh = () => {
         setSearchParams({})
     }
+        
+    useEffect(() => {
+        handleRefresh()
+    }, [])
 
     const [filter, setFilter] = useState('')
     
@@ -161,7 +168,8 @@ export default function AdminUser() {
         <div className='employee-container'>
             <div className = 'employee-controller'>
                 <select onChange={(e) => handleFilter('', e.target.value)}>
-                    <option value='All'>All</option>
+                    <option value=''>All</option>
+                    <option value='Manager'>Manager</option>
                     <option value='Admin'>Admin</option>
                     <option value='Seller'>Seller</option>
                     <option value='Stocker'>Stocker</option>
@@ -185,6 +193,7 @@ export default function AdminUser() {
             </div>
             <div className='employee-header'>
                 <span>Fullname</span>
+                <span>Email</span>
                 <span>Phone Number</span>
                 <span>Date Created</span>
                 <span>Role</span>
@@ -213,6 +222,10 @@ export default function AdminUser() {
                             <label>Full name</label>
                             <input type='text' placeholder='Full name' value={fullname} 
                                         onChange={(e) => setFullname(e.target.value)}/>
+
+                            <label>Email</label>
+                            <input type='text' placeholder='Email' value={email} 
+                                        onChange={(e) => setEmail(e.target.value)}/>
         
                             <label>Phone Number</label>
                             <input type='text' placeholder='Phone Number' value={phone}
@@ -228,6 +241,7 @@ export default function AdminUser() {
 
                             <label>Role</label><br/>
                             <select value={role} onChange={(e) => setRole(e.target.value)}>
+                                <option value='Manager'>Manager</option>
                                 <option value='Admin'>Admin</option>
                                 <option value='Seller'>Seller</option>
                                 <option value='Stocker'>Stocker</option>

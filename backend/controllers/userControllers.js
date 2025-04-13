@@ -2,6 +2,7 @@ const User = require('../models/userModel')
 const Order = require('../models/orderModel')
 const JWT = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const removeSpecialChar = require('../helpers/helper')
 
 const createToken = (_id) => {
     return JWT.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -44,12 +45,12 @@ const getAllUsers = async (req, res) => {
         let filter = {}
 
         if (username)
-            filter.username = { $regex: `.*${removeSpecialChar(username)}.*`, $options: 'i' };
+            filter.username = { $regex: `.*${removeSpecialChar(username)}.*`, $options: 'i' }
 
         if (status)
             filter.status = status
 
-        const users = await User.find({ filter, isDelete: false }).sort({createdAt: -1})
+        const users = await User.find({ ...filter, isDelete: false }).sort({ createdAt: -1 })
 
         if (!users || users.length === 0)
             return res.status(404).json({error: 'Users not found'})

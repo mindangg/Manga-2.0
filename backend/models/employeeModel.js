@@ -9,8 +9,14 @@ const employeeSchema = new Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     phone: {
         type: String,
+        required: true,
         unique: true
     },
     password: {
@@ -21,13 +27,24 @@ const employeeSchema = new Schema({
         type: String,
         enum: ['Admin', 'Seller', 'Stocker', 'Manager'],
         required: true
+    },
+    isDelete: {
+        type: Boolean, 
+        default: false
     }
 },{ timestamps: true })
 
 // static signup function
-employeeSchema.statics.signup = async function(fullname, phone, password, role) {
-    if (!fullname || !phone || !password || !role)
+employeeSchema.statics.signup = async function(fullname, email, phone, password, role) {
+    if (!fullname || !email || !phone || !password || !role)
         throw new Error('All fields must be filled')
+
+    if (!validator.isEmail(email))
+        throw new Error('Email is not valid')
+
+    const emailExists = await this.findOne({ email })
+    if (emailExists)
+        throw new Error('Email already in use')
 
     if (!validator.isMobilePhone(phone))
         throw new Error('Phone number is not valid')
@@ -42,21 +59,24 @@ employeeSchema.statics.signup = async function(fullname, phone, password, role) 
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const employee = await this.create({ fullname, phone, password: hash, role })
+    const employee = await this.create({ fullname, email, phone, password: hash, role })
 
     return employee
 }
 
 // static login function
-employeeSchema.statics.login = async function(phone, password) {
+employeeSchema.statics.login = async function(email, password) {
     // validation
-    if (!phone || !password)
+    if (!email || !password)
         throw new Error('All fields must be filled')
 
-    const employee = await this.findOne({ phone })
+    const employee = await this.findOne({ email })
 
     if(!employee)
         throw new Error('No employee found')
+    
+    if (employee.isDelete)
+        throw new Error('Employee is deleted')
 
     const match = await bcrypt.compare(password, employee.password)
 

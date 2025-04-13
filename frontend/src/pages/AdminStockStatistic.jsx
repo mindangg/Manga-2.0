@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
+import { useSearchParams } from 'react-router-dom'
 
 import { useAdminContext } from '../hooks/useAdminContext'
 
@@ -16,6 +18,8 @@ export default function AdminStockStatistic() {
         labels: [],
         datasets: []
     })
+
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [option, setOption] = useState('month')
     
@@ -80,53 +84,9 @@ export default function AdminStockStatistic() {
         fetchStats(option)
     }, [option])
 
-    // useEffect(() => {
-    //     const fetchStatsByMonths = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:4000/api/stock-statistic/months', {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${admin.token}`
-    //                 }
-    //             })
-    //             if (!response.ok)
-    //                 return console.error('Error fetching order statistic:', response.status)
-                
-    //             const json = await response.json()
-    
-    //             setStatsByMonths(json)
-
-    //             const salesData = json.map((stat) => stat.totalSales)
-    //             const revenueData = json.map((stat) => stat.totalRevenue)
-    //             const profitData = json.map((stat) => stat.totalProfit)
-    
-    //             setChartData({
-    //                 labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    //                 datasets: [
-    //                     {
-    //                         label: 'Total Sales',
-    //                         data: salesData,
-    //                         backgroundColor: '#e69e19',
-    //                     },
-    //                     {
-    //                         label: 'Total Revenue ($)',
-    //                         data: revenueData,
-    //                         backgroundColor: '#28ac64',
-    //                     },
-    //                     {
-    //                         label: 'Total Profit ($)',
-    //                         data: profitData,
-    //                         backgroundColor: '#f84c2c',
-    //                     }
-    //                 ]
-    //             })
-    //         }
-    //         catch (error) {
-    //             console.error('Error fetching stats:', error)
-    //         }
-    //     }
-    
-    //     fetchStatsByMonths()
-    // }, [])
+    useEffect(() => {
+        setSearchParams({})
+    }, [])
 
     return (
         <div className='stock-statistic-container'>
@@ -137,7 +97,7 @@ export default function AdminStockStatistic() {
                 </select>
 
                 <div className='stock-statistic-icon'>
-                    <button><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                    <button onClick={() => setOption('month')}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
                 </div>
             </div>
 
@@ -172,22 +132,6 @@ export default function AdminStockStatistic() {
             </div>
 
             <div className='stock-statistic-chart'>
-                {/* <Bar
-                    data={{
-                        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                        datasets: [
-                            {
-                                label: 'Ammount',
-                                data: [10,20,30]
-                            },
-                            {
-                                label: 'Cost',
-                                data: [300,200,400]
-                            }
-                        ]
-                    }}
-                    
-                /> */}
                 {chartData 
                 ? (
                     <Bar data={chartData} />

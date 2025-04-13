@@ -1,16 +1,27 @@
 const Stock = require('../models/stockModel')
 const Manga = require('../models/mangaModel')
 const mongoose = require('mongoose')
+const removeSpecialChar = require('../helpers/helper')
 
 // Get all Stocks
 const getStocks = async (req, res) => {
     try {
-        const { stock } = req.query
+        const { name, startDate, endDate } = req.query
         
         let filter = {}
 
-        if (stock)
-            filter.stockNumber = { $regex: `.*${removeSpecialChar(stock)}.*`, $options: 'i' }
+        if (name)
+            filter.stockNumber = { $regex: `.*${removeSpecialChar(name)}.*`, $options: 'i' }
+                
+        if (startDate || endDate) {
+            filter.createdAt = {}
+            
+            if (startDate) 
+                filter.createdAt.$gte = new Date(startDate)
+
+            if (endDate) 
+                filter.createdAt.$lte = new Date(endDate)
+        }
 
         const stocks = await Stock.find(filter)
             .populate('employeeID')

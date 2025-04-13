@@ -48,82 +48,45 @@ export default function AdminOrder() {
         fetchOrder()
     }, [dispatch, searchParams])
 
-    // const [status, setStatus] = useState('All')
-    // const [startDate, setStartDate] = useState('')
-    // const [endDate, setEndDate] = useState('')
-
-    // const handleFilterChange = (newStatus, newStartDate, newEndDate) => {
-    //     setStatus(newStatus ?? status)
-    //     setStartDate(newStartDate ?? startDate)
-    //     setEndDate(newEndDate ?? endDate)
-    //     filterOrder(newStatus ?? status, newStartDate ?? startDate, newEndDate ?? endDate)
-    // }    
-
-    // const filterOrder = async (status, startDate, endDate) => {
-    //     try {
-    //         const orders = await fetchOrder()
-    //         let filteredOrders = orders
-
-    //         if (status !== 'All') {
-    //             filteredOrders = filteredOrders.filter((o) => o.status === status)
-    //         }
-
-    //         if (startDate && endDate) {
-    //             const start = new Date(startDate)
-    //             const end = new Date(endDate)
-
-    //             if (start > end) {
-    //                 alert('Wrong date format')
-    //                 return
-    //             }
-
-    //             filteredOrders = filteredOrders.filter((o) => {
-    //                 const orderDate = new Date(o.createdAt)
-    //                 return orderDate >= start && orderDate <= end
-    //             })
-    //         }
-    
-    //         dispatch({ type: 'DISPLAY_ITEM', payload: filteredOrders })
-    //     } 
-    //     catch (error) {
-    //         console.error('Error filtering orders:', error)
-    //     }
-    // }
-
-    // const handleRefresh = () => {
-    //     setStatus('All')
-    //     setStartDate('')
-    //     setEndDate('')
-    //     fetchOrder()
-    // }
-
-    
     const handleRefresh = () => {
         setSearchParams({})
     }
+    
+    useEffect(() => {
+        handleRefresh()
+    }, [])
 
     const [filter, setFilter] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
     
-    const handleFilter = (title, category, supplier) => {
+    const handleFilter = (order, status, startDate, endDate) => {
         const newParams = new URLSearchParams(searchParams)
 
-        if (title.trim() !== '') {
-            newParams.set('title', title.trim())
+        if (order.trim() !== '') {
+            newParams.set('order', order.trim())
         } 
         else
-            newParams.delete('title')
+            newParams.delete('order')
 
-        if (category !== '') {
-            newParams.set('category', category)
+        if (status !== '') {
+            newParams.set('status', status)
         } 
         else
-            newParams.delete('category')
+            newParams.delete('status')
 
-        if (supplier !== '') {
-            newParams.set('supplier', supplier)
-        } 
-        else
-            newParams.delete('supplier')
+        if (startDate !== '' || endDate !== '') {
+            if (startDate !== '')
+                newParams.set('startDate', startDate)
+
+            if (endDate !== '') 
+                newParams.set('endDate', endDate)
+        }
+
+        else {
+            newParams.delete('startDate')
+            newParams.delete('endDate')
+        }
 
         setSearchParams(newParams)
     }
@@ -135,8 +98,8 @@ export default function AdminOrder() {
     return (
         <div className='order-container'>
             <div className = 'order-controller'>
-                <select value={status} onChange={(e) => handleFilterChange(e.target.value, startDate, endDate)}>
-                    <option value='All'>All</option>
+                <select onChange={(e) => handleFilter('', e.target.value, '', '')}>
+                    <option value=''>All</option>
                     <option value='Delivered'>Delivered</option>
                     <option value='Pending'>Pending</option>
                     <option value='Canceled'>Canceled</option>
@@ -146,13 +109,10 @@ export default function AdminOrder() {
                     <input
                     type='text'
                     placeholder='Search for...'
-                //     value={filter}
-                //     onChange={(e) => {
-                //         handleFilter('', e.target.value);
-                //         setFilter(e.target.value);
-                //     }
-                // }
-                    />
+                    value={filter}
+                    onChange={(e) => {
+                        handleFilter(e.target.value, '', '', '');
+                        setFilter(e.target.value)}}/>
                     <i className='fa-solid fa-magnifying-glass'></i>
                 </div>
                 
@@ -161,7 +121,7 @@ export default function AdminOrder() {
                 <input 
                     type='date' 
                     value={startDate || ''}
-                    onChange={(e) => handleFilterChange(status, e.target.value, endDate)} 
+                    onChange={(e) => handleFilter('', '', e.target.value, '')} 
                 />
 
                 <label>To</label>
@@ -169,7 +129,7 @@ export default function AdminOrder() {
                 <input 
                     type='date' 
                     value={endDate || ''} 
-                    onChange={(e) => handleFilterChange(status, startDate, e.target.value)} 
+                    onChange={(e) => handleFilter('', '', '', e.target.value)} 
                 />
 
                 <div className='order-icon'>

@@ -56,8 +56,8 @@ export default function Admin() {
                 </div>
                 <div className='bottomnav'>
                     <ul>
-                        <li><i className='fa-regular fa-circle-user'></i> {role}</li>
-                        <li><i className='fa-solid fa-phone'></i> {admin?.employee?.phone}</li>
+                        <li><i className="fa-solid fa-pen-ruler" style={{paddingTop: '0px'}}></i> {role}</li>
+                        <li><i className='fa-regular fa-circle-user'></i>  {admin?.employee?.fullname}</li>
                         <li onClick={logout}><i className='fa-solid fa-arrow-right-from-bracket'></i> Logout</li>
                     </ul>
                 </div>

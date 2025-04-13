@@ -146,6 +146,10 @@ export default function AdminUser() {
     const handleRefresh = () => {
         setSearchParams({})
     }
+        
+    useEffect(() => {
+        handleRefresh()
+    }, [])
 
     const [filter, setFilter] = useState('')
     
@@ -175,7 +179,7 @@ export default function AdminUser() {
         <div className='user-container'>
             <div className = 'user-controller'>
                 <select onChange={(e) => handleFilter('', e.target.value)}>
-                    <option value='All'>All</option>
+                    <option value=''>All</option>
                     <option value='Active'>Active</option>
                     <option value='Disabled'>Disabled</option>
                 </select>

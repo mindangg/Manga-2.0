@@ -20,7 +20,7 @@ export default function StockCard({ stock }) {
     return (
         <div className='stock-info'>
             <span>{stock.stockNumber}</span>
-            <span>{stock.employeeID.fullname}</span>
+            <span>{stock.employeeID && stock.employeeID.fullname}</span>
             <span>{formatDate(stock.createdAt)}</span>
             <span>{stock.items.reduce((total, item) => total + item.stockQuantity || 0, 0)}</span>
             <span>$ {stock.totalPrice}</span>

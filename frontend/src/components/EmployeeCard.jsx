@@ -44,9 +44,10 @@ export default function EmployeeCard({ employee, handleEdit }) {
     return (
         <div className='employee-info'>
             <span>{employee.fullname}</span>
+            <span>{employee.email}</span>
             <span>{employee.phone}</span>
             <span>{formatDate(employee.createdAt)}</span>
-            <span className={`employee-status-${employee.role}`}>{employee.role}</span>
+            <span className={`employee-role-${employee.role}`}>{employee.role}</span>
             <span className='employee-action'>
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(employee)}></i>
                 <i className='fa-solid fa-trash-can' onClick={handleDelete}></i>

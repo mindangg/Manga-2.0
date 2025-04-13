@@ -1,16 +1,18 @@
 const Employee = require('../models/employeeModel')
+const Stock = require('../models/stockModel')
 const JWT = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const removeSpecialChar = require('../helpers/helper')
 
 const createToken = (_id) => {
     return JWT.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
 
 const loginEmployee = async (req, res) => {
-    const { phone, password } = req.body
+    const { email, password } = req.body
 
     try {
-        const employee = await Employee.login(phone, password)
+        const employee = await Employee.login(email, password)
 
         const token = createToken(employee._id)
         res.status(200).json({employee, token})
@@ -21,10 +23,10 @@ const loginEmployee = async (req, res) => {
 }
 
 const signupEmployee = async (req, res) => {
-    const { fullname, phone, password, role } = req.body
+    const { fullname, email, phone, password, role } = req.body
 
     try {
-        const employee = await Employee.signup(fullname, phone, password, role)
+        const employee = await Employee.signup(fullname, email, phone, password, role)
 
         const token = createToken(employee._id)
         res.status(200).json({employee, token})
@@ -37,8 +39,7 @@ const signupEmployee = async (req, res) => {
 const getAllEmployees = async (req, res) => {
     try {
         const { fullname, role } = req.query
-        console.log(fullname)
-        
+
         let filter = {}
 
         if (fullname)
@@ -47,9 +48,9 @@ const getAllEmployees = async (req, res) => {
         if (role)
             filter.role = role
 
-        const employees = await Employee.find(filter).sort({createdAt: -1})
+        const employees = await Employee.find({ ...filter, isDelete: false }).sort({ createdAt: -1 })
 
-        if (!employees)
+        if (!employees || employees.length === 0)
             return res.status(404).json({error: 'Employees not found'})
     
         res.status(200).json(employees)
@@ -66,7 +67,7 @@ const getEmployee = async (req, res) => {
         return res.status(400).json({error: 'No such employee'})
 
     try {
-        const employee = await Employee.findById(id)
+        const employee = await Employee.findOne({_id: id, isDelete: false})
 
         if (!employee)
             return res.status(404).json({error: 'Employee not found'})
@@ -85,11 +86,19 @@ const deleteEmployee = async (req, res) => {
         return res.status(400).json({error: 'No such employee'})
 
     try {
-        const employee = await Employee.findByIdAndDelete(id)
+        const employee = await Employee.findById(id)
 
-        if (!employee)
-            return res.status(404).json({error: 'Employee not found'})
-    
+        if (!employee || employee.isDelete)
+            return res.status(404).json({error: 'Employee not found or already deleted'})
+
+        const stock = await Stock.findOne({employeeID: id})
+
+        if (stock)
+            employee = await Employee.findByIdAndUpdate(id, { isDelete: true }, { new: true, runValidators: true })
+
+        else
+            employee = await Employee.findByIdAndDelete(id)
+
         res.status(200).json(employee)
     }
     catch (error) {
@@ -104,10 +113,12 @@ const updateEmployee = async (req, res) => {
         return res.status(400).json({error: 'No such employee'})
     
     try {
-        const employee = await Employee.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        const employee = await Employee.findById(id)
 
-        if (!employee)
-            return res.status(404).json({ error: 'Employee not found' })
+        if (!employee || employee.isDelete)
+            return res.status(404).json({error: 'Employee not found or already deleted'})
+
+        employee = await Employee.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
 
         res.status(200).json(employee)
     } 

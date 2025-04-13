@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 const path = require('path')
 const removeSpecialChar = require('../helpers/helper')
-const { error } = require('console')
 
 // multer storage
 const storage = multer.diskStorage({
@@ -21,21 +20,9 @@ const upload = multer({
 
 // Get all manga
 const getAllManga = async (req, res) => {
-    // try {
-    //     const manga = await Manga.find().sort({ title: 1 })
-
-    //     if (!manga)
-    //         return res.status(404).json({error: 'Manga not found'})
-        
-    //     res.status(200).json(manga)
-    // }   
-    // catch (error){
-    //     res.status(400).json(error)
-    // }
-
     try {
         const { title, category, supplier, minPrice, maxPrice } = req.query
-        
+        console.log(supplier)
         let filter = {}
 
         if (title)
@@ -45,7 +32,7 @@ const getAllManga = async (req, res) => {
             filter.category = { $regex: removeSpecialChar(category), $options: 'i' }
 
         if (supplier)
-            filter.supplierID = { $regex: removeSpecialChar(supplier), $options: 'i' }
+            filter.supplierID = supplier
 
         if (minPrice || maxPrice) {
             filter.priceOut = {}

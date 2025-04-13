@@ -8,7 +8,7 @@ export const useAdminLogin = () => {
     const { dispatch } = useAdminContext()
     const { showNotification } = useNotificationContext()
 
-    const login = async (phone, password) => {
+    const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
 
@@ -17,7 +17,7 @@ export const useAdminLogin = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ phone, password })
+            body: JSON.stringify({ email, password })
         })
     
         const json = await response.json()
@@ -32,7 +32,7 @@ export const useAdminLogin = () => {
             localStorage.setItem('employee', JSON.stringify(json))
 
             // show notification login
-            showNotification(`Hello ${phone}`)
+            showNotification(`Hello ${email}`)
             
             // update the admin context
             dispatch({type: 'LOGIN', payload: json})

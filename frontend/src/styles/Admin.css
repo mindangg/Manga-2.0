@@ -806,7 +806,7 @@ input[type='file'] {
 .employee-header,
 .employee-info{
     display: grid;
-    grid-template-columns: 3fr 2.5fr 3fr 2fr 2fr;
+    grid-template-columns: 3fr 3.5fr 2.5fr 3fr 2fr 2fr;
     padding: 25px 0;
     text-align: center;
     align-items: center;
@@ -814,14 +814,26 @@ input[type='file'] {
     border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
 } 
 
-.employee-status-Active{
+.employee-role-Manager{
+    background-color: #f84c2c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.employee-role-Admin{
+    background-color: #4ca0ff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.employee-role-Stocker{
     background-color: #28ac64;
     padding: 5px;
     border-radius: 5px;
 }
 
-.employee-status-Disabled{
-    background-color: #f84c2c;
+.employee-role-Seller{
+    background-color: #e69e19;
     padding: 5px;
     border-radius: 5px;
 }
