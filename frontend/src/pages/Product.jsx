@@ -22,10 +22,10 @@ export default function Product() {
                 const response = await fetch(url)
 
                 if (!response.ok)
-                    console.error('Error fetching order:', response.status)
+                    throw new Error(`HTTP error! Status: ${response.status}`)
                 
                 const json = await response.json()
-                console.log(json)
+
                 setManga(json)
             } 
             catch (error) {

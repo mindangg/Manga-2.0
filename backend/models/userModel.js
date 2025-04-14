@@ -26,8 +26,7 @@ const userSchema = new Schema({
     },
     address: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     status: {
         type: String,
@@ -65,10 +64,6 @@ userSchema.statics.signup = async function(username, email, password, phone, add
     const phoneExists = await this.findOne({ phone })
     if (phoneExists)
         throw new Error('Phone number already in use')
-
-    const addressExists = await this.findOne({ address })
-    if (addressExists)
-        throw new Error('Address already in use')
 
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)

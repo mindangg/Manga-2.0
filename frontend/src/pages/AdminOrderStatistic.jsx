@@ -71,12 +71,63 @@ export default function AdminOrderStatistic() {
         fetchStats()
     }, [])
 
-    useEffect(() => {
+    const handleRefresh = () => {
+        setStartDate('')
+        setEndDate('')
         setSearchParams({})
+    }
+
+    useEffect(() => {
+        handleRefresh()
     }, [])
+
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    
+    const handleFilter = (startDate, endDate) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (startDate !== '' || endDate !== '') {
+            if (startDate !== '')
+                newParams.set('startDate', startDate)
+
+            if (endDate !== '') 
+                newParams.set('endDate', endDate)
+        }
+
+        else {
+            newParams.delete('startDate')
+            newParams.delete('endDate')
+        }
+
+        setSearchParams(newParams)
+    }
  
     return (
         <div className='order-statistic-container'>
+            <div className='order-statistic-controller'>
+            <label>From</label>
+
+            <input 
+                type='date' 
+                value={startDate || ''}
+                onChange={(e) => {
+                    handleFilter(e.target.value, '');
+                    setStartDate(e.target.value)}}/>
+
+            <label>To</label>
+
+            <input 
+                type='date' 
+                value={endDate || ''} 
+                onChange={(e) => {
+                    handleFilter('', e.target.value);
+                    setEndDate(e.target.value)}}/>
+
+                <div className='order-statistic-icon'>
+                    <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
+                </div>
+            </div>
 
             <div className='order-statistic-items'>
                 <div className='order-statistic-item'>

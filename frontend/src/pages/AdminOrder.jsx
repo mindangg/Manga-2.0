@@ -49,6 +49,8 @@ export default function AdminOrder() {
     }, [dispatch, searchParams])
 
     const handleRefresh = () => {
+        setStartDate('')
+        setEndDate('')
         setSearchParams({})
     }
     
@@ -121,20 +123,21 @@ export default function AdminOrder() {
                 <input 
                     type='date' 
                     value={startDate || ''}
-                    onChange={(e) => handleFilter('', '', e.target.value, '')} 
-                />
+                    onChange={(e) => {
+                        handleFilter('', '', e.target.value, '');
+                        setStartDate(e.target.value)}}/>
 
                 <label>To</label>
 
                 <input 
                     type='date' 
                     value={endDate || ''} 
-                    onChange={(e) => handleFilter('', '', '', e.target.value)} 
-                />
+                    onChange={(e) => {
+                        handleFilter('', '', e.target.value, '');
+                        setEndDate(e.target.value)}}/>
 
                 <div className='order-icon'>
                     <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                    {/* <button onClick={toggleAdd}><i className='fa-solid fa-plus'></i>Add</button> */}
                 </div>
             </div>
             <div className='order-header'>

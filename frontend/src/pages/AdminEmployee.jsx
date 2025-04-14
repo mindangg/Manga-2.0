@@ -43,7 +43,11 @@ export default function AdminUser() {
             
             const json = await response.json()
 
-            dispatch({type: 'SET_USER', payload: json})
+            const filtered = admin.employee.role === 'Admin'
+            ? json.filter(i => i.role !== 'Manager')
+            : json
+
+            dispatch({type: 'SET_USER', payload: filtered})
             
             return json
         }
