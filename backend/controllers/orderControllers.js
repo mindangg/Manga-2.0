@@ -1,5 +1,6 @@
 const Order = require('../models/orderModel')
 const Cart = require('../models/cartModel')
+const Manga = require('../models/mangaModel')
 const mongoose = require('mongoose')
 const removeSpecialChar = require('../helpers/helper')
 
@@ -110,23 +111,59 @@ const deleteOrder = async (req, res) => {
 }
 
 // Update order
+// const updateOrder = async (req, res) => {
+//     const { id } = req.params
+
+//     if (!mongoose.Types.ObjectId.isValid(id))
+//         res.status(400).json({ error: 'No such order' })
+    
+//     try {
+//         const order = await Order.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+
+//         if(!order)
+//             res.status(400).json({ error: 'No such order' })
+    
+//         res.status(200).json(order)
+//     }
+//     catch (error) {
+//         res.status(500).json({ error: error.message })
+//     }
+// }
+
 const updateOrder = async (req, res) => {
     const { id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id))
-        res.status(400).json({ error: 'No such order' })
-    
-    try {
-        const order = await Order.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+        return res.status(400).json({ error: 'No such order' })
 
-        if(!order)
-            res.status(400).json({ error: 'No such order' })
-    
-        res.status(200).json(order)
-    }
-    catch (error) {
+    try {
+        const existingOrder = await Order.findById(id)
+        if (!existingOrder) {
+            return res.status(400).json({ error: 'No such order' })
+        }
+
+        const isDelivering = req.body.status === 'Delivered' && existingOrder.status === 'Pending'
+
+        const updatedOrder = await Order.findByIdAndUpdate(id, req.body, {
+            new: true,
+            runValidators: true
+        })
+
+        if (isDelivering) {
+            for (const item of updatedOrder.items) {
+                const manga = await Manga.findById(item.mangaID)
+                if (manga) {
+                    manga.stock = Math.max(manga.stock - item.quantity, 0)
+                    await manga.save()
+                }
+            }
+        }
+
+        res.status(200).json(updatedOrder)
+    } catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
+
 
 module.exports = { getOrders, getOrder, createOrder, deleteOrder, updateOrder }

@@ -15,9 +15,14 @@ export default function EmployeeCard({ employee, handleEdit }) {
 
     const handleDelete = async () => {
         if (employee._id === admin.employee._id) {
-            console.error('Cant delete employee because it is in used')
+            alert('Cant delete employee because it is in used')
             return
         }
+
+        const confirmed = window.confirm("Are you sure you want to delete this employee?")
+        if (!confirmed) 
+            return
+
         try {
             const response = await fetch('http://localhost:4000/api/employee/' + employee._id, {
                 method: 'DELETE',

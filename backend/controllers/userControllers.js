@@ -88,7 +88,7 @@ const deleteUser = async (req, res) => {
         return res.status(400).json({error: 'No such user'})
 
     try {
-        const user = await User.findById(id)
+        let user = await User.findById(id)
 
         if (!user || user.isDelete)
             return res.status(404).json({error: 'User not found or already deleted'})
@@ -115,7 +115,7 @@ const updateUser = async (req, res) => {
         return res.status(400).json({error: 'No such user'})
 
     try {
-        const user = await User.findById(id)
+        let user = await User.findById(id)
 
         if (!user || user.isDelete)
             return res.status(404).json({error: 'User not found or already deleted'})

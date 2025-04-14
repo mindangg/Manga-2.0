@@ -7,6 +7,7 @@ import Order from '../components/Order'
 
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useOrderContext } from '../hooks/useOrderContext'
+import { useNotificationContext } from '../hooks/useNotificationContext'
 
 export default function UserInfo() {
     const { logout } = useLogout()
@@ -16,31 +17,42 @@ export default function UserInfo() {
     const [isOrder, setIsOrder] = useState(true)
     const [isUser, setIsUser] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
- 
-    const [fullname, setFullName] = useState(user.user.fullname)
-    const [phone, setPhone] = useState(user.user.phone)
-    const [address, setAddress] = useState(user.user.address)
 
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         const response = await fetch('http://localhost:4000/api/user/' + user.user.id, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${user.token}`
-    //             }
-    //         })
+    const { showNotification } = useNotificationContext()
 
-    //         const json = await response.json()
-    //         console.log(json)
+    const [userCurrent, setUserCurrent] = useState(null)
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
 
-    //         if (response.ok) {
-    //             dispatch({ type: 'LOGIN', payload: json })
-    //         }
-    //     }
+    const fetchUser = async () => {
+        const response = await fetch('http://localhost:4000/api/user/' + user.user._id, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
 
-    //     fetchUser()
+        const json = await response.json()
+        console.log(json)
 
-    //     console.log(user)
-    // }, [])
+        if (response.ok) {
+            setUserCurrent(json)
+        }
+    }
+    
+    useEffect(() => {
+        fetchUser()
+    }, [])
+    
+    useEffect(() => {
+        if (userCurrent) {
+            setUsername(userCurrent.username)
+            setEmail(userCurrent.email)
+            setPhone(userCurrent.phone)
+            setAddress(userCurrent.address)
+        }
+    }, [userCurrent])    
     
     const toggleOrder = () => {
         if (!isOrder) {
@@ -93,18 +105,16 @@ export default function UserInfo() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ fullname, phone, address })
+                body: JSON.stringify({ username, email, phone, address })
             })
 
             const json = await response.json()
     
             if (response.ok) {
-                console.log(json)
-                console.log(user.user.address)
-                dispatch({ type: 'SET_USER', payload: json })
+                fetchUser()
                 setIsLoading(false)
+                showNotification('Update user info succesfully')
             }
-
         }
         catch (error) {
             setIsLoading(false)
@@ -138,13 +148,16 @@ export default function UserInfo() {
                 <div id='user-container'>
                     <form onSubmit={(e) => handleSubmit(e)}>
                         <h2>Edit user info</h2>
-                        <p>Please fill in the information below:</p>
-                            <div>
-                                <input type='text' placeholder='Fullname' value={fullname} 
-                                    onChange={(e) => setFullName(e.target.value)}></input>
+                            <div class='user-info__input'>
+                                <input type='text' placeholder='Username' value={username}
+                                    onChange={(e) => setUsername(e.target.value)}></input>
                             </div>
                             <div class='user-info__input'>
-                                <input type='text' placeholder='Phone number' value={phone}
+                                <input type='text' placeholder='Email' value={email}
+                                    onChange={(e) => setEmail(e.target.value)}></input>
+                            </div>
+                            <div class='user-info__input'>
+                                <input type='tel' placeholder='Phone number' value={phone}
                                     onChange={(e) => setPhone(e.target.value)}></input>
                             </div>
                             <div class='user-info__input'>

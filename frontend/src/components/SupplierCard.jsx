@@ -14,6 +14,10 @@ export default function SupplierCard({ supplier, handleEdit }) {
     }
 
     const handleDelete = async () => {
+        const confirmed = window.confirm('Are you sure you want to delete this supplier?')
+        if (!confirmed) 
+            return
+
         try {
             const response = await fetch('http://localhost:4000/api/supplier/' + supplier._id, {
                 method: 'DELETE',

@@ -1,4 +1,5 @@
 const Cart = require('../models/cartModel')
+const Manga = require('../models/mangaModel')
 const mongoose = require('mongoose')
 
 // Get user cart
@@ -119,17 +120,24 @@ const updateCartQuantity = async (req, res) => {
 
     try {
         const cart = await Cart.findOne({ userID })
-        
         if (!cart)
             return res.status(400).json({error: 'Cart not found'})
 
         const item = cart.items.find((i) => i.mangaID.equals(mangaID))
-
         if (!item) 
             return res.status(400).json({error: 'Item not found'})
+        
+        const manga = await Manga.findById(mangaID)
+        if (!manga)
+            return res.status(400).json({ error: 'Manga not found' })
 
-        if (type === 'increase')
+        if (type === 'increase') {
+            if (item.quantity >= manga.stock)
+                return res.status(400).json({ error: 'Quantity exceeds available stock' })
+
             item.quantity += 1
+        }
+
         else if (type === 'decrease') {
             
             // check if quantity is above 1 so decrease quantity by 1

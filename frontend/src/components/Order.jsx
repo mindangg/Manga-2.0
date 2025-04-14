@@ -21,6 +21,10 @@ export default function Order({ order }) {
 
     const cancelOrder = async () => {
         try {
+            const confirmed = window.confirm("Are you sure you want to cancel your order?")
+            if (!confirmed) 
+                return
+
             const response = await fetch('http://localhost:4000/api/order/' + order._id, {
                 method: 'PATCH',
                 headers: {

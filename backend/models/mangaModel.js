@@ -50,13 +50,6 @@ const mangaModel = new Schema({
     }
 }, { timestamps: true })
 
-// mangaModel.pre('save', function (next) {
-//     if (this.isModified('priceIn'))
-//         this.priceOut = this.priceIn * 1.2
-
-//     next()
-// })
-
 mangaModel.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate()
     if (update.priceIn) {

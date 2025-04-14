@@ -23,6 +23,10 @@ export default function OrderCard({ order }) {
     }
 
     const approveOrder = async (status) => {
+        const confirmed = window.confirm(`Are you sure you want to ${status.toLowerCase()} this order?`)
+        if (!confirmed) 
+            return
+
         try {
             const response = await fetch('http://localhost:4000/api/order/' + order._id, {
                 method: 'PATCH',

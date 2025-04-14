@@ -42,11 +42,14 @@ const userSchema = new Schema({
 
 // static signup function
 userSchema.statics.signup = async function(username, email, password, phone, address) {
-    if (!username || !email || !password)
+    if (!username || !email || !password || !phone || !address)
         throw new Error('All fields must be filled')
 
     if (!validator.isEmail(email))
         throw new Error('Email is not valid')
+
+    if (!validator.isMobilePhone(phone))
+        throw new Error('Phone is not valid')
 
     const usernameExists = await this.findOne({ username })
     if (usernameExists)
@@ -89,7 +92,7 @@ userSchema.statics.login = async function(username, password) {
     if (user.isDelete)
         throw new Error('User is deleted')
 
-    if (user.status == 'Disable')
+    if (user.status == 'Disabled')
         throw new Error('User is disabled')
 
     const match = await bcrypt.compare(password, user.password)

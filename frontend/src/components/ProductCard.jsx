@@ -8,6 +8,10 @@ export default function ProductCard({ manga, handleEdit }) {
     const { dispatch } = useMangaContext()
 
     const handleDelete = async () => {
+        const confirmed = window.confirm("Are you sure you want to delete this product?")
+        if (!confirmed) 
+            return
+
         try {
             const response = await fetch('http://localhost:4000/api/manga/' + manga._id, {
                 method: 'DELETE',

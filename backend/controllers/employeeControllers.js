@@ -86,7 +86,7 @@ const deleteEmployee = async (req, res) => {
         return res.status(400).json({error: 'No such employee'})
 
     try {
-        const employee = await Employee.findById(id)
+        let employee = await Employee.findById(id)
 
         if (!employee || employee.isDelete)
             return res.status(404).json({error: 'Employee not found or already deleted'})
@@ -113,7 +113,7 @@ const updateEmployee = async (req, res) => {
         return res.status(400).json({error: 'No such employee'})
     
     try {
-        const employee = await Employee.findById(id)
+        let employee = await Employee.findById(id)
 
         if (!employee || employee.isDelete)
             return res.status(404).json({error: 'Employee not found or already deleted'})
