@@ -28,7 +28,10 @@ export default function AdminUserStatistic() {
 
     const fetchStats = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/user-statistic', {
+            const url = searchParams.toString()
+            ? `http://localhost:4000/api/user-statistic?${searchParams}`
+            : `http://localhost:4000/api/user-statistic`
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${admin.token}`
                 }

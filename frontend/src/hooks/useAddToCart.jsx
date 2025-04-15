@@ -45,10 +45,6 @@ export const useAddToCart = () => {
     }
 
     const handleDelete = async (cartID, userID, mangaID) => {
-        const confirmed = window.confirm("Are you sure you want to remove from cart?")
-        if (!confirmed) 
-            return
-
         try {
             const response = await fetch(`http://localhost:4000/api/cart/${userID}/${mangaID}`, {
                 method: 'DELETE',

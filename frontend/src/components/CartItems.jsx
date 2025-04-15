@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import '../styles/Cart.css'
 
 import { useAddToCart } from '../hooks/useAddToCart'
 import { useAuthContext } from '../hooks/useAuthContext'
 
+import Confirm from './Confirm'
+
 export default function CartItems({ cart }) {
     const { handleDelete, handleQuantity } = useAddToCart()
     const { user } = useAuthContext()
+    const [showConfirm, setShowConfirm] = useState(false)
 
     return (
         <div className='cart-item'>
@@ -37,8 +40,15 @@ export default function CartItems({ cart }) {
                 <p>{cart.mangaID && (cart.mangaID.priceOut * cart.quantity).toFixed(2)}</p>
             </div>
             <div className='cart-delete'>
-                <button id='cart-quantityremove' onClick={() => handleDelete(cart._id, user.user._id, cart.mangaID._id)}>Remove</button>
+                <button id='cart-quantityremove'  onClick={() => setShowConfirm(true)}>Remove</button>
             </div>
+            {showConfirm && (
+                <Confirm
+                    message='Are you sure you want to remove from cart?'
+                    onConfirm={() => handleDelete(cart._id, user.user._id, cart.mangaID._id)}
+                    onCancel={() => setShowConfirm(false)}
+                />
+            )}
         </div>
     )
 }

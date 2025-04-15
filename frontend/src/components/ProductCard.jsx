@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { useState }  from 'react'
 
 import '../styles/Admin.css'
 
 import { useMangaContext } from '../hooks/useMangaContext'
 
+import Confirm from './Confirm'
+
 export default function ProductCard({ manga, handleEdit }) {
     const { dispatch } = useMangaContext()
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const handleDelete = async () => {
-        const confirmed = window.confirm("Are you sure you want to delete this product?")
-        if (!confirmed) 
-            return
-
         try {
             const response = await fetch('http://localhost:4000/api/manga/' + manga._id, {
                 method: 'DELETE',
@@ -41,8 +40,15 @@ export default function ProductCard({ manga, handleEdit }) {
             <span>$ {manga.priceIn}</span>
             <span className='manga-action'>
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(manga)}></i>
-                <i className='fa-solid fa-trash-can' onClick={handleDelete}></i>
+                <i className='fa-solid fa-trash-can' onClick={() => setShowConfirm(true)}></i>
             </span>
+            {showConfirm && (
+                <Confirm
+                    message='Are you sure you want to delete this manga?'
+                    onConfirm={handleDelete}
+                    onCancel={() => setShowConfirm(false)}
+                />
+            )}
         </div>
     )
 }
