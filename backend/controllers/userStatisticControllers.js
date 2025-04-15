@@ -11,14 +11,15 @@ const getStats = async (req, res) => {
 
         if (startDate || endDate) {
             matchConditions.createdAt = {}
-            if (startDate) matchConditions.createdAt.$gte = new Date(startDate)
-            if (endDate) matchConditions.createdAt.$lte = new Date(endDate)
+            if (startDate) 
+                matchConditions.createdAt.$gte = new Date(startDate)
+            
+            if (endDate) 
+                matchConditions.createdAt.$lte = new Date(endDate)
         }
 
-        // 1. Total number of users (within range if filtered)
         const totalUsers = await User.countDocuments(matchConditions)
 
-        // 2. Users created per month (within range if filtered)
         const monthlyUsers = await User.aggregate([
             { $match: matchConditions },
             {

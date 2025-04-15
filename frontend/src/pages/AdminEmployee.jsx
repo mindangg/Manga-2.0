@@ -43,11 +43,7 @@ export default function AdminUser() {
             
             const json = await response.json()
 
-            const filtered = admin.employee.role === 'Admin'
-            ? json.filter(i => i.role !== 'Manager')
-            : json
-
-            dispatch({type: 'SET_USER', payload: filtered})
+            dispatch({type: 'SET_USER', payload: json})
             
             return json
         }
@@ -168,12 +164,16 @@ export default function AdminUser() {
     const firstPageIndex = lastPageIndex - productPerPages
     const currentEmployee = users?.slice(firstPageIndex, lastPageIndex)
 
+    useEffect(() => {
+        console.log(admin.employee.role)
+    })
+
     return (
         <div className='employee-container'>
             <div className = 'employee-controller'>
                 <select onChange={(e) => handleFilter('', e.target.value)}>
                     <option value=''>All</option>
-                    <option value='Manager'>Manager</option>
+                    {admin.employee.role == 'Manager' && <option value='Manager'>Manager</option>}
                     <option value='Admin'>Admin</option>
                     <option value='Seller'>Seller</option>
                     <option value='Stocker'>Stocker</option>
@@ -245,7 +245,7 @@ export default function AdminUser() {
 
                             <label>Role</label><br/>
                             <select value={role} onChange={(e) => setRole(e.target.value)}>
-                                <option value='Manager'>Manager</option>
+                                {admin.employee.role == 'Manager' && <option value='Manager'>Manager</option>}
                                 <option value='Admin'>Admin</option>
                                 <option value='Seller'>Seller</option>
                                 <option value='Stocker'>Stocker</option>

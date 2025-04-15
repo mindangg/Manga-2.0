@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const Order = require('../models/orderModel')
+const Cart = require('../models/cartModel')
 const JWT = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const removeSpecialChar = require('../helpers/helper')
@@ -100,6 +101,8 @@ const deleteUser = async (req, res) => {
 
         else
             user = await User.findByIdAndDelete(id)
+        
+        await Cart.findOneAndDelete({userID: id})
 
         res.status(200).json(user)
     }

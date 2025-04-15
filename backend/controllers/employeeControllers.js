@@ -39,26 +39,36 @@ const signupEmployee = async (req, res) => {
 const getAllEmployees = async (req, res) => {
     try {
         const { fullname, role } = req.query
+        const employeeID = req.employee._id
 
         let filter = {}
 
         if (fullname)
             filter.fullname = { $regex: `.*${removeSpecialChar(fullname)}.*`, $options: 'i' }
 
-        if (role)
-            filter.role = role
+        const employeeCheck = await Employee.findById(employeeID)
+
+        if (role) {
+            if (employeeCheck.role === 'Admin' && role === 'Manager') {
+                return res.status(403).json({ error: 'Admins are not allowed to view Managers' })
+            } else {
+                filter.role = role
+            }
+        } else if (employeeCheck.role === 'Admin') {
+            filter.role = { $ne: 'Manager' }
+        }
 
         const employees = await Employee.find({ ...filter, isDelete: false }).sort({ createdAt: -1 })
 
         if (!employees || employees.length === 0)
-            return res.status(404).json({error: 'Employees not found'})
-    
+            return res.status(404).json({ error: 'Employees not found' })
+
         res.status(200).json(employees)
-    }
-    catch (error) {
-        res.status(400).json({error: error.message})
+    } catch (error) {
+        res.status(400).json({ error: error.message })
     }
 }
+
 
 const getEmployee = async (req, res) => {
     const { id } = req.params

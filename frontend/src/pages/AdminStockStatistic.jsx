@@ -25,10 +25,11 @@ export default function AdminStockStatistic() {
     
     const fetchStats = async (option) => {
         try {
-            let url = `http://localhost:4000/api/stock-statistic`
-
-            if (option)
-                url += `/${option}`
+            const baseUrl = 'http://localhost:4000/api'
+            const endpoint = option ? `stock-statistic/${option}` : 'order-statistic'
+            
+            const query = searchParams.toString()
+            const url = `${baseUrl}/${endpoint}${query ? `?${query}` : ''}`            
 
             const response = await fetch(url, {
                 headers: {
@@ -40,7 +41,6 @@ export default function AdminStockStatistic() {
                 return console.error('Error fetching order statistic:', response.status)
             
             const json = await response.json()
-            // console.log(json)
 
             setStats(json)
                 let labels = ''
@@ -82,11 +82,37 @@ export default function AdminStockStatistic() {
 
     useEffect(() => {
         fetchStats(option)
-    }, [option])
+    }, [option, searchParams])
+
+    const handleRefresh = () => {
+        setSearchParams({})
+    }
 
     useEffect(() => {
-        setSearchParams({})
+        handleRefresh()
     }, [])
+
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    
+    const handleFilter = (startDate, endDate) => {
+        const newParams = new URLSearchParams(searchParams)
+
+        if (startDate !== '' || endDate !== '') {
+            if (startDate !== '')
+                newParams.set('startDate', startDate)
+
+            if (endDate !== '') 
+                newParams.set('endDate', endDate)
+        }
+
+        else {
+            newParams.delete('startDate')
+            newParams.delete('endDate')
+        }
+
+        setSearchParams(newParams)
+    }
 
     return (
         <div className='stock-statistic-container'>
@@ -95,6 +121,24 @@ export default function AdminStockStatistic() {
                     <option value='month'>Month</option>
                     <option value='year'>Year</option>
                 </select>
+
+                <label>From</label>
+
+                <input 
+                    type='date' 
+                    value={startDate || ''}
+                    onChange={(e) => {
+                        handleFilter(e.target.value, '');
+                        setStartDate(e.target.value)}}/>
+
+                <label>To</label>
+
+                <input 
+                    type='date' 
+                    value={endDate || ''} 
+                    onChange={(e) => {
+                        handleFilter('', e.target.value);
+                        setEndDate(e.target.value)}}/>
 
                 <div className='stock-statistic-icon'>
                     <button onClick={() => setOption('month')}><i className='fa-solid fa-rotate-right'></i>Refresh</button>

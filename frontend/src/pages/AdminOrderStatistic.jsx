@@ -24,7 +24,10 @@ export default function AdminOrderStatistic() {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/order-statistic', {
+                const url = searchParams.toString()
+                ? `http://localhost:4000/api/order-statistic?${searchParams}`
+                : `http://localhost:4000/api/order-statistic`
+                const response = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${admin.token}`
                     }
@@ -69,7 +72,7 @@ export default function AdminOrderStatistic() {
         }
 
         fetchStats()
-    }, [])
+    }, [searchParams])
 
     const handleRefresh = () => {
         setStartDate('')

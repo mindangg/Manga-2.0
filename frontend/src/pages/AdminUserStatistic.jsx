@@ -192,7 +192,6 @@ export default function AdminUserStatistic() {
                 <span>Address</span>
                 <span>Date Created</span>
                 <span>Status</span>
-                <span>Edit</span>
             </div>
 
             {user && user.map((u) => (

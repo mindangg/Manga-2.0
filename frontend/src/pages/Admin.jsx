@@ -25,7 +25,7 @@ export default function Admin() {
     const accessMap = {
         'Seller': ['order', 'order-statistic'],
         'Stocker': ['product', 'supplier', 'stock-statistic'],
-        'Admin': ['user', 'employee'],
+        'Admin': ['user', 'employee', 'user-statistic'],
         'Manager': ['product', 'supplier', 'user', 'order', 'employee', 'user-statistic', 'order-statistic', 'stock-statistic']
     }
     

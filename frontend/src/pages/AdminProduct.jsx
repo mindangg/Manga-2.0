@@ -194,11 +194,6 @@ export default function AdminProduct() {
     }, [dispatch, userDispatch, searchParams])
 
     const toggle = () => {
-        if (!users || users.length <= 0) {
-            alert('No supplier')
-            return
-        }
-
         if (selectedProduct) {
             setTitle('')
             setSeries('')
@@ -351,9 +346,6 @@ export default function AdminProduct() {
                                     <option key={u._id} value={u._id}>{u.name}</option>
                                 ))}
                             </select><br/>
-
-                            {/* <input type='text' placeholder='Stock' value={stock}
-                                        onChange={(e) => setStock(e.target.value)}/> */}
 
                             <input type='text' placeholder='PriceIn' value={priceIn}
                                         onChange={(e) => setPriceIn(e.target.value)}/>
