@@ -75,7 +75,7 @@ const createStock = async (req, res) => {
 
         const totalPrice = stockItems.reduce((total, i) => total + i.quantity * i.priceIn, 0)
 
-        const stock = await Stock.create({ employeeID, items, totalPrice })
+        const stock = await Stock.create({ employeeID, items, totalPrice: totalPrice.toFixed(2)  })
 
         res.status(200).json(stock)
     } 

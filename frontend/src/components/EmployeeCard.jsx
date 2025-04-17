@@ -35,10 +35,6 @@ export default function EmployeeCard({ employee, handleEdit }) {
                 return
             }
             dispatch({type: 'DELETE_USER', payload: employee._id})
-
-            // remove employee from local storage
-            if (admin.employee.role !== 'Admin')
-                localStorage.removeItem('employee')
         }
         catch (error) {
             console.error(error)

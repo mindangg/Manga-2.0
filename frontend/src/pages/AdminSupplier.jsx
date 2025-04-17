@@ -80,7 +80,7 @@ export default function AdminSupplier() {
             console.log(order)
         }
         catch (error) {
-            console.error('Error fetching stockp:', error)
+            console.error('Error fetching stock:', error)
         }
     }
 
@@ -189,6 +189,11 @@ export default function AdminSupplier() {
             dispatch({type: 'ADD_USER', payload: json})
 
             setIsToggle(false)
+            setName('')
+            setEmail('')
+            setPhone('')
+            setAddress('')
+            setSelectedSupplier(null)
         }
         catch (error) {
             console.error(error)
@@ -211,6 +216,9 @@ export default function AdminSupplier() {
     }
 
     const handleRefresh = () => {
+        setFilterSupplier('')
+        setStartDate('')
+        setEndDate('')
         setSearchParams({})
     }
   
@@ -283,7 +291,9 @@ export default function AdminSupplier() {
                             <input 
                                 type='date' 
                                 value={startDate || ''}
-                                onChange={(e) => handleFilterStock(e.target.value, '')} 
+                                onChange={(e) => {handleFilterStock(e.target.value, '');
+                                                    setStartDate(e.target.value)}
+                                } 
                             />
             
                             <label>To</label>
@@ -291,7 +301,9 @@ export default function AdminSupplier() {
                             <input 
                                 type='date' 
                                 value={endDate || ''} 
-                                onChange={(e) => handleFilterStock('', e.target.value)} 
+                                onChange={(e) => {handleFilterStock('', e.target.value);
+                                                    setEndDate(e.target.value)}
+                                } 
                             />
                         </>
                     )

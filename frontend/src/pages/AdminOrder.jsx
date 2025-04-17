@@ -49,6 +49,7 @@ export default function AdminOrder() {
     }, [dispatch, searchParams])
 
     const handleRefresh = () => {
+        setFilter('')
         setStartDate('')
         setEndDate('')
         setSearchParams({})

@@ -5,12 +5,16 @@ import '../styles/Admin.css'
 import { useAdminContext } from '../hooks/useAdminContext'
 import { useOrderContext } from '../hooks/useOrderContext'
 
+import Confirm from './Confirm'
+
 import { usePDF } from '../hooks/usePDF'
 
 export default function OrderCard({ order }) {
     const { admin } = useAdminContext()
     const { dispatch } = useOrderContext()
     const [isApprove, setIsApprove] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
+    const [selectedAction, setSelectedAction] = useState(null)
 
     const { generatePDF } = usePDF()
 
@@ -23,10 +27,6 @@ export default function OrderCard({ order }) {
     }
 
     const approveOrder = async (status) => {
-        const confirmed = window.confirm(`Are you sure you want to ${status.toLowerCase()} this order?`)
-        if (!confirmed) 
-            return
-
         try {
             const response = await fetch('http://localhost:4000/api/order/' + order._id, {
                 method: 'PATCH',
@@ -41,9 +41,10 @@ export default function OrderCard({ order }) {
                 return console.error('Failed to approve order:', response.status)
     
             const json = await response.json()
-            console.log(json)
             dispatch({type: 'UPDATE_ITEM', payload: json})
-            setIsApprove()
+            toggleApprove()
+            setShowConfirm(false)
+            setSelectedAction(null)
         }
         catch (error) {
             console.error('Failed to approve order', error)
@@ -65,7 +66,7 @@ export default function OrderCard({ order }) {
             {isApprove && (
                 <div className='order-approve-container'>
                     <div className='order-approve'>
-                        <i class='fa-solid fa-xmark' onClick={toggleApprove}></i>
+                        <i className='fa-solid fa-xmark' onClick={toggleApprove}></i>
                         <h2 style={{textAlign: 'center'}}>Order: {order && order.orderNumber}</h2>
                         <div>Customer: {order && order.userID.email}</div>
                         <div>Phone number: {order && order.userID.phone}</div>
@@ -85,8 +86,34 @@ export default function OrderCard({ order }) {
                         {
                             order?.status === 'Pending' && (
                                 <div style={{margin: '0', display: 'flex', gap: '10px', justifyContent: 'center'}}>
-                                    {order && <button onClick={() => approveOrder('Delivered')} style={{backgroundColor: '#28ac64'}}>Delivered</button>}
-                                    {order && <button onClick={() => approveOrder('Canceled')} style={{backgroundColor: '#f84c2c'}}>Canceled</button>}
+                                    {order && <button
+                                                    onClick={() => {
+                                                        setSelectedAction('Delivered')
+                                                        setShowConfirm(true)
+                                                    }}
+                                                    style={{ backgroundColor: '#28ac64' }}
+                                                >
+                                                    Delivered
+                                                </button>}
+                                    {order && <button
+                                                    onClick={() => {
+                                                        setSelectedAction('Canceled')
+                                                        setShowConfirm(true)
+                                                    }}
+                                                    style={{ backgroundColor: '#f84c2c' }}
+                                                >
+                                                    Canceled
+                                                </button>}
+                                    {showConfirm && (
+                                        <Confirm
+                                            message={`Are you sure you want to mark this order as ${selectedAction}?`}
+                                            onConfirm={() => approveOrder(selectedAction)}
+                                            onCancel={() => {
+                                                setShowConfirm(false)
+                                                setSelectedAction(null)
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             )
                         }

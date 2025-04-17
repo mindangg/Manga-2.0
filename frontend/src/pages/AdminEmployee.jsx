@@ -126,6 +126,11 @@ export default function AdminUser() {
             dispatch({type: 'ADD_USER', payload: json.employee})
 
             setIsToggle(false)
+            setFullname('')
+            setEmail('')
+            setPhone('')
+            setRole('Admin')
+            setSelectedEmployee(null)
         }
         catch (error) {
             console.error(error)
