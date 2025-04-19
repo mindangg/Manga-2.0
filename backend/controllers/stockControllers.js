@@ -69,7 +69,6 @@ const createStock = async (req, res) => {
 
         const items = stockItems.map(i => ({
             mangaID: i._id,
-            supplierID: i.supplierID,
             stockQuantity: i.quantity,
         }))
 

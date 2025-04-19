@@ -19,11 +19,6 @@ const stockModel = new Schema({
           ref: 'Manga',
           required: true
         },
-        supplierID: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Supplier',
-          required: true
-        },
         stockQuantity: {
           type: Number,
           default: 1
