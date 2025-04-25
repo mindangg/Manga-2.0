@@ -138,6 +138,7 @@ export default function AdminUser() {
     }
     
     const handleRefresh = () => {
+        setFilter('')
         setSearchParams({})
     }
         

@@ -5,11 +5,14 @@ import '../styles/UserInfo.css'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useOrderContext } from '../hooks/useOrderContext'
 
+import Confirm from './Confirm'
+
 export default function Order({ order }) {
     const { user } = useAuthContext()
     const { dispatch } = useOrderContext()
 
     const [isInfo, setIsInfo] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const toggleInfo = () => {
         setIsInfo(!isInfo)
@@ -21,10 +24,6 @@ export default function Order({ order }) {
 
     const cancelOrder = async () => {
         try {
-            const confirmed = window.confirm("Are you sure you want to cancel your order?")
-            if (!confirmed) 
-                return
-
             const response = await fetch('http://localhost:4000/api/order/' + order._id, {
                 method: 'PATCH',
                 headers: {
@@ -52,7 +51,14 @@ export default function Order({ order }) {
                 <div>Date: {order && formatDate(order.createdAt)}</div>
                 <div className={`order-history-status-${order.status}`}>Status: {order && order.status}</div>
                 <span className='show-history-details' onClick={toggleInfo}>View Details</span>
-                <button onClick={cancelOrder}>Cancel this order</button>
+                <button onClick={() => setShowConfirm(true)}>Cancel this order</button>
+                {showConfirm && (
+                    <Confirm
+                        message='Are you sure you want to cancel this order?'
+                        onConfirm={cancelOrder}
+                        onCancel={() => setShowConfirm(false)}
+                    />
+                )}
             </div>
 
             {isInfo && (

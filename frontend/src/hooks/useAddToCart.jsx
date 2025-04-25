@@ -65,7 +65,13 @@ export const useAddToCart = () => {
         }
     }
 
-    const handleQuantity = async (cartID, userID, mangaID, type) => {
+    const handleQuantity = async (cartID, userID, mangaID, typeOrValue) => {
+        const isNumber = !isNaN(typeOrValue)
+
+        const body = isNumber
+            ? { userID, mangaID, quantity: Number(typeOrValue) }
+            : { userID, mangaID, type: typeOrValue }
+            
         try {
             const response = await fetch(`http://localhost:4000/api/cart/quantity/${cartID}`, {
                 method: 'PATCH',
@@ -73,17 +79,16 @@ export const useAddToCart = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ userID, mangaID, type })
+                body: JSON.stringify(body)
             })
     
             if (!response.ok)
                 return console.error('Failed to update quantity of item in cart:', response.status)
 
             const json = await response.json()
-            // console.log(json)
             
             const updatedCart = json.items.find((i) => i.mangaID.toString() === mangaID.toString())
-            // console.log(updatedCart.quantity)
+
             if (!updatedCart)
                 dispatch({type: 'DELETE_ITEM', payload: cartID})
             else

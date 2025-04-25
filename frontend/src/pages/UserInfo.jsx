@@ -83,7 +83,6 @@ export default function UserInfo() {
                 const json = await response.json()        
 
                 orderDispatch({ type: 'DISPLAY_ITEM', payload: json })
-                console.log(order)
             }
             catch (error) {
                 console.error('Error fetching order:', error)
@@ -107,8 +106,6 @@ export default function UserInfo() {
                 },
                 body: JSON.stringify({ username, email, phone, address })
             })
-
-            const json = await response.json()
     
             if (response.ok) {
                 fetchUser()

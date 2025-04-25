@@ -22,9 +22,43 @@ export default function Checkout() {
     const [cardNumber, setCardNumber] = useState('')
     const [cardName, setCardName] = useState('')
 
+    const [userCurrent, setUserCurrent] = useState(null)
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
+
     const handlePayment = (methodCheck) => {
         setMethod(methodCheck)
     }
+
+    const fetchUser = async () => {
+        const response = await fetch('http://localhost:4000/api/user/' + user.user._id, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
+        const json = await response.json()
+        console.log(json)
+
+        if (response.ok) {
+            setUserCurrent(json)
+        }
+    }
+    
+    useEffect(() => {
+        fetchUser()
+    }, [])
+    
+    useEffect(() => {
+        if (userCurrent) {
+            setUsername(userCurrent.username)
+            setEmail(userCurrent.email)
+            setPhone(userCurrent.phone)
+            setAddress(userCurrent.address)
+        }
+    }, [userCurrent])
 
     useEffect(() => {
         if (!user) 
@@ -86,16 +120,16 @@ export default function Checkout() {
                     <h3 style={{marginBottom: '15px'}}>Address and user information</h3>
                     <label>Email</label>
                     <div className='billing-info-input'>
-                        <input type='text' placeholder='Email' value={user && user.user.email} readOnly></input>
+                        <input type='text' placeholder='Email' value={email} readOnly></input>
                     </div>
                     <div className='billing-info-input'>
                         <label>Phone Number</label>
-                        <input type='text' placeholder='Phone Number' value={user && user.user.phone} readOnly></input>
+                        <input type='text' placeholder='Phone Number' value={phone} readOnly></input>
                     </div>
                     <div>
                         <div className='billing-info-input'>
                             <label>Address</label>
-                            <input type='text' placeholder='Address' value={user && user.user.address} readOnly></input>
+                            <input type='text' placeholder='Address' value={address} readOnly></input>
                         </div>
                     </div>
                 </div>

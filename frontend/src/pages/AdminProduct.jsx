@@ -212,6 +212,7 @@ export default function AdminProduct() {
     }
 
     const handleRefresh = () => {
+        setFilter('')
         setSearchParams({})
     }
         
