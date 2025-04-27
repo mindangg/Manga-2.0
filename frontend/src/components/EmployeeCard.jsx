@@ -4,12 +4,14 @@ import '../styles/Admin.css'
 
 import { useUserContext } from '../hooks/useUserContext'
 import { useAdminContext } from '../hooks/useAdminContext'
+import { useNotificationContext } from '../hooks/useNotificationContext'
 
 import Confirm from './Confirm'
 
 export default function EmployeeCard({ employee, handleEdit, hasPermission }) {
     const { dispatch } = useUserContext()
     const { admin } = useAdminContext()
+    const { showNotification } = useNotificationContext()
     const [showConfirm, setShowConfirm] = useState(false)
 
     const formatDate = (dateString) => {
@@ -18,7 +20,7 @@ export default function EmployeeCard({ employee, handleEdit, hasPermission }) {
 
     const handleDelete = async () => {
         if (employee._id === admin.employee._id) {
-            alert('Cant delete employee because it is in used')
+            showNotification('Cant delete employee because it is in used')
             return
         }
 
@@ -47,7 +49,7 @@ export default function EmployeeCard({ employee, handleEdit, hasPermission }) {
             <span>{employee.email}</span>
             <span>{employee.phone}</span>
             <span>{formatDate(employee.createdAt)}</span>
-            <span className='employee-role'>{employee.role?.name ?? ''}</span>
+            <span className={`employee-role-${employee.role?.name || ''}`}>{employee.role?.name ?? ''}</span>
             <span className='employee-action'>
             {hasPermission(admin, 'Employee', 'Update') && (
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(employee)}></i>

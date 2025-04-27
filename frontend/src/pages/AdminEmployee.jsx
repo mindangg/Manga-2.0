@@ -8,12 +8,12 @@ import Pagination from '../components/Pagination'
 
 import { useUserContext } from '../hooks/useUserContext'
 import { useAdminContext } from '../hooks/useAdminContext'
-import { useNotificationContext } from '../hooks/useNotificationContext'
+
+import Confirm from '../components/Confirm'
 
 export default function AdminEmployee() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
-    const {showNotification } = useNotificationContext()
     
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -25,31 +25,28 @@ export default function AdminEmployee() {
 
     const [isToggle, setIsToggle] = useState(false)
     const [isToggleRole, setIsToggleRole] = useState(false)
+    const [isToggleManage, setIsToggleManage] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
 
     const [allRoles, setAllRoles] = useState([])
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const toggle = () => {
+        setFullname('')
+        setEmail('')
+        setPhone('')
+        setPassword('')
+        setRole('')
         setIsToggle(!isToggle)
-        if (selectedEmployee) {
-            setFullname('')
-            setEmail('')
-            setPhone('')
-            setPassword('')
-            setRole('')
-        }
-
         setSelectedEmployee(null)
     }
-    const toggleRole = () => {
-        setIsToggleRole(!isToggleRole)
-        if (selectedRole) {
-            setRoleName('')
-            setPermissions('')
-        }
 
+    const toggleRole = () => {
+        setRoleName('')
+        setPermissions([])
+        setIsToggleRole(!isToggleRole)
         setSelectedRole(null)
     }
 
@@ -133,9 +130,8 @@ export default function AdminEmployee() {
 
             if (!response.ok)
                 throw new Error('Failed to update employee')
-    
-            const json = await response.json()
-            dispatch({ type: 'UPDATE_USER', payload: json })
+
+            fetchEmployee()
 
             setIsToggle(false)
             setFullname('')
@@ -286,8 +282,7 @@ export default function AdminEmployee() {
             if (!response.ok)
                 throw new Error('Failed to update role')
     
-            const json = await response.json()
-            // dispatch({ type: 'UPDATE_USER', payload: json })
+            fetchRole()
 
             setIsToggleRole(false)
             setRoleName('')
@@ -315,9 +310,7 @@ export default function AdminEmployee() {
             if (!response.ok)
                 throw new Error(`HTTP error! Status: ${response.status}`)
 
-            const json = await response.json()
-
-            setAllRoles(json)
+            fetchRole()
 
             setIsToggleRole(false)
             setRoleName('')
@@ -336,7 +329,27 @@ export default function AdminEmployee() {
                 permission.actions.includes(action)
             )
         }
-    }    
+    }   
+    
+    const handleDeleteRole = async (id) => {
+        try {
+            const response = await fetch('http://localhost:4000/api/role/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
+    
+            if (!response.ok) {
+                console.error('Failed to delete role')
+                return
+            }
+            fetchRole()
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
 
     return (
         <div className='employee-container'>
@@ -367,10 +380,10 @@ export default function AdminEmployee() {
                     {hasPermission(admin, 'Employee', 'Create') && (
                         <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add Employee</button>
                     )}
-                    
                     {hasPermission(admin, 'Employee', 'Create') && (
                         <button onClick={toggleRole}><i className='fa-solid fa-plus'></i>Add Role</button>
                     )}
+                    <button onClick={() => setIsToggleManage(!isToggleManage)}><i className='fa-solid fa-bars-progress'></i>Manage Role</button>
                 </div>
             </div>
             <div className='employee-header'>
@@ -486,6 +499,40 @@ export default function AdminEmployee() {
                                 )}
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {isToggleManage && (
+                <div className='manage-role-container'>
+                    <div className='manage-role'>
+                        <i className='fa-solid fa-xmark' id='manage-role-close' onClick={() => setIsToggleManage(!isToggleManage)}></i>
+                        <h2>All Role</h2>
+                        <div className='manage-role-header'>
+                            <span>Role</span>
+                            <span>Action</span>
+                        </div>
+                        {allRoles?.map(r => (
+                            <div key={r._id} className='manage-role-items'>
+                                <span>{r.name}</span>
+                                <span className='manage-role-action'>
+                                    {hasPermission(admin, 'Employee', 'Update') && (
+                                        <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(r)}></i>
+                                    )}
+                                    {hasPermission(admin, 'Employee', 'Delete') && (
+                                        <i className='fa-solid fa-trash-can' onClick={() => setShowConfirm(r._id)}></i>
+                                    )}
+                                </span>
+
+                                {showConfirm === r._id && (
+                                    <Confirm
+                                        message='Are you sure you want to delete this role?'
+                                        onConfirm={() => handleDeleteRole(r._id)}
+                                        onCancel={() => setShowConfirm(null)}
+                                    />
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </div>
             )}

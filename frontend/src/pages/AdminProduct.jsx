@@ -193,19 +193,16 @@ export default function AdminProduct() {
     }, [dispatch, userDispatch, searchParams])
 
     const toggle = () => {
-        if (selectedProduct) {
-            setTitle('')
-            setSeries('')
-            setCategory('')
-            setAuthor('')
-            setSupplier('')
-            setPriceIn('')
-            setDescription('')
-            setCover1('')
-            setCover2('')
-        }
+        setTitle('')
+        setSeries('')
+        setCategory('')
+        setAuthor('')
+        setSupplier('')
+        setPriceIn('')
+        setDescription('')
+        setCover1('')
+        setCover2('')
         setSelectedProduct(null)
-
         setIsToggle(!isToggle)
     }
 

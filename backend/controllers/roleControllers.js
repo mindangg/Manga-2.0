@@ -37,8 +37,9 @@ const getRole = async (req, res) => {
 
 const createRole = async (req, res) => {
     const { name, permissions } = req.body
-    console.log(name)
-    console.log(permissions)
+
+    if (!permissions || permissions.length === 0)
+        return res.status(400).json({error: 'Permissions cannot be empty'})
 
     try {
         const role = await Role.create({ name, permissions })

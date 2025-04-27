@@ -112,15 +112,12 @@ export default function AdminSupplier() {
     }, [dispatch, searchParams])
 
     const toggle = () => {
+        setName('')
+        setEmail('')
+        setPhone('')
+        setAddress('')
+        setStatus('')
         setIsToggle(!isToggle)
-        if (selectedSupplier) {
-            setName('')
-            setEmail('')
-            setPhone('')
-            setAddress('')
-            setStatus('')
-        }
-
         setSelectedSupplier(null)
     }
 

@@ -57,16 +57,13 @@ export default function AdminUser() {
     }, [dispatch, searchParams])
 
     const toggle = () => {
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setPhone('')
+        setAddress('')
+        setStatus('')
         setIsToggle(!isToggle)
-        if (selectedUser) {
-            setUsername('')
-            setEmail('')
-            setPassword('')
-            setPhone('')
-            setAddress('')
-            setStatus('')
-        }
-
         setSelectedUser(null)
     }
 

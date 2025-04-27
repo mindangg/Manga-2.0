@@ -2058,6 +2058,66 @@ input[type='file'] {
 }
 
 
+.manage-role-container{
+    position: fixed; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 2;
+}
+
+.manage-role{
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    padding: 20px;
+    background-color: var(--black);
+    width: 90%;
+    max-width: 520px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+}
+
+#manage-role-close{
+    position: absolute;
+    font-size: 18px;
+    top: 3%;
+    right: 3%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#manage-role-close:hover{
+    transform: translateY(-5px);
+}
+
+.manage-role-action i{
+    cursor: pointer;
+}
+
+.manage-role-action i:nth-of-type(1){
+    margin-right: 15px;
+}
+
+.manage-role h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.manage-role-header,
+.manage-role-items{
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+    padding: 20px 0;
+    text-align: center;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid hsl(0, 0%, 50%, 0.3);
+}
 
 
 .admin-login-container{
