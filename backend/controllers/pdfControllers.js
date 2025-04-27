@@ -18,7 +18,6 @@ const generatePDF = async (req, res) => {
     const page = await browser.newPage()
 
     let htmlContent = ''
-    // console.log(method)
     // Order Details HTML Template
     if (method == 'order') {
         htmlContent = `
@@ -168,7 +167,6 @@ const generatePDF = async (req, res) => {
                             ${o.mangaID.title}
                         </div>
                         <div>Quantity: ${o.stockQuantity} <span style='margin-left: 50px;'>Stock Price: $${o.mangaID.priceIn}</span></div>
-                        <div>Supplier: ${o.supplierID.name}</div>
                     </div>
                 `).join('')}
                 <h3>Total: $${order.totalPrice}</h3>

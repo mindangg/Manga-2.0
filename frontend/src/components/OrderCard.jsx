@@ -9,7 +9,7 @@ import Confirm from './Confirm'
 
 import { usePDF } from '../hooks/usePDF'
 
-export default function OrderCard({ order }) {
+export default function OrderCard({ order, hasPermission, fetchOrder }) {
     const { admin } = useAdminContext()
     const { dispatch } = useOrderContext()
     const [isApprove, setIsApprove] = useState(false)
@@ -39,9 +39,8 @@ export default function OrderCard({ order }) {
     
             if (!response.ok)
                 return console.error('Failed to approve order:', response.status)
-    
-            const json = await response.json()
-            dispatch({type: 'UPDATE_ITEM', payload: json})
+
+            fetchOrder()
             toggleApprove()
             setShowConfirm(false)
             setSelectedAction(null)
@@ -86,24 +85,32 @@ export default function OrderCard({ order }) {
                         {
                             order?.status === 'Pending' && (
                                 <div style={{margin: '0', display: 'flex', gap: '10px', justifyContent: 'center'}}>
-                                    {order && <button
-                                                    onClick={() => {
-                                                        setSelectedAction('Delivered')
-                                                        setShowConfirm(true)
-                                                    }}
-                                                    style={{ backgroundColor: '#28ac64' }}
-                                                >
-                                                    Delivered
-                                                </button>}
-                                    {order && <button
-                                                    onClick={() => {
-                                                        setSelectedAction('Canceled')
-                                                        setShowConfirm(true)
-                                                    }}
-                                                    style={{ backgroundColor: '#f84c2c' }}
-                                                >
-                                                    Canceled
-                                                </button>}
+                                {hasPermission(admin, 'Supplier', 'Update') && (
+                                    <>
+                                        {order && (
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedAction('Delivered');
+                                                    setShowConfirm(true);
+                                                }}
+                                                style={{ backgroundColor: '#28ac64' }}
+                                            >
+                                                Delivered
+                                            </button>
+                                        )}
+                                        {order && (
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedAction('Canceled');
+                                                    setShowConfirm(true);
+                                                }}
+                                                style={{ backgroundColor: '#f84c2c' }}
+                                            >
+                                                Canceled
+                                            </button>
+                                        )}
+                                    </>
+                                )}
                                     {showConfirm && (
                                         <Confirm
                                             message={`Are you sure you want to mark this order as ${selectedAction}?`}

@@ -7,7 +7,7 @@ import { useAdminContext } from '../hooks/useAdminContext'
 
 import Confirm from './Confirm'
 
-export default function UserCard({ user, handleEdit }) {
+export default function UserCard({ user, handleEdit, hasPermission }) {
     const { dispatch } = useUserContext()
     const { admin } = useAdminContext()
     const [showConfirm, setShowConfirm] = useState(false)
@@ -48,8 +48,12 @@ export default function UserCard({ user, handleEdit }) {
             <span>{formatDate(user.createdAt)}</span>
             <span className={`user-status-${user.status}`}>{user.status}</span>
             <span className='user-action'>
+            {hasPermission(admin, 'User', 'Update') && (
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(user)}></i>
+            )}
+            {hasPermission(admin, 'User', 'Delete') && (
                 <i className='fa-solid fa-trash-can' onClick={() => setShowConfirm(true)}></i>
+            )}
             </span>
             {showConfirm && (
                 <Confirm

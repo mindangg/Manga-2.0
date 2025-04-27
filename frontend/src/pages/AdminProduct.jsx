@@ -44,7 +44,6 @@ export default function AdminProduct() {
         setCategory(product.category)
         setAuthor(product.author)
         setSupplier(product.supplier)
-        // setStock(product.stock)
         setPriceIn(product.priceIn)
         setDescription(product.description)
         setIsToggle(true)
@@ -200,7 +199,6 @@ export default function AdminProduct() {
             setCategory('')
             setAuthor('')
             setSupplier('')
-            // setStock('')
             setPriceIn('')
             setDescription('')
             setCover1('')
@@ -250,6 +248,15 @@ export default function AdminProduct() {
     const firstPageIndex = lastPageIndex - productPerPages
     const currentManga = manga?.slice(firstPageIndex, lastPageIndex)
 
+    const hasPermission = (admin, functionName, action) => {
+        if (admin && admin.employee.role.permissions) {
+            return admin.employee.role.permissions.some(permission => 
+                permission.function === functionName &&
+                permission.actions.includes(action)
+            )
+        }
+    }   
+
     return (
         <div className='manga-container'>
             <div className = 'manga-controller'>
@@ -285,7 +292,10 @@ export default function AdminProduct() {
 
                 <div className='manga-icon'>
                     <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                    <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
+
+                    {hasPermission(admin, 'Product', 'Create') && (
+                        <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add Product</button>
+                    )}
                 </div>
             </div>
             <div className='manga-header'>
@@ -299,7 +309,7 @@ export default function AdminProduct() {
             </div>
             
             {currentManga && currentManga.map((m) => (
-                <ProductCard key={m._id} manga={m} handleEdit={handleEdit}/>
+                <ProductCard key={m._id} manga={m} handleEdit={handleEdit} hasPermission={hasPermission}/>
             ))}
             <Pagination
                 totalProducts={manga?.length} 

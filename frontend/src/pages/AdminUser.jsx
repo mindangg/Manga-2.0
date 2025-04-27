@@ -183,6 +183,15 @@ export default function AdminUser() {
     const firstPageIndex = lastPageIndex - productPerPages
     const currentUser = users?.slice(firstPageIndex, lastPageIndex)
 
+    const hasPermission = (admin, functionName, action) => {
+        if (admin && admin.employee.role.permissions) {
+            return admin.employee.role.permissions.some(permission => 
+                permission.function === functionName &&
+                permission.actions.includes(action)
+            )
+        }
+    }    
+
     return (
         <div className='user-container'>
             <div className = 'user-controller'>
@@ -205,7 +214,9 @@ export default function AdminUser() {
 
                 <div className='user-icon'>
                     <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                    <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
+                    {hasPermission(admin, 'User', 'Create') && (
+                        <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add User</button>
+                    )}
                 </div>
             </div>
             <div className='user-header'>
@@ -219,7 +230,7 @@ export default function AdminUser() {
             </div>
 
             {currentUser && currentUser.map((u) => (
-                <UserCard key={u._id} user={u} handleEdit={handleEdit}/>
+                <UserCard key={u._id} user={u} handleEdit={handleEdit} hasPermission={hasPermission}/>
             ))}
             <Pagination
                 totalProducts={users?.length} 

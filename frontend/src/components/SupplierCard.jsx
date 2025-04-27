@@ -7,7 +7,7 @@ import { useAdminContext } from '../hooks/useAdminContext'
 
 import Confirm from './Confirm'
 
-export default function SupplierCard({ supplier, handleEdit }) {
+export default function SupplierCard({ supplier, handleEdit, hasPermission }) {
     const { dispatch } = useUserContext()
     const { admin } = useAdminContext()
     const [showConfirm, setShowConfirm] = useState(false)
@@ -45,8 +45,12 @@ export default function SupplierCard({ supplier, handleEdit }) {
             <span>{supplier.address}</span>
             <span>{formatDate(supplier.createdAt)}</span>
             <span className='supplier-action'>
+            {hasPermission(admin, 'Supplier', 'Update') && (
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(supplier)}></i>
+            )}
+            {hasPermission(admin, 'Supplier', 'Delete') && (
                 <i className='fa-solid fa-trash-can' onClick={() => setShowConfirm(true)}></i>
+            )}
             </span>
             {showConfirm && (
                 <Confirm

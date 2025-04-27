@@ -46,9 +46,8 @@ const getAllManga = async (req, res) => {
 
         const manga = await Manga.find(filter).sort({ title: 1 })
 
-        if (!manga.length) {
+        if (!manga.length)
             return res.status(400).json({ error: 'No such manga' })
-        }
 
         res.status(200).json(manga)
     } 

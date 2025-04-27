@@ -46,19 +46,24 @@ const getAllEmployees = async (req, res) => {
         if (fullname)
             filter.fullname = { $regex: `.*${removeSpecialChar(fullname)}.*`, $options: 'i' }
 
+        if (role)
+            filter.role = role
+
         const employeeCheck = await Employee.findById(employeeID)
 
-        if (role) {
-            if (employeeCheck.role === 'Admin' && role === 'Manager') {
-                return res.status(403).json({ error: 'Admins are not allowed to view Managers' })
-            } else {
-                filter.role = role
-            }
-        } else if (employeeCheck.role === 'Admin') {
-            filter.role = { $ne: 'Manager' }
-        }
+        // if (role) {
+        //     if (employeeCheck.role === 'Admin' && role === 'Manager') {
+        //         return res.status(403).json({ error: 'Admins are not allowed to view Managers' })
+        //     } else {
+        //         filter.role = role
+        //     }
+        // } else if (employeeCheck.role === 'Admin') {
+        //     filter.role = { $ne: 'Manager' }
+        // }
 
-        const employees = await Employee.find({ ...filter, isDelete: false }).sort({ createdAt: -1 })
+        const employees = await Employee.find({ ...filter, isDelete: false })
+                                        .populate('role')
+                                        .sort({ createdAt: 1 })
 
         if (!employees || employees.length === 0)
             return res.status(404).json({ error: 'Employees not found' })
@@ -69,7 +74,6 @@ const getAllEmployees = async (req, res) => {
     }
 }
 
-
 const getEmployee = async (req, res) => {
     const { id } = req.params
     
@@ -78,6 +82,7 @@ const getEmployee = async (req, res) => {
 
     try {
         const employee = await Employee.findOne({_id: id, isDelete: false})
+                                        .populate('role')
 
         if (!employee)
             return res.status(404).json({error: 'Employee not found'})

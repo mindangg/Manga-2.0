@@ -7,7 +7,7 @@ import { useAdminContext } from '../hooks/useAdminContext'
 
 import Confirm from './Confirm'
 
-export default function EmployeeCard({ employee, handleEdit }) {
+export default function EmployeeCard({ employee, handleEdit, hasPermission }) {
     const { dispatch } = useUserContext()
     const { admin } = useAdminContext()
     const [showConfirm, setShowConfirm] = useState(false)
@@ -47,10 +47,14 @@ export default function EmployeeCard({ employee, handleEdit }) {
             <span>{employee.email}</span>
             <span>{employee.phone}</span>
             <span>{formatDate(employee.createdAt)}</span>
-            <span className={`employee-role-${employee.role}`}>{employee.role}</span>
+            <span className='employee-role'>{employee.role?.name ?? ''}</span>
             <span className='employee-action'>
+            {hasPermission(admin, 'Employee', 'Update') && (
                 <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(employee)}></i>
+            )}
+            {hasPermission(admin, 'Employee', 'Delete') && (
                 <i className='fa-solid fa-trash-can' onClick={() => setShowConfirm(true)}></i>
+            )}
             </span>
             {showConfirm && (
                 <Confirm

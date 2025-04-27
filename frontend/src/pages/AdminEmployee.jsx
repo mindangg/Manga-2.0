@@ -8,10 +8,12 @@ import Pagination from '../components/Pagination'
 
 import { useUserContext } from '../hooks/useUserContext'
 import { useAdminContext } from '../hooks/useAdminContext'
+import { useNotificationContext } from '../hooks/useNotificationContext'
 
-export default function AdminUser() {
+export default function AdminEmployee() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
+    const {showNotification } = useNotificationContext()
     
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -19,12 +21,37 @@ export default function AdminUser() {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    const [role, setRole] = useState('Admin')
+    const [role, setRole] = useState('')
 
     const [isToggle, setIsToggle] = useState(false)
+    const [isToggleRole, setIsToggleRole] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1) 
     const [productPerPages, setProductPerPages] = useState(8) 
+
+    const [allRoles, setAllRoles] = useState([])
+
+    const toggle = () => {
+        setIsToggle(!isToggle)
+        if (selectedEmployee) {
+            setFullname('')
+            setEmail('')
+            setPhone('')
+            setPassword('')
+            setRole('')
+        }
+
+        setSelectedEmployee(null)
+    }
+    const toggleRole = () => {
+        setIsToggleRole(!isToggleRole)
+        if (selectedRole) {
+            setRoleName('')
+            setPermissions('')
+        }
+
+        setSelectedRole(null)
+    }
 
     const fetchEmployee = async () => {
         try {
@@ -44,30 +71,47 @@ export default function AdminUser() {
             const json = await response.json()
 
             dispatch({type: 'SET_USER', payload: json})
-            
-            return json
         }
         catch (error) {
             console.error('Error fetching employee:', error)
         }
     }
 
-    useEffect(() => {
-        fetchEmployee()
-    }, [dispatch, searchParams])
+    const fetchRole = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/role', {
+                headers: {
+                    'Authorization': `Bearer ${admin.token}`
+                }
+            })
 
-    const toggle = () => {
-        setIsToggle(!isToggle)
+            if (!response.ok)
+                return console.error('Error fetching role:', response.status)
+            
+            const json = await response.json()
+
+            setAllRoles(json)
+        }
+        catch (error) {
+            console.error('Error fetching role:', error)
+        }
     }
 
+    useEffect(() => {
+        fetchEmployee()
+        fetchRole()
+    }, [dispatch, searchParams])
+
     const [selectedEmployee, setSelectedEmployee] = useState(null)
+    const [selectedRole, setSelectedRole] = useState(null)
 
     const handleEdit = (employee) => {
         setSelectedEmployee(employee)
         setFullname(employee.fullname)
         setEmail(employee.email)
         setPhone(employee.phone)
-        setRole(employee.role)
+        if (employee.role)
+            setRole(employee.role._id)
         setIsToggle(true)
     }
 
@@ -97,7 +141,7 @@ export default function AdminUser() {
             setFullname('')
             setEmail('')
             setPhone('')
-            setRole('Admin')
+            setRole('')
             setSelectedEmployee(null)
         } 
         catch (error) {
@@ -129,7 +173,7 @@ export default function AdminUser() {
             setFullname('')
             setEmail('')
             setPhone('')
-            setRole('Admin')
+            setRole('')
             setSelectedEmployee(null)
         }
         catch (error) {
@@ -170,19 +214,141 @@ export default function AdminUser() {
     const firstPageIndex = lastPageIndex - productPerPages
     const currentEmployee = users?.slice(firstPageIndex, lastPageIndex)
 
-    useEffect(() => {
-        console.log(admin.employee.role)
-    })
+    const [roleName, setRoleName] = useState('')
+    const [permissions, setPermissions] = useState([])
+
+    const functions = [
+        'Product',
+        'Supplier',
+        'User',
+        'Order',
+        'Employee',
+        'User Statistic',
+        'Order Statistic',
+        'Stock Statistic'
+    ]
+    
+    const actions = ['Create', 'Read', 'Update', 'Delete']    
+
+    const handleCheckboxChange = (func, action) => {
+        setPermissions(prev => {
+            const existing = prev.find(p => p.function === func)
+            
+            if (existing) {
+                const hasAction = existing.actions.includes(action)
+                let updatedActions
+    
+                if (hasAction)
+                    updatedActions = existing.actions.filter(a => a !== action)
+                 
+                else {
+                    updatedActions = [...existing.actions, action]
+   
+                    if (['Create', 'Delete', 'Update'].includes(action) && !updatedActions.includes('Read'))
+                        updatedActions.push('Read')
+                }
+    
+                if (updatedActions.length === 0)
+                    return prev.filter(p => p.function !== func)
+                
+                else {
+                    return prev.map(p =>
+                        p.function === func ? { ...p, actions: updatedActions } : p
+                    )
+                }
+            } 
+            else {
+                let newActions = [action]
+                if (['Create', 'Delete', 'Update'].includes(action))
+                    newActions.push('Read')
+
+                return [...prev, { function: func, actions: newActions }]
+            }
+        })
+    }
+    
+    const handleSaveRole = async (e) => {
+        e.preventDefault()
+
+        if (!selectedRole)
+            return
+    
+        try {
+            const response = await fetch(`http://localhost:4000/api/role/${selectedRole._id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${admin.token}`
+                },
+                body: JSON.stringify({ name: roleName, permissions })
+            })
+
+            if (!response.ok)
+                throw new Error('Failed to update role')
+    
+            const json = await response.json()
+            // dispatch({ type: 'UPDATE_USER', payload: json })
+
+            setIsToggleRole(false)
+            setRoleName('')
+            setPermissions([])
+            setSelectedRole(null)
+        } 
+        catch (error) {
+            console.error('Error updating role:', error)
+        }
+    }
+
+    const handleUploadRole = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await fetch('http://localhost:4000/api/role', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${admin.token}`
+                },
+                body: JSON.stringify({ name: roleName, permissions })
+            })
+
+            if (!response.ok)
+                throw new Error(`HTTP error! Status: ${response.status}`)
+
+            const json = await response.json()
+
+            setAllRoles(json)
+
+            setIsToggleRole(false)
+            setRoleName('')
+            setPermissions([])
+            setSelectedRole(null)
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
+    const hasPermission = (admin, functionName, action) => {
+        if (admin && admin.employee.role.permissions) {
+            return admin.employee.role.permissions.some(permission => 
+                permission.function === functionName &&
+                permission.actions.includes(action)
+            )
+        }
+    }    
 
     return (
         <div className='employee-container'>
             <div className = 'employee-controller'>
                 <select onChange={(e) => handleFilter('', e.target.value)}>
                     <option value=''>All</option>
-                    {admin.employee.role == 'Manager' && <option value='Manager'>Manager</option>}
-                    <option value='Admin'>Admin</option>
-                    <option value='Seller'>Seller</option>
-                    <option value='Stocker'>Stocker</option>
+                    {/* {admin.employee.role.name == 'Manager' && <option value='Manager'>Manager</option>} */}
+                    {allRoles && allRoles.map((roleItem) => (
+                        <option key={roleItem._id} value={roleItem._id}>
+                            {roleItem.name}
+                        </option>
+                    ))}
                 </select>
 
                 <div className='employee-search'>
@@ -191,14 +357,20 @@ export default function AdminUser() {
                     placeholder='Search for...'
                     value={filter}
                     onChange={(e) => {
-                        handleFilter(e.target.value, '');
+                        handleFilter(e.target.value, '')
                         setFilter(e.target.value)}}/>
                     <i className='fa-solid fa-magnifying-glass'></i>
                 </div>
 
                 <div className='employee-icon'>
                     <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                    <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
+                    {hasPermission(admin, 'Employee', 'Create') && (
+                        <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add Employee</button>
+                    )}
+                    
+                    {hasPermission(admin, 'Employee', 'Create') && (
+                        <button onClick={toggleRole}><i className='fa-solid fa-plus'></i>Add Role</button>
+                    )}
                 </div>
             </div>
             <div className='employee-header'>
@@ -211,7 +383,7 @@ export default function AdminUser() {
             </div>
 
             {currentEmployee && currentEmployee.map((e) => (
-                <EmployeeCard key={e._id} employee={e} handleEdit={handleEdit}/>
+                <EmployeeCard key={e._id} employee={e} handleEdit={handleEdit} hasPermission={hasPermission}/>
             ))}
             <Pagination
                 totalProducts={users?.length} 
@@ -251,14 +423,63 @@ export default function AdminUser() {
 
                             <label>Role</label><br/>
                             <select value={role} onChange={(e) => setRole(e.target.value)}>
-                                {admin.employee.role == 'Manager' && <option value='Manager'>Manager</option>}
-                                <option value='Admin'>Admin</option>
-                                <option value='Seller'>Seller</option>
-                                <option value='Stocker'>Stocker</option>
+                                <option value=''>Role</option>
+                            {allRoles && allRoles.map((r) => (
+                                <option key={r._id} value={r._id}>
+                                    {r.name}
+                                </option>
+                            ))}
                             </select>
         
                             <div style={{ textAlign: 'center' }}>
                                 {selectedEmployee ? (
+                                    <button type='submit'>Save</button>
+                                ) : (
+                                    <button type='submit'>+ Add</button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {isToggleRole && (
+                <div className='add-role-container'>
+                    <div className='add-role'>
+                        <i className='fa-solid fa-xmark' onClick={toggleRole}></i>
+                        {selectedRole ? (
+                            <h2>Edit role</h2>
+                        ) : (
+                            <h2>Add new role</h2>
+                        )}
+                        <form onSubmit={selectedRole ? handleSaveRole : handleUploadRole}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '30px', justifyContent: 'center'}}>
+                                <label>Name</label>
+                                <input style={{ width: '30%'}}
+                                        value={roleName}
+                                        onChange={(e) => setRoleName(e.target.value)}></input>
+                            </div>
+                            <div className='add-role-header'>
+                                <span>Function</span>
+                                {actions.map(action => <span key={action}>{action}</span>)}
+                            </div>
+
+                            {functions.map(func => (
+                                <div key={func} className='add-role-items'>
+                                    <span>{func}</span>
+                                    {actions.map(action => (
+                                        <input
+                                            key={action}
+                                            type='checkbox'
+                                            checked={permissions.find(p => p.function === func)?.actions.includes(action) || false}
+                                            onChange={() => handleCheckboxChange(func, action)}
+                                        />
+                                    ))}
+                                </div>
+                            ))}
+        
+                            <div style={{ textAlign: 'center' }}>
+                                {selectedRole ? (
                                     <button type='submit'>Save</button>
                                 ) : (
                                     <button type='submit'>+ Add</button>

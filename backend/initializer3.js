@@ -8,56 +8,49 @@ const initializerArray =
             email: "employee1@gmail.com",
             phone: "0901234561",
             password: "employee1",
-            role: "Manager",
+            role: '680cfd519274d93e74c16f85'
         },
         {
             fullname: "employee2",
             email: "employee2@gmail.com",
             phone: "0901234562",
             password: "employee2",
-            role: "Manager",
         },
         {
             fullname: "employee3",
             email: "employee3@gmail.com",
             phone: "0901234563",
             password: "employee3",
-            role: "Admin",
         },
         {
             fullname: "employee4",
             email: "employee4@gmail.com",
             phone: "0901234564",
             password: "employee4",
-            role: "Admin",
         },
         {
             fullname: "employee5",
             email: "employee5@gmail.com",
             phone: "0901234565",
             password: "employee5",
-            role: "Seller",
         },
         {
             fullname: "employee6",
             email: "employee6@gmail.com",
             phone: "0901234566",
             password: "employee6",
-            role: "Seller",
         },
         {
             fullname: "employee7",
             email: "employee7@gmail.com",
             phone: "0901234567",
             password: "employee7",
-            role: "Stocker",
         },
         {
             fullname: "employee8",
             email: "employee8@gmail.com",
             phone: "0901234568",
             password: "employee8",
-            role: "Stocker",
         }
     ]
 

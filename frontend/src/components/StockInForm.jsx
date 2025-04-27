@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import '../styles/Admin.css'
 
 import { useAdminContext } from '../hooks/useAdminContext'
 import { useOrderContext } from '../hooks/useOrderContext'
 
-export default function StockInForm({ products, toggle }) {
+export default function StockInForm({ products, toggle, fetchStock }) {
     const { admin } = useAdminContext()
     const { order, dispatch } = useOrderContext()
 
@@ -54,14 +54,17 @@ export default function StockInForm({ products, toggle }) {
 
             const json = await response.json()
 
-            dispatch({type: 'ADD_ITEM', payload: json})
-
+            fetchStock()
             toggle()
         }
         catch (error) {
             console.error(error)
         }
     }
+
+    useEffect(() => {
+        console.log(order)
+    }, [dispatch])
 
     return (
         <div className='add-stock-container'>

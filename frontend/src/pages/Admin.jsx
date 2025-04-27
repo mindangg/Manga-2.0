@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import logo from '../assets/WEBTOON_Logo.png'
 import '../styles/Admin.css'
 
@@ -18,25 +18,43 @@ import { useAdminLogout } from '../hooks/useAdminLogout'
 export default function Admin() {
     const { admin } = useAdminContext()
     const { logout } = useAdminLogout()
-    
+
     const [toggle, setToggle] = useState('')
-    const role = admin?.employee?.role
 
-    const accessMap = {
-        'Seller': ['order', 'order-statistic'],
-        'Stocker': ['product', 'supplier', 'stock-statistic'],
-        'Admin': ['user', 'employee', 'user-statistic'],
-        'Manager': ['product', 'supplier', 'user', 'order', 'employee', 'user-statistic', 'order-statistic', 'stock-statistic']
-    }
-    
-    const accessiblePages = accessMap[role] || []
-    const canAccess = (page) => accessiblePages.includes(page)
-    
-    if (!canAccess(toggle) && accessiblePages.length > 0) {
-        setToggle(accessiblePages[0])
+    const permissions = admin?.employee?.role?.permissions || []
+    const accessibleFunctions = permissions.map(p => p.function)
+
+    // Define functionMap OUTSIDE so it can be reused
+    const functionMap = {
+        'product': 'Product',
+        'supplier': 'Supplier',
+        'user': 'User',
+        'order': 'Order',
+        'employee': 'Employee',
+        'user-statistic': 'User Statistic',
+        'order-statistic': 'Order Statistic',
+        'stock-statistic': 'Stock Statistic'
     }
 
-    return admin ? (
+    const canAccess = (page) => {
+        return accessibleFunctions.includes(functionMap[page])
+    }
+
+    useEffect(() => {
+        if (!canAccess(toggle) && accessibleFunctions.length > 0) {
+            // Find first accessible page
+            const firstAccessiblePage = Object.keys(functionMap).find(page => canAccess(page))
+            if (firstAccessiblePage) {
+                setToggle(firstAccessiblePage)
+            }
+        }
+    }, [admin, permissions])
+
+    if (!admin) {
+        return <AdminLogin />
+    }
+
+    return (
         <div>
             <div className='sidenav'>
                 <div className='ok'>
@@ -56,10 +74,11 @@ export default function Admin() {
                         </ul>
                     </div>
                 </div>
+
                 <div className='bottomnav'>
                     <ul>
-                        <li><i className="fa-solid fa-pen-ruler" style={{paddingTop: '0px'}}></i> {role}</li>
-                        <li><i className='fa-regular fa-circle-user'></i>  {admin?.employee?.fullname}</li>
+                        <li><i className="fa-solid fa-pen-ruler" style={{paddingTop: '0px'}}></i> {admin?.employee?.role?.name}</li>
+                        <li><i className='fa-regular fa-circle-user'></i> {admin?.employee?.fullname}</li>
                         <li onClick={logout}><i className='fa-solid fa-arrow-right-from-bracket'></i> Logout</li>
                     </ul>
                 </div>
@@ -76,7 +95,5 @@ export default function Admin() {
                 {toggle === 'stock-statistic' && canAccess('stock-statistic') && <AdminStockStatistic />}
             </div>
         </div>
-    ) : (
-        <AdminLogin />
     )
 }

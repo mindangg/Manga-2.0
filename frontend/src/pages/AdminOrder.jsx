@@ -10,8 +10,10 @@ import { useOrderContext } from '../hooks/useOrderContext'
 import { useAdminContext } from '../hooks/useAdminContext'
 
 export default function AdminOrder() {
-    const { order, dispatch } = useOrderContext()
+    // const { order, dispatch } = useOrderContext()
     const { admin } = useAdminContext()
+
+    const [order, setOrder] = useState([])
     
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -35,9 +37,8 @@ export default function AdminOrder() {
             
             const json = await response.json()
             
-            dispatch({type: 'DISPLAY_ITEM', payload: json})
+            setOrder(json)
 
-            return json
         }
         catch (error) {
             console.error('Error fetching order:', error)
@@ -46,7 +47,7 @@ export default function AdminOrder() {
 
     useEffect(() => {
         fetchOrder()
-    }, [dispatch, searchParams])
+    }, [searchParams])
 
     const handleRefresh = () => {
         setFilter('')
@@ -97,6 +98,15 @@ export default function AdminOrder() {
     const lastPageIndex = currentPage * productPerPages
     const firstPageIndex = lastPageIndex - productPerPages
     const currentOrder = order?.slice(firstPageIndex, lastPageIndex)
+        
+    const hasPermission = (admin, functionName, action) => {
+        if (admin && admin.employee.role.permissions) {
+            return admin.employee.role.permissions.some(permission => 
+                permission.function === functionName &&
+                permission.actions.includes(action)
+            )
+        }
+    }
 
     return (
         <div className='order-container'>
@@ -151,7 +161,7 @@ export default function AdminOrder() {
             </div>
 
             {currentOrder && currentOrder.map((o) => (
-                <OrderCard key={o._id} order={o}/>
+                <OrderCard key={o._id} order={o} hasPermission={hasPermission} fetchOrder={fetchOrder}/>
             ))}
             <Pagination
                 totalProducts={order?.length} 

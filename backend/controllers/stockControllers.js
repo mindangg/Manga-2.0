@@ -25,7 +25,6 @@ const getStocks = async (req, res) => {
 
         const stocks = await Stock.find(filter)
             .populate('employeeID')
-            .populate('items.supplierID')
             .populate('items.mangaID')
             .sort({ createdAt: -1 })
   

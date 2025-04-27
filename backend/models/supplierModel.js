@@ -19,8 +19,7 @@ const supplierSchema = new Schema({
     },
     address: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     isDelete: {
       type: Boolean, 

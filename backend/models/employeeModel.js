@@ -24,9 +24,8 @@ const employeeSchema = new Schema({
         required: true
     },
     role: {
-        type: String,
-        enum: ['Admin', 'Seller', 'Stocker', 'Manager'],
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role'
     },
     isDelete: {
         type: Boolean, 
@@ -70,7 +69,7 @@ employeeSchema.statics.login = async function(email, password) {
     if (!email || !password)
         throw new Error('All fields must be filled')
 
-    const employee = await this.findOne({ email })
+    const employee = await this.findOne({ email }).populate('role')
 
     if(!employee)
         throw new Error('No employee found')

@@ -22,6 +22,7 @@ const pdfRoutes = require('./routes/pdfRoutes')
 const userStatisticRoutes = require('./routes/userStatisticRoutes')
 const orderStatisticRoutes = require('./routes/orderStatisticRoutes')
 const stockStatisticRoutes = require('./routes/stockStatisticRoutes')
+const roleRoutes = require('./routes/roleRoutes')
 
 const app = express()
 
@@ -53,6 +54,7 @@ app.use('/api/stock', stockRoutes)
 app.use('/api/user-statistic', userStatisticRoutes)
 app.use('/api/order-statistic', orderStatisticRoutes)
 app.use('/api/stock-statistic', stockStatisticRoutes)
+app.use('/api/role', roleRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

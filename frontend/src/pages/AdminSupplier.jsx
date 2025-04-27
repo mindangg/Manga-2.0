@@ -16,6 +16,8 @@ export default function AdminSupplier() {
     const { users, dispatch } = useUserContext()
     const { admin } = useAdminContext()
     const { order, dispatch: orderDispatch } = useOrderContext()
+
+    const [stock, setStock] = useState([])
     
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -76,8 +78,7 @@ export default function AdminSupplier() {
             
             const json = await response.json()
 
-            orderDispatch({ type: 'DISPLAY_ITEM', payload: json})
-            console.log(order)
+            setStock(json)
         }
         catch (error) {
             console.error('Error fetching stock:', error)
@@ -212,7 +213,7 @@ export default function AdminSupplier() {
     else {
         const lastPageIndex = currentPage * productPerPages
         const firstPageIndex = lastPageIndex - productPerPages
-        currentStock = order?.slice(firstPageIndex, lastPageIndex)
+        currentStock = stock.slice(firstPageIndex, lastPageIndex)
     }
 
     const handleRefresh = () => {
@@ -264,6 +265,15 @@ export default function AdminSupplier() {
 
         setSearchParams(newParams)
     }
+    
+    const hasPermission = (admin, functionName, action) => {
+        if (admin && admin.employee.role.permissions) {
+            return admin.employee.role.permissions.some(permission => 
+                permission.function === functionName &&
+                permission.actions.includes(action)
+            )
+        }
+    }
 
     return (
         <div className='supplier-container'>
@@ -311,15 +321,17 @@ export default function AdminSupplier() {
                 
                 <div className='supplier-icon'>
                     <button onClick={handleRefresh}><i className='fa-solid fa-rotate-right'></i>Refresh</button>
-                    {
-                        action === 'Supplier' 
-                        ? (
-                            <button onClick={toggle}><i className='fa-solid fa-plus'></i>Add</button>
+                    {hasPermission(admin, 'Supplier', 'Create') && (
+                        action === 'Supplier' ? (
+                            <button onClick={toggle}>
+                                <i className='fa-solid fa-plus'></i> Add Supplier
+                            </button>
+                        ) : (
+                            <button onClick={toggle}>
+                                <i className='fa-solid fa-plus'></i> Stock in
+                            </button>
                         )
-                        : (
-                            <button onClick={toggle}><i className='fa-solid fa-plus'></i>Stock in</button>
-                        )
-                    }        
+                    )}
                 </div>
             </div>
             {action === 'Supplier' ? (
@@ -333,7 +345,7 @@ export default function AdminSupplier() {
                         <span>Edit</span>
                     </div>
                     {currentSupplier?.map((s) => (
-                        <SupplierCard key={s._id} supplier={s} handleEdit={handleEdit} />
+                        <SupplierCard key={s._id} supplier={s} handleEdit={handleEdit} hasPermission={hasPermission}/>
                     ))}
                     <Pagination
                         totalProducts={users?.length} 
@@ -401,7 +413,7 @@ export default function AdminSupplier() {
             )}
 
             {isToggle && action === 'Stock Receipt' && (
-                <StockInForm products={products} toggle={toggle}/>
+                <StockInForm products={products} toggle={toggle} fetchStock={fetchStock}/>
             )}
         </div>
     )
