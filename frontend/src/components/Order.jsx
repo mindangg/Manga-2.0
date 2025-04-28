@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 import '../styles/UserInfo.css'
 
 import { useAuthContext } from '../hooks/useAuthContext'
-import { useOrderContext } from '../hooks/useOrderContext'
 
 import Confirm from './Confirm'
 
-export default function Order({ order }) {
+export default function Order({ order, fetchOrder }) {
     const { user } = useAuthContext()
-    const { dispatch } = useOrderContext()
 
     const [isInfo, setIsInfo] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
@@ -36,8 +34,7 @@ export default function Order({ order }) {
             if (!response.ok)
                 return console.error('Failed to cancel order:', response.status)
     
-            const json = await response.json()
-            dispatch({type: 'UPDATE_ITEM', payload: json})
+            fetchOrder()
         }
         catch (error) {
             console.error('Failed to cancel order', error)

@@ -43,7 +43,7 @@ export default function AdminProduct() {
         setSeries(product.series)
         setCategory(product.category)
         setAuthor(product.author)
-        setSupplier(product.supplier)
+        setSupplier(product.supplierID)
         setPriceIn(product.priceIn)
         setDescription(product.description)
         setIsToggle(true)
@@ -67,9 +67,8 @@ export default function AdminProduct() {
             if (!response.ok)
                 throw new Error('Failed to update product')
         
-            const json = await response.json()
-            dispatch({ type: 'UPDATE_ITEM', payload: json })
-        
+            fetchManga()
+
             setIsToggle(false)
             setTitle('')
             setSeries('')
@@ -94,7 +93,6 @@ export default function AdminProduct() {
         formData.append('category', category)
         formData.append('author', author)
         formData.append('supplierID', supplier)
-        // formData.append('stock', stock)
         formData.append('priceIn', priceIn)
         formData.append('description', description)
     
@@ -129,7 +127,6 @@ export default function AdminProduct() {
             setCover2(null)
     
             dispatch({ type: 'ADD_ITEM', payload: json })
-            console.log('New manga added', json)
 
             setIsToggle(!isToggle)
 

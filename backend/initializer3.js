@@ -8,25 +8,28 @@ const initializerArray =
             email: "employee1@gmail.com",
             phone: "0901234561",
             password: "employee1",
-            role: '680cfd519274d93e74c16f85'
+            role: "680ee09889310522927d4599"
         },
         {
             fullname: "employee2",
             email: "employee2@gmail.com",
             phone: "0901234562",
             password: "employee2",
+            role: "680ee09889310522927d45a2"
         },
         {
             fullname: "employee3",
             email: "employee3@gmail.com",
             phone: "0901234563",
             password: "employee3",
+            role: "680ee09889310522927d45a6"
         },
         {
             fullname: "employee4",
             email: "employee4@gmail.com",
             phone: "0901234564",
             password: "employee4",
+            role: "680ee09889310522927d45ac"
         },
         {
             fullname: "employee5",

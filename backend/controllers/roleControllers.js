@@ -80,12 +80,10 @@ const updateRole = async (req, res) => {
         return res.status(400).json({error: 'No such role'})
 
     try {
-        let role = await role.findById(id)
+        const role = await Role.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
 
         if (!role)
-            return res.status(404).json({error: 'Role not found'})
-
-        role = await Role.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+            return res.status(404).json({error: 'Failed to update role'})
 
         res.status(200).json(Role)
     } 

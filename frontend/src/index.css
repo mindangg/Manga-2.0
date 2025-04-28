@@ -450,6 +450,8 @@ input.error {
     width: 50%;
     font-weight: bold;
     cursor: pointer;
+    color: black;
+    background-color: var(--green);
 }
 
 @keyframes fadeIn {

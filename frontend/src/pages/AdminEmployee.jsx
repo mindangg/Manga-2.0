@@ -112,6 +112,13 @@ export default function AdminEmployee() {
         setIsToggle(true)
     }
 
+    const handleEditRole = (role) => {
+        setSelectedRole(role)
+        setRoleName(role.name)
+        setPermissions(role.permissions)
+        setIsToggleRole(true)
+    }
+
     const handleSave = async (e) => {
         e.preventDefault()
 
@@ -161,9 +168,7 @@ export default function AdminEmployee() {
             if (!response.ok)
                 throw new Error(`HTTP error! Status: ${response.status}`)
 
-            const json = await response.json()
-
-            dispatch({type: 'ADD_USER', payload: json.employee})
+            fetchEmployee()
 
             setIsToggle(false)
             setFullname('')
@@ -268,6 +273,10 @@ export default function AdminEmployee() {
 
         if (!selectedRole)
             return
+
+        console.log(selectedRole._id)
+        console.log(roleName)
+        console.log(permissions)
     
         try {
             const response = await fetch(`http://localhost:4000/api/role/${selectedRole._id}`, {
@@ -345,6 +354,7 @@ export default function AdminEmployee() {
                 return
             }
             fetchRole()
+            fetchEmployee()
         }
         catch (error) {
             console.error(error)
@@ -517,7 +527,7 @@ export default function AdminEmployee() {
                                 <span>{r.name}</span>
                                 <span className='manage-role-action'>
                                     {hasPermission(admin, 'Employee', 'Update') && (
-                                        <i className='fa-solid fa-pen-to-square' onClick={() => handleEdit(r)}></i>
+                                        <i className='fa-solid fa-pen-to-square' onClick={() => handleEditRole(r)}></i>
                                     )}
                                     {hasPermission(admin, 'Employee', 'Delete') && (
                                         <i className='fa-solid fa-trash-can' onClick={() => setShowConfirm(r._id)}></i>

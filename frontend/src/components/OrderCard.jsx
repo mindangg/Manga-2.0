@@ -93,7 +93,7 @@ export default function OrderCard({ order, hasPermission, fetchOrder }) {
                                                     setSelectedAction('Delivered');
                                                     setShowConfirm(true);
                                                 }}
-                                                style={{ backgroundColor: '#28ac64' }}
+                                                style={{ color: 'black', backgroundColor: '#28ac64' }}
                                             >
                                                 Delivered
                                             </button>
@@ -104,7 +104,7 @@ export default function OrderCard({ order, hasPermission, fetchOrder }) {
                                                     setSelectedAction('Canceled');
                                                     setShowConfirm(true);
                                                 }}
-                                                style={{ backgroundColor: '#f84c2c' }}
+                                                style={{ color: 'black',  backgroundColor: '#f84c2c' }}
                                             >
                                                 Canceled
                                             </button>

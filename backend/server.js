@@ -7,9 +7,11 @@ const path = require('path')
 const Manga = require('./models/mangaModel')
 const User = require('./models/userModel')
 const Employee = require('./models/employeeModel')
+const Role = require('./models/roleModel')
 const initializerArray1 = require('./initializer1')
 const initializerArray2 = require('./initializer2')
 const initializerArray3 = require('./initializer3')
+const initializerArray4 = require('./initializer4')
 
 const mangaRoutes = require('./routes/mangaRoutes')
 const userRoutes = require('./routes/userRoutes')
@@ -78,7 +80,8 @@ mongoose.connect(process.env.MONGO_URI)
                 const hashedUsers = await initializerArray2
                 await User.insertMany(hashedUsers)
                 console.log('Initialized users.')
-            } else {
+            } 
+            else {
                 console.log('Users already exist.')
             }
         })
@@ -88,9 +91,21 @@ mongoose.connect(process.env.MONGO_URI)
                 const hashedEmployees = await initializerArray3
                 await Employee.insertMany(hashedEmployees)
                 console.log('Initialized employees.')
-            } else {
+            } 
+            else {
                 console.log('Employees already exist.')
             }
+        })
+        
+        Role.countDocuments().then(count => {
+            if (count === 0) {
+                Role.insertMany(initializerArray4)
+                .then(() => console.log('Role data initialized.', initializerArray4.length))
+                .catch(err => console.error('Error initializing role data:', err))
+            }
+            else {
+            console.log('Role data already exists.')
+          }
         })
     })
     .catch((error) => {

@@ -156,10 +156,9 @@ export default function AdminUserStatistic() {
                         <i className='fa-solid fa-book'></i>
                     </div>
                 </div>
-                <div className='user-statistic-item'>
+                {/* <div className='user-statistic-item'>
                     <div className='user-statistic-item-content'>
                         <p>Total Revenue</p>
-                        {/* <h4>$ {stats && stats.reduce((total, i) => total + i.monthlyUsers || 0, 0).toFixed(2)}</h4> */}
                         <h4>$ </h4>
                     </div>
                     <div className='user-statistic-item-icon'>
@@ -174,7 +173,7 @@ export default function AdminUserStatistic() {
                     <div className='user-statistic-item-icon'>
                         <i className='fa-solid fa-dollar-sign'></i>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className='user-statistic-chart'>

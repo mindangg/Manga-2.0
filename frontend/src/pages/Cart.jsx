@@ -30,7 +30,6 @@ export default function Cart() {
                 const json = await response.json()
     
                 dispatch({type: 'DISPLAY_ITEM', payload: json})
-                // console.log(cart)
             }
             catch (error) {
                 console.error('Error fetching cart:', error)

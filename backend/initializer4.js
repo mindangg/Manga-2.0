@@ -1,42 +1,103 @@
-const bcrypt = require('bcrypt')
+const initializerArray = [
+    {
+        name: "Manager",
+        permissions: [
+            {
+                function: 'Product',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Supplier',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'User',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Order',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Employee',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'User Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Order Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Stock Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            }
+        ]
+    },
 
-const initializerArray =
-    [
-        {
-            username: "user1",
-            email: "user1@gmail.com",
-            password: "user1",
-            phone: "0901234561",
-            address: "101 Street, An Duong Vuong, Ward 2, District 5, Ho Chi Minh City",
-        },
-        {
-            username: "user2",
-            email: "user2@gmail.com",
-            password: "user2",
-            phone: "0901234562",
-            address: "102 Street, An Duong Vuong, Ward 2, District 5, Ho Chi Minh City",
-        },
-        {
-            username: "user3",
-            email: "user3@gmail.com",
-            password: "user3",
-            phone: "0901234563",
-            address: "103 Street, An Duong Vuong, Ward 2, District 5, Ho Chi Minh City",
-        },
-        {
-            username: "user4",
-            email: "user4@gmail.com",
-            password: "user4",
-            phone: "0901234564",
-            address: "104 Street, An Duong Vuong, Ward 2, District 5, Ho Chi Minh City",
-        },
-        {
-            username: "user5",
-            email: "user5@gmail.com",
-            password: "user5",
-            phone: "0901234565",
-            address: "105 Street, An Duong Vuong, Ward 2, District 5, Ho Chi Minh City",
-        }
-    ]
+    {
+        name: "Admin",
+        permissions: [
+            {
+                function: 'User',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Employee',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'User Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+        ]
+    },
 
-module.exports = hashPasswords(initializerArray)
+    {
+        name: "Seller",
+        permissions: [
+            {
+                function: 'Product',
+                actions: ['Read']
+            },
+            {
+                function: 'Supplier',
+                actions: ['Read']
+            },
+            {
+                function: 'Order',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'User Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Order Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+        ]
+    },
+
+    {
+        name: "Stocker",
+        permissions: [
+            {
+                function: 'Product',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Supplier',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            },
+            {
+                function: 'Stock Statistic',
+                actions: ['Create', 'Read', 'Update', 'Delete']
+            }
+        ]
+    },
+]
+
+module.exports = initializerArray;

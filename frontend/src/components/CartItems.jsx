@@ -58,6 +58,7 @@ export default function CartItems({ cart }) {
                     <button id='cart-quantitydown'
                             onClick={() => handleQuantity(cart._id, user.user._id, 
                                                             cart.mangaID._id, 'decrease')}
+                            disabled={cart.quantity === 1}
                             >-</button>
                     <input
                         id='cart-quantity'

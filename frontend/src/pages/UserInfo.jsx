@@ -68,29 +68,28 @@ export default function UserInfo() {
         }
     }
 
-    useEffect(() => {
-        const fetchOrder = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/order/' + user.user._id, {
-                    headers: {
-                        'Authorization': `Bearer ${user.token}`
-                    }
-                })
+    const fetchOrder = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/order/' + user.user._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
 
-                if (!response.ok)
-                    return console.error('Error fetching order:', response.status)
-    
-                const json = await response.json()        
+            if (!response.ok)
+                return console.error('Error fetching order:', response.status)
 
-                orderDispatch({ type: 'DISPLAY_ITEM', payload: json })
-            }
-            catch (error) {
-                console.error('Error fetching order:', error)
-            }
+            const json = await response.json()        
+
+            orderDispatch({ type: 'DISPLAY_ITEM', payload: json })
         }
+        catch (error) {
+            console.error('Error fetching order:', error)
+        }
+    }
 
+    useEffect(() => {
         fetchOrder()
-
     }, [orderDispatch])
 
     const handleSubmit = async (e) => {
@@ -137,7 +136,7 @@ export default function UserInfo() {
                     <h2>Your Order History</h2>
                     <div className='order-history'>
                         {order && order.map((o) => (
-                            <Order key={o._id} order={o}/>
+                            <Order key={o._id} order={o} fetchOrder={fetchOrder}/>
                         ))}
                     </div>
                 </div>
