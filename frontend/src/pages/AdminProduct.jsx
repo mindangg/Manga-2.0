@@ -334,7 +334,6 @@ export default function AdminProduct() {
                                 <option value='Rom Com'>Rom Com</option>
                                 <option value='Family'>Family</option>
                                 <option value='Fantasy'>Fantasy</option>
-                                <option value='Slice Of Life'>Slice Of Life</option>
                                 <option value='Action'>Action</option>
                                 <option value='Comedy'>Comedy</option>
                                 <option value='Drama'>Drama</option>

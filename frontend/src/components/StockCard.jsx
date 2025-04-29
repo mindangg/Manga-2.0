@@ -43,7 +43,6 @@ export default function StockCard({ stock }) {
                                     {o.mangaID && o.mangaID.title}
                                 </div>
                                 <div>Quantity: {o?.stockQuantity} <span style={{marginLeft: '50px'}}>stock Price: ${o?.mangaID?.priceIn}</span></div>
-                                <div>Supplier: {o?.supplierID?.name}</div>
                             </div>
                         ))}
                         <h3>Total: ${stock && stock.totalPrice}</h3>
